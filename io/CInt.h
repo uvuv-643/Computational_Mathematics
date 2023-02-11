@@ -1,7 +1,7 @@
 //
 // Created by artem on 10.02.2023.
 //
-
+#pragma once
 #ifndef VM1_CINT_H
 #define VM1_CINT_H
 

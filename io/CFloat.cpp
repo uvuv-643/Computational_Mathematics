@@ -9,9 +9,6 @@ ostream &operator<<(ostream &os, const CFloat &validated) {
     os << fixed;
     os << setprecision(3);
     os << validated.value;
-    if (std::getenv("DEBUG_MODE")) {
-        cerr << "float";
-    }
     return os;
 }
 
@@ -37,4 +34,14 @@ CFloat::CFloat() {
 
 CFloat::CFloat(float _value) {
     this->value = _value;
+}
+
+CFloat operator+(CFloat lhs, const CFloat &rhs) {
+    lhs += rhs;
+    return lhs;
+}
+
+CFloat &CFloat::operator+=(const CFloat &rhs) {
+    this->value += rhs.value;
+    return *this;
 }

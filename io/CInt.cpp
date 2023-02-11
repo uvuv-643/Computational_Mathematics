@@ -6,9 +6,6 @@
 
 ostream &operator<<(ostream &os, const CInt &validated) {
     os << validated.value;
-    if (std::getenv("DEBUG_MODE")) {
-        cerr << "int";
-    }
     return os;
 }
 
