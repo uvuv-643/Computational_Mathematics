@@ -9,15 +9,23 @@ ostream &operator<<(ostream &os, const CFloat &validated) {
     os << fixed;
     os << setprecision(3);
     os << validated.value;
+    if (std::getenv("DEBUG_MODE")) {
+        cerr << "float";
+    }
     return os;
 }
 
 istream &operator>>(istream &is, CFloat &data) {
     float inputted;
+    if (std::getenv("DEBUG_MODE")) {
+        cerr << "Input float:" << endl;
+    }
     while (!(is >> inputted)) {
         cin.clear();
         cin.ignore(1000, '\n');
-        cerr << "Wrong input" << endl;
+        if (std::getenv("DEBUG_MODE")) {
+            cerr << "Wrong input" << endl;
+        }
     }
     data.value = inputted;
     return is;

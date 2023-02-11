@@ -6,15 +6,23 @@
 
 ostream &operator<<(ostream &os, const CInt &validated) {
     os << validated.value;
+    if (std::getenv("DEBUG_MODE")) {
+        cerr << "int";
+    }
     return os;
 }
 
 istream &operator>>(istream &is, CInt &data) {
     int32_t inputted;
+    if (std::getenv("DEBUG_MODE")) {
+        cerr << "Input int:" << endl;
+    }
     while (!(is >> inputted)) {
         cin.clear();
         cin.ignore(1000, '\n');
-        cerr << "Wrong input" << endl;
+        if (std::getenv("DEBUG_MODE")) {
+            cerr << "Wrong input" << endl;
+        }
     }
     data.value = inputted;
     return is;

@@ -12,7 +12,9 @@ istream &operator>>(istream &is, CSize &data) {
     while (!(is >> inputted) || inputted <= 0) {
         cin.clear();
         cin.ignore(1000, '\n');
-        cerr << "Wrong input" << endl;
+        if (std::getenv("DEBUG_MODE")) {
+            cerr << "Wrong input" << endl;
+        }
     }
     data.value = inputted;
     return is;
