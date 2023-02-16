@@ -1,7 +1,7 @@
 //
 // Created by artem on 11.02.2023.
 //
-
+#pragma once
 #include "CVector.h"
 
 template<typename T>
@@ -14,7 +14,7 @@ CVector<T>::CVector() {
 template<typename T>
 CVector<T>::CVector(size_t _n) {
     this->n = _n;
-    vector<T> v(this->n);
+    vector<T> v(this->n, rand());
     this->data = v;
 }
 
@@ -25,7 +25,6 @@ ostream& operator<<(ostream& os,  CVector<T>& vector) {
     for (size_t row = 0; row < n; row++) {
         os << vector[row] << " ";
     }
-    os << endl;
     return os;
 }
 
@@ -48,4 +47,20 @@ istream& operator>>(istream& is, CVector<T>& vector) {
 template<typename T>
 T& CVector<T>::operator [] (size_t i) {
     return this->data[i];
+}
+
+template<typename T>
+void CVector<T>::push_back(T element) {
+    this->data.push_back(element);
+    this->n++;
+}
+
+template<typename T>
+CVector<T> &CVector<T>::operator=(const CVector<T> &other) {
+    if (this == &other) {
+        return *this;
+    }
+    this->n = other.n;
+    this->data = other.data;
+    return *this;
 }

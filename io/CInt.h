@@ -20,6 +20,11 @@ public:
     operator size_t() const { return value; }
     friend ostream &operator<<(ostream &os, const CInt &validated);
     friend istream &operator>>(istream &is, CInt &data);
+    friend CInt operator+(CInt lhs, const CInt &rhs);
+    friend CInt operator+(CInt lhs, const int &rhs);
+    CInt &operator+=(const CInt &rhs);
+    CInt &operator+=(const int &rhs);
+    friend const CInt operator++(CInt& i, int);
 };
 
 #endif //VM1_CINT_H

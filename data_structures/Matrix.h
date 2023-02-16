@@ -6,9 +6,9 @@
 #define VM1_MATRIX_H
 
 #include <vector>
-#include <stdint.h>
+#include <cstdint>
 #include <iomanip>
-#include "../io/CSize.h"
+#include "../io/CSize.cpp"
 
 #define MAXIMUM_DISPLAYED_SYMBOLS_IN_MATRIX 14
 
@@ -34,5 +34,6 @@ public:
     vector<T>& operator[](size_t i);
 
 };
+
 
 #endif //VM1_MATRIX_H

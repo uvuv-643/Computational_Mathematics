@@ -2,6 +2,7 @@
 // Created by artem on 10.02.2023.
 //
 
+#pragma once
 #include "CInt.h"
 
 ostream &operator<<(ostream &os, const CInt &validated) {
@@ -31,4 +32,28 @@ CInt::CInt() {
 
 CInt::CInt(int _value) {
     this->value = _value;
+}
+
+CInt operator+(CInt lhs, const CInt &rhs) {
+    lhs += rhs;
+    return lhs;
+}
+CInt operator+(CInt lhs, const int &rhs) {
+    lhs += rhs;
+    return lhs;
+}
+
+CInt &CInt::operator+=(const CInt &rhs) {
+    this->value += rhs.value;
+    return *this;
+}
+CInt &CInt::operator+=(const int &rhs) {
+    this->value += rhs;
+    return *this;
+}
+
+const CInt operator++(CInt &i, int) {
+    CInt oldValue(i.value);
+    i.value++;
+    return oldValue;
 }

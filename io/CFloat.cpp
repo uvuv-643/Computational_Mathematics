@@ -2,6 +2,7 @@
 // Created by artem on 10.02.2023.
 //
 
+#pragma once
 #include "CFloat.h"
 #include <iomanip>
 

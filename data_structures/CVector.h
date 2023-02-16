@@ -7,9 +7,9 @@
 
 
 #include <vector>
-#include <stdint.h>
+#include <cstdint>
 #include <iomanip>
-#include "../io/CSize.h"
+#include "../io/CSize.cpp"
 
 #define MAXIMUM_DISPLAYED_SYMBOLS_IN_MATRIX 14
 
@@ -34,7 +34,10 @@ public:
 
     T &operator[](size_t i);
 
-};
+    void push_back(T element);
 
+    CVector<T> &operator=(const CVector<T> &other);
+
+};
 
 #endif //VM1_CVECTOR_H
