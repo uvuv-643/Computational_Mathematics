@@ -130,9 +130,45 @@ enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> 
 IterMethodInformation& Lab1::applyIterMethod(Matrix<CFloat> &a, CVector<CFloat> &b, CFloat eps) {
     auto* answer = new IterMethodInformation();
     enum DiagonalDominanceStatus dominance_status = checkOrApplyDiagonalDominance(a);
+    cout << a << endl;
     if (dominance_status >= 0) {
-        answer->append(*new CVector<CFloat>(3), 0.01);
-        answer->append(*new CVector<CFloat>(2), 0.001);
+        size_t k = 1;
+        size_t n = a.n;
+        vector<vector<float>> dp(1, vector<float>(n));
+        float current_eps = INITIAL_EPS;
+        for (size_t i = 0; i < n; i++) {
+            dp[0][i] = b[i] / a[i][i];
+        }
+        while (k < MAX_NUMBER_OF_ITERATIONS && current_eps >= eps) {
+            cout << current_eps << " " << eps << endl;
+            vector<float> new_solution(n);
+            dp.emplace_back(new_solution);
+            for (size_t i = 0; i < n; i++) {
+                dp[k][i] += b[i] / a[i][i];
+                for (size_t j = 0; j < n; j++) {
+                    dp[k][i] -= (i != j) * (a[i][j] * dp[k - 1][j] / a[i][i]);
+                }
+            }
+            float maximum_difference = 0;
+            for (size_t i = 0; i < n; i++) {
+                maximum_difference = max(maximum_difference, abs(dp[k][i] - dp[k - 1][i]));
+            }
+            current_eps = maximum_difference;
+            k++;
+        }
+        for (size_t s = 0; s < dp.size(); s++) {
+            float maximum_difference = 0;
+            CVector<CFloat> current(n);
+            for (size_t i = 0; i < n; i++) {
+                current[i] = dp[s][i];
+            }
+            if (s != 0) {
+                for (size_t i = 0; i < n; i++) {
+                    maximum_difference = max(maximum_difference, abs(dp[s][i] - dp[s - 1][i]));
+                }
+            }
+            answer->append(current, maximum_difference);
+        }
         return *answer;
     }
     return *answer;

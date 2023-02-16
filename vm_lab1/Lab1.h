@@ -5,6 +5,9 @@
 #ifndef VM1_LAB1_H
 #define VM1_LAB1_H
 
+#define INITIAL_EPS 1000.0
+#define MAX_NUMBER_OF_ITERATIONS 500
+
 #include <set>
 #include <map>
 #include "../io/CInt.cpp"
