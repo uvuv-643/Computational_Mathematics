@@ -17,12 +17,16 @@ class IterMethodInformation {
     CSize count_of_iterations;
     CVector<CVector<CFloat>> answers;
     CVector<CFloat> eps;
+    Matrix<CFloat> initial_matrix;
 public:
-    IterMethodInformation();
+
+    explicit IterMethodInformation(Matrix<CFloat> &initial_matrix);
 
     CSize getCountOfIterations();
 
     CVector<CVector<CFloat>> getAnswers();
+
+    Matrix<CFloat> getInitialMatrix();
 
     CVector<CFloat> getEps();
 

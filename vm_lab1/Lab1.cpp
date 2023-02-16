@@ -27,7 +27,7 @@ void Lab1::runFromKeyboard() {
     cin >> eps;
 
     // checking possibility of diagonal maximum
-    enum DiagonalDominanceStatus diagonal_dominance_status = checkOrApplyDiagonalDominance(a);
+    enum DiagonalDominanceStatus diagonal_dominance_status = checkOrApplyDiagonalDominance(a, b);
     cout << diagonal_dominance_status << " ";
 
     Matrix<CFloat> c(a.n);
@@ -41,6 +41,7 @@ void Lab1::runFromFile() {
 
     Matrix<CFloat> a;
     CFloat eps;
+    string output;
 
     if (std::getenv("DEBUG_MODE")) {
         cerr << "> Enter matrix A below following instruction" << endl;
@@ -59,19 +60,34 @@ void Lab1::runFromFile() {
     }
     fs >> eps;
 
-    // checking possibility of diagonal maximum
     IterMethodInformation answer = applyIterMethod(a, b, eps);
-    CSize count_of_iterations = answer.getCountOfIterations();
-    cout << count_of_iterations << endl;
-    for (size_t k = 0; k < (size_t) count_of_iterations; k++) {
-        cout << answer.getAnswers()[k] << " -> ";
-        cout << answer.getEps()[k] << endl;
-    }
-
+    outputResult(answer);
     fs.close();
+
 }
 
-enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> &a) {
+void Lab1::outputResult(IterMethodInformation information) {
+    Matrix<CFloat> initial_matrix = information.getInitialMatrix();
+    if (information.getCountOfIterations() > 0) {
+        CVector<CVector<CFloat>> iterations = information.getAnswers();
+        CVector<CFloat> errors = information.getEps();
+        cout << "Diagonal domination was reached" << endl;
+        cout << "Updated matrix A: " << endl;
+        cout << initial_matrix << endl;
+        cout << "Number of iterations: " << information.getCountOfIterations() << endl;
+        cout << "Iterations: " << endl;
+        for (size_t k = 0; k < (size_t) information.getCountOfIterations(); k++) {
+            cout << "k = " << k << " | ";
+            cout << iterations[k] << " | ";
+            cout << "eps = " << errors[k] << endl;
+        }
+    } else {
+        cerr << "There is no diagonal dominance, unable to solve system" << endl;
+        cerr << initial_matrix << endl;
+    }
+}
+
+enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> &a, CVector<CFloat> &b) {
     size_t n = a.n;
     set<size_t> good_indexes;
     map<size_t, size_t> maximums_by_indexes;
@@ -80,13 +96,13 @@ enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> 
     }
     for (size_t row = 0; row < n; row++) {
         CFloat sum_in_row = 0;
-        CFloat maximum_element_in_row = a[row][0];
+        CFloat maximum_element_in_row = abs(a[row][0]);
         size_t maximum_element_in_row_index = 0;
         for (size_t col = 0; col < n; col++) {
-            sum_in_row += a[row][col];
-            if (a[row][col] > maximum_element_in_row) {
+            sum_in_row += abs(a[row][col]);
+            if (abs(a[row][col]) > maximum_element_in_row) {
                 maximum_element_in_row_index = col;
-                maximum_element_in_row = a[row][col];
+                maximum_element_in_row = abs(a[row][col]);
             }
         }
         maximums_by_indexes[row] = maximum_element_in_row_index;
@@ -115,7 +131,8 @@ enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> 
                 }
             }
         }
-        for (pair<size_t, size_t> swapped_elements : have_to_be_swapped) {
+        for (pair<size_t, size_t> swapped_elements: have_to_be_swapped) {
+            swap(b[swapped_elements.first], b[swapped_elements.second]);
             for (size_t col = 0; col < n; col++) {
                 swap(a[swapped_elements.first][col], a[swapped_elements.second][col]);
             }
@@ -127,10 +144,9 @@ enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> 
     }
 }
 
-IterMethodInformation& Lab1::applyIterMethod(Matrix<CFloat> &a, CVector<CFloat> &b, CFloat eps) {
-    auto* answer = new IterMethodInformation();
-    enum DiagonalDominanceStatus dominance_status = checkOrApplyDiagonalDominance(a);
-    cout << a << endl;
+IterMethodInformation &Lab1::applyIterMethod(Matrix<CFloat> &a, CVector<CFloat> &b, CFloat eps) {
+    enum DiagonalDominanceStatus dominance_status = checkOrApplyDiagonalDominance(a, b);
+    auto *answer = new IterMethodInformation(a);
     if (dominance_status >= 0) {
         size_t k = 1;
         size_t n = a.n;
@@ -140,13 +156,14 @@ IterMethodInformation& Lab1::applyIterMethod(Matrix<CFloat> &a, CVector<CFloat> 
             dp[0][i] = b[i] / a[i][i];
         }
         while (k < MAX_NUMBER_OF_ITERATIONS && current_eps >= eps) {
-            cout << current_eps << " " << eps << endl;
             vector<float> new_solution(n);
             dp.emplace_back(new_solution);
             for (size_t i = 0; i < n; i++) {
                 dp[k][i] += b[i] / a[i][i];
                 for (size_t j = 0; j < n; j++) {
-                    dp[k][i] -= (i != j) * (a[i][j] * dp[k - 1][j] / a[i][i]);
+                    if (i != j) {
+                        dp[k][i] -= (a[i][j] * dp[k - 1][j] / a[i][i]);
+                    }
                 }
             }
             float maximum_difference = 0;
@@ -166,10 +183,12 @@ IterMethodInformation& Lab1::applyIterMethod(Matrix<CFloat> &a, CVector<CFloat> 
                 for (size_t i = 0; i < n; i++) {
                     maximum_difference = max(maximum_difference, abs(dp[s][i] - dp[s - 1][i]));
                 }
+                answer->append(current, maximum_difference);
+            } else {
+                answer->append(current, INITIAL_EPS);
             }
-            answer->append(current, maximum_difference);
         }
-        return *answer;
     }
     return *answer;
 }
+
