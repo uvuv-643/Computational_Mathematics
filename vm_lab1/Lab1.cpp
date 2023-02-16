@@ -3,12 +3,6 @@
 //
 
 #include "Lab1.h"
-#include "DiagonalDominanceStatus.h"
-
-#define coutv(v) for (int jj = 0; jj < (v).size(); ++jj) cout << v[jj] << " "; cout << endl;
-#define coutvv(v) for (int i = 0; i < (v).size(); ++i) {for (int j = 0; j < (v[i]).size(); ++j) cout << v[i][j] << ' '; cout << endl;}
-#define coutp(v) for (int i = 0; i < (v).size(); ++i) cout << v[i].first << " " << v[i].second << endl; cout << endl;
-
 
 void Lab1::runFromKeyboard() {
 
@@ -66,8 +60,14 @@ void Lab1::runFromFile() {
     fs >> eps;
 
     // checking possibility of diagonal maximum
-    enum DiagonalDominanceStatus diagonal_dominance_status = checkOrApplyDiagonalDominance(a);
-    Matrix<CFloat> c(a.n);
+    IterMethodInformation answer = applyIterMethod(a, b, eps);
+    CSize count_of_iterations = answer.getCountOfIterations();
+    cout << count_of_iterations << endl;
+    for (size_t k = 0; k < (size_t) count_of_iterations; k++) {
+        cout << answer.getAnswers()[k] << " -> ";
+        cout << answer.getEps()[k] << endl;
+    }
+
     fs.close();
 }
 
@@ -95,7 +95,7 @@ enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> 
         }
     }
     if (good_indexes.size() != n) {
-        return DIAGONAL_DOMINANCE_IS_NOT_REACHABLE_T;
+        return DIAGONAL_DOMINANCE_IS_NOT_REACHABLE;
     } else {
         vector<pair<size_t, size_t>> have_to_be_swapped = {};
         for (size_t current_column = 0; current_column < n; current_column++) {
@@ -120,7 +120,20 @@ enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> 
                 swap(a[swapped_elements.first][col], a[swapped_elements.second][col]);
             }
         }
-        cout << a;
+        if (have_to_be_swapped.empty()) {
+            return DIAGONAL_DOMINANCE_INITIALLY_PRESENT;
+        }
+        return DIAGONAL_DOMINANCE_WAS_REACHED;
     }
-    return DIAGONAL_DOMINANCE_WAS_REACHED;
+}
+
+IterMethodInformation& Lab1::applyIterMethod(Matrix<CFloat> &a, CVector<CFloat> &b, CFloat eps) {
+    auto* answer = new IterMethodInformation();
+    enum DiagonalDominanceStatus dominance_status = checkOrApplyDiagonalDominance(a);
+    if (dominance_status >= 0) {
+        answer->append(*new CVector<CFloat>(3), 0.01);
+        answer->append(*new CVector<CFloat>(2), 0.001);
+        return *answer;
+    }
+    return *answer;
 }
