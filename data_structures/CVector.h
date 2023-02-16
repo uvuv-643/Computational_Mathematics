@@ -11,7 +11,7 @@
 #include <iomanip>
 #include "../io/CSize.cpp"
 
-#define MAXIMUM_DISPLAYED_SYMBOLS_IN_MATRIX 14
+#define MAXIMUM_DISPLAYED_SYMBOLS_IN_VECTOR 15
 
 using namespace std;
 

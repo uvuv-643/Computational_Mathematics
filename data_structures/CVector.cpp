@@ -21,9 +21,8 @@ CVector<T>::CVector(size_t _n) {
 template<typename T>
 ostream& operator<<(ostream& os,  CVector<T>& vector) {
     size_t n = vector.n;
-    os << n << endl;
     for (size_t row = 0; row < n; row++) {
-        os << vector[row] << " ";
+        os << setw(MAXIMUM_DISPLAYED_SYMBOLS_IN_VECTOR) << right << vector[row] << " ";
     }
     return os;
 }

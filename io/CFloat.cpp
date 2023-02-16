@@ -8,7 +8,7 @@
 
 ostream &operator<<(ostream &os, const CFloat &validated) {
     os << fixed;
-    os << setprecision(3);
+    os << setprecision(5);
     os << validated.value;
     return os;
 }

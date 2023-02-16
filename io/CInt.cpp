@@ -57,3 +57,35 @@ const CInt operator++(CInt &i, int) {
     i.value++;
     return oldValue;
 }
+
+bool operator==(CInt c1, CInt c2) {
+    return c1.value == c2.value;
+}
+
+bool operator!=(CInt c1, CInt c2) {
+    return c1.value != c2.value;
+}
+
+bool operator>(CInt c1, CInt c2) {
+    return c1.value > c2.value;
+}
+
+bool operator<(CInt c1, CInt c2) {
+    return c1.value < c2.value;
+}
+
+bool operator==(CInt c1, int c2) {
+    return c1.value == c2;
+}
+
+bool operator!=(CInt c1, int c2) {
+    return c1.value != c2;
+}
+
+bool operator>(CInt c1, int c2) {
+    return c1.value > c2;
+}
+
+bool operator<(CInt c1, int c2) {
+    return c1.value < c2;
+}
