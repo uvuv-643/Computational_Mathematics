@@ -7,6 +7,7 @@
 
 #define INITIAL_EPS 1000.0
 #define MAX_NUMBER_OF_ITERATIONS 50
+#define ENV_PATH "SOURCE_PATH"
 
 #include <set>
 #include <map>

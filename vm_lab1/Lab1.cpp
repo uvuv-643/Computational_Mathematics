@@ -26,42 +26,39 @@ void Lab1::runFromKeyboard() {
     }
     cin >> eps;
 
-    // checking possibility of diagonal maximum
-    enum DiagonalDominanceStatus diagonal_dominance_status = checkOrApplyDiagonalDominance(a, b);
-    cout << diagonal_dominance_status << " ";
-
-    Matrix<CFloat> c(a.n);
+    IterMethodInformation answer = applyIterMethod(a, b, eps);
+    outputResult(answer);
 
 }
 
 void Lab1::runFromFile() {
 
+    string file_path = std::getenv(ENV_PATH);
+    if (file_path.empty()) {
+        cerr << "Not found env. variable '" << ENV_PATH << "'" << endl;
+        return;
+    }
     ifstream fs;
-    fs.open(std::getenv("SOURCE_PATH"));
+    fs.open(std::getenv(ENV_PATH));
+    if (fs.fail()) {
+        cerr << "File not found. Make sure that it exists" << endl;
+        return;
+    }
 
     Matrix<CFloat> a;
     CFloat eps;
-    string output;
-
-    if (std::getenv("DEBUG_MODE")) {
-        cerr << "> Enter matrix A below following instruction" << endl;
-    }
     fs >> a;
     size_t n = a.n;
-
     CVector<CFloat> b(n);
-    if (std::getenv("DEBUG_MODE")) {
-        cerr << "> Enter vector B below following instruction" << endl;
-    }
     fs >> b;
 
-    if (std::getenv("DEBUG_MODE")) {
-        cerr << "> Enter eps below" << endl;
+    if (!fs.eof()) {
+        fs >> eps;
+        IterMethodInformation answer = applyIterMethod(a, b, eps);
+        outputResult(answer);
+    } else {
+        cerr << "Something wrong with file. Consider you are using correct format of file" << endl;
     }
-    fs >> eps;
-
-    IterMethodInformation answer = applyIterMethod(a, b, eps);
-    outputResult(answer);
     fs.close();
 
 }
