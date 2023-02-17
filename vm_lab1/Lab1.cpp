@@ -9,22 +9,41 @@ void Lab1::runFromKeyboard() {
     Matrix<CFloat> a;
     CFloat eps;
 
-    if (&is == &cin) {
-        cerr << "> Enter matrix A below following instruction" << endl;
-    }
+    cerr << "> Enter matrix A below following instruction" << endl;
     cin >> a;
     size_t n = a.n;
 
     CVector<CFloat> b(n);
-    if (&is == &cin) {
-        cerr << "> Enter vector B below following instruction" << endl;
-    }
+    cerr << "> Enter vector B below following instruction" << endl;
     cin >> b;
 
-    if (&is == &cin) {
-        cerr << "> Enter eps below" << endl;
-    }
+    cerr << "> Enter eps below" << endl;
     cin >> eps;
+
+    IterMethodInformation answer = applyIterMethod(a, b, eps);
+    outputResult(answer);
+
+}
+
+void Lab1::runFromKeyboardWithGeneration() {
+
+    CSize n;
+    cerr << "> Enter number of equations" << endl;
+    cin >> n;
+
+    Matrix<CFloat> a(n);
+    a.setRandom();
+    CFloat eps;
+    CVector<CFloat> b(n);
+    b.setRandom();
+
+    cerr << "> Enter eps below" << endl;
+    cin >> eps;
+
+    cout << "Randomly generated matrix A: " << endl;
+    cout << a << endl;
+    cout << "Randomly generated matrix B: " << endl;
+    cout << b << endl << endl;
 
     IterMethodInformation answer = applyIterMethod(a, b, eps);
     outputResult(answer);

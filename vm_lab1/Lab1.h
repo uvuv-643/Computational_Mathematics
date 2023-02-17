@@ -28,8 +28,9 @@ class Lab1 {
 public:
     static enum DiagonalDominanceStatus checkOrApplyDiagonalDominance(Matrix<CFloat>& a, CVector<CFloat>& b);
     static IterMethodInformation& applyIterMethod(Matrix<CFloat>& a, CVector<CFloat>& b, CFloat eps);
-    static void runFromKeyboard();
     static void runFromFile();
+    static void runFromKeyboard();
+    static void runFromKeyboardWithGeneration();
     static void outputResult(IterMethodInformation information);
 };
 
