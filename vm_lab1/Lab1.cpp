@@ -9,19 +9,19 @@ void Lab1::runFromKeyboard() {
     Matrix<CFloat> a;
     CFloat eps;
 
-    if (std::getenv("DEBUG_MODE")) {
+    if (&is == &cin) {
         cerr << "> Enter matrix A below following instruction" << endl;
     }
     cin >> a;
     size_t n = a.n;
 
     CVector<CFloat> b(n);
-    if (std::getenv("DEBUG_MODE")) {
+    if (&is == &cin) {
         cerr << "> Enter vector B below following instruction" << endl;
     }
     cin >> b;
 
-    if (std::getenv("DEBUG_MODE")) {
+    if (&is == &cin) {
         cerr << "> Enter eps below" << endl;
     }
     cin >> eps;

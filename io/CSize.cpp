@@ -13,7 +13,7 @@ istream &operator>>(istream &is, CSize &data) {
     while ((!(is >> inputted) || inputted <= 0) && !is.eof()) {
         is.clear();
         is.ignore(1000, '\n');
-        if (std::getenv("DEBUG_MODE")) {
+        if (&is == &cin) {
             cerr << "Wrong input" << endl;
         }
     }

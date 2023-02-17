@@ -18,7 +18,7 @@ istream &operator>>(istream &is, CInt &data) {
     while (!(is >> inputted) && !is.eof()) {
         is.clear();
         is.ignore(1000, '\n');
-        if (std::getenv("DEBUG_MODE")) {
+        if (&is == &cin) {
             cerr << "Wrong input" << endl;
         }
     }
