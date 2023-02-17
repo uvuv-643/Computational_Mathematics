@@ -40,7 +40,7 @@ istream& operator>>(istream& is, Matrix<T>& matrix) {
     matrix.matrix.resize(n, vector<T>(n));
     for (size_t row = 0; row < n; row++) {
         for (size_t col = 0; col < n; col++) {
-            if (std::getenv("DEBUG_MODE")) {
+            if (&is == &cin) {
                 cerr << "Input a[" << row << "][" << col << "]" << endl;
             }
             is >> matrix[row][col];

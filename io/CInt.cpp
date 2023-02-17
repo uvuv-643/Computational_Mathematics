@@ -12,12 +12,12 @@ ostream &operator<<(ostream &os, const CInt &validated) {
 
 istream &operator>>(istream &is, CInt &data) {
     int32_t inputted;
-    if (std::getenv("DEBUG_MODE")) {
+    if (&is == &cin) {
         cerr << "Input int:" << endl;
     }
-    while (!(is >> inputted)) {
-        cin.clear();
-        cin.ignore(1000, '\n');
+    while (!(is >> inputted) && !is.eof()) {
+        is.clear();
+        is.ignore(1000, '\n');
         if (std::getenv("DEBUG_MODE")) {
             cerr << "Wrong input" << endl;
         }

@@ -35,7 +35,7 @@ istream& operator>>(istream& is, CVector<T>& vector) {
     size_t n = vector.n;
     vector.data.resize(n);
     for (size_t row = 0; row < n; row++) {
-        if (std::getenv("DEBUG_MODE")) {
+        if (&is == &cin) {
             cerr << "Input a[" << row << "]" << endl;
         }
         is >> vector[row];

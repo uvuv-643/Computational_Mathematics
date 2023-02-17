@@ -7,20 +7,19 @@
 #include <iomanip>
 
 ostream &operator<<(ostream &os, const CFloat &validated) {
-    os << fixed;
-    os << setprecision(5);
+    os << setprecision(8);
     os << validated.value;
     return os;
 }
 
 istream &operator>>(istream &is, CFloat &data) {
     float inputted;
-    if (std::getenv("DEBUG_MODE")) {
+    if (&is == &cin) {
         cerr << "Input float:" << endl;
     }
-    while (!(is >> inputted)) {
-        cin.clear();
-        cin.ignore(1000, '\n');
+    while (!(is >> inputted) && !is.eof()) {
+        is.clear();
+        is.ignore(1000, '\n');
         if (std::getenv("DEBUG_MODE")) {
             cerr << "Wrong input" << endl;
         }

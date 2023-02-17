@@ -7,12 +7,12 @@
 
 istream &operator>>(istream &is, CSize &data) {
     int32_t inputted;
-    if (std::getenv("DEBUG_MODE")) {
+    if (&is == &cin) {
         cerr << "Input size:" << endl;
     }
-    while (!(is >> inputted) || inputted <= 0) {
-        cin.clear();
-        cin.ignore(1000, '\n');
+    while ((!(is >> inputted) || inputted <= 0) && !is.eof()) {
+        is.clear();
+        is.ignore(1000, '\n');
         if (std::getenv("DEBUG_MODE")) {
             cerr << "Wrong input" << endl;
         }
