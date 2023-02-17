@@ -2,6 +2,8 @@
 // Created by artem on 10.02.2023.
 //
 #pragma once
+
+#include <functional>
 #include "Matrix.h"
 
 template<typename T>
@@ -52,4 +54,27 @@ istream& operator>>(istream& is, Matrix<T>& matrix) {
 template<typename T>
 vector<T>& Matrix<T>::operator [] (size_t i) {
     return this->matrix[i];
+}
+
+template<typename T>
+void Matrix<T>::setRandom() {
+    std::default_random_engine generator;
+    std::uniform_real_distribution<double> distribution(-MATRIX_GENERATION_MAXIMUM_VALUE_BY_MODULO, MATRIX_GENERATION_MAXIMUM_VALUE_BY_MODULO);
+    std::uniform_int_distribution<int> index_distribution(0, (size_t) n - 1);
+    auto random_number = std::bind(distribution, generator);
+    auto random_index = std::bind(index_distribution, generator);
+    set<size_t> used_rows;
+    for (size_t i = 0; i < (size_t) n; i++) {
+        size_t target_col = 0;
+        do {
+            target_col = random_index() % (size_t) n;
+        } while (used_rows.count(target_col) != 0);
+        used_rows.insert(target_col);
+        for (size_t j = 0; j < (size_t) n; j++) {
+            this->matrix[i][j] = random_number();
+            if (j == target_col) {
+                this->matrix[i][j] = this->matrix[i][j] * MATRIX_DIAGONAL_DOMINANCE_COEFFICIENT;
+            }
+        }
+    }
 }

@@ -63,3 +63,13 @@ CVector<T> &CVector<T>::operator=(const CVector<T> &other) {
     this->data = other.data;
     return *this;
 }
+
+template<typename T>
+void CVector<T>::setRandom() {
+    std::default_random_engine generator;
+    std::uniform_real_distribution<double> distribution(-VECTOR_GENERATION_MAXIMUM_VALUE_BY_MODULO, VECTOR_GENERATION_MAXIMUM_VALUE_BY_MODULO);
+    auto random_number = std::bind(distribution, generator);
+    for (size_t i = 0; i < (size_t) n; i++) {
+        this->data[i] = random_number();
+    }
+}

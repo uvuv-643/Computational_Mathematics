@@ -12,6 +12,7 @@
 #include "../io/CSize.cpp"
 
 #define MAXIMUM_DISPLAYED_SYMBOLS_IN_VECTOR 15
+#define VECTOR_GENERATION_MAXIMUM_VALUE_BY_MODULO 100
 
 using namespace std;
 
@@ -25,6 +26,8 @@ public:
     CVector();
 
     CVector(size_t n);
+
+    void setRandom();
 
     template<typename U>
     friend ostream &operator<<(ostream &os, CVector<U> &vector);

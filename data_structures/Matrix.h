@@ -7,10 +7,13 @@
 
 #include <vector>
 #include <cstdint>
+#include <random>
 #include <iomanip>
 #include "../io/CSize.cpp"
 
 #define MAXIMUM_DISPLAYED_SYMBOLS_IN_MATRIX 14
+#define MATRIX_GENERATION_MAXIMUM_VALUE_BY_MODULO 100
+#define MATRIX_DIAGONAL_DOMINANCE_COEFFICIENT 500
 
 using namespace std;
 
@@ -24,6 +27,8 @@ public:
     Matrix();
 
     Matrix(size_t n);
+
+    void setRandom();
 
     template<typename U>
     friend ostream &operator<<(ostream &os, Matrix<U> &matrix);
