@@ -12,8 +12,8 @@
 
 class CIterationsMethod {
 public:
-    static enum MethodResult validateBorder(float f(float), float phi_derivative(float), float border_left, float border_right);
-    static CIterationsResult performMethod(float f(float), float phi(float), float phi_derivative(float), float initial_border_left, float initial_border_right, float eps);
+    static enum MethodResult validateBorder(CFunction* function_data, float border_left, float border_right);
+    static CIterationsResult performMethod(CFunction* function_data, float initial_border_left, float initial_border_right, float eps);
 };
 
 

@@ -8,32 +8,22 @@
 #include "./methods/half_dividing/CHalfDividingMethod.cpp"
 #include "./methods/secant/CSecantMethod.cpp"
 #include "./methods/iterations/CIterationsMethod.cpp"
+#include "./CFunctionManager.cpp"
 
-float a(float x) {
-    return pow(x, 3) - x + 4;
-}
-float b(float x) {
-    return 3.0 * pow(x, 2) - 1;
-}
-float c(float x) {
-    return 6 * x;
-}
-float d(float x) {
-    return 12.0 / 11.0 * x - 1.0 / 11.0 * pow(x, 3) - 4.0 / 11.0;
-}
-float d_derivative(float x) {
-    return 12.0 / 11.0 - 3.0 * 1.0 / 11.0 * pow(x, 2);
-}
 
 void Lab2::runFromKeyboard() {
-    CHalfDividingResult result = CHalfDividingMethod::performMethod(a, b, -2, -1, 0.0001);
-    outputResult(result, a);
 
-    CSecantResult result1 = CSecantMethod::performMethod(a, b, c, -2, -1, 0.0001);
-    outputResult(result1, a);
+    CFunctionManager manager = * new CFunctionManager();
+    CFunction* function1 = manager[0];
 
-    CIterationsResult result2 = CIterationsMethod::performMethod(a, d, d_derivative, -2, -1, 0.0001);
-    outputResult(result2, a);
+    CHalfDividingResult result = CHalfDividingMethod::performMethod(function1, -2, -1, 0.0001);
+    outputResult(result, function1->f);
+
+    CSecantResult result1 = CSecantMethod::performMethod(function1, -2, -1, 0.0001);
+    outputResult(result1, function1->f);
+
+    CIterationsResult result2 = CIterationsMethod::performMethod(function1, -2, -1, 0.0001);
+    outputResult(result2, function1->f);
 
 }
 

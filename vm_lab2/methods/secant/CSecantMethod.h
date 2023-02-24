@@ -12,8 +12,8 @@
 
 class CSecantMethod {
 public:
-    static enum MethodResult validateBorder(float f(float), float derivative(float), float second_derivative(float), float border_left, float border_right);
-    static CSecantResult performMethod(float f(float), float derivative(float), float second_derivative(float), float initial_border_left, float initial_border_right, float eps);
+    static enum MethodResult validateBorder(CFunction* function_data, float border_left, float border_right);
+    static CSecantResult performMethod(CFunction* function_data, float initial_border_left, float initial_border_right, float eps);
 };
 
 
