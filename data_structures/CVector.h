@@ -35,12 +35,16 @@ public:
     template<typename U>
     friend istream &operator>>(istream &os, CVector<U> &vector);
 
+    template<typename U>
+    friend CVector<U> &operator -(CVector<U> &l, CVector<U> &r);
+
     T &operator[](size_t i);
 
     void push_back(T element);
 
     CVector<T> &operator=(const CVector<T> &other);
 
+    CVector<CFloat> apply(float (*pFunction)(float));
 };
 
 #endif //VM1_CVECTOR_H

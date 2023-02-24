@@ -2,6 +2,9 @@
 // Created by artem on 11.02.2023.
 //
 #pragma once
+
+#include <random>
+#include <functional>
 #include "CVector.h"
 
 template<typename T>
@@ -14,7 +17,7 @@ CVector<T>::CVector() {
 template<typename T>
 CVector<T>::CVector(size_t _n) {
     this->n = _n;
-    vector<T> v(this->n, rand());
+    vector<T> v(this->n);
     this->data = v;
 }
 
@@ -72,4 +75,24 @@ void CVector<T>::setRandom() {
     for (size_t i = 0; i < (size_t) n; i++) {
         this->data[i] = random_number();
     }
+}
+
+template<typename U>
+CVector<U> &operator-(CVector<U> &l, CVector<U> &r) {
+    if (l.n == r.n) {
+        size_t vector_size = l.n;
+        for (size_t i = 0; i < vector_size; i++) {
+            l[i] = r[i] - l[i];
+        }
+    }
+    return l;
+}
+
+template<typename T>
+CVector<CFloat> CVector<T>::apply(float (*pFunction)(float)) {
+    CVector<CFloat> new_vector = *new CVector<CFloat>(this->n);
+    for (size_t i = 0; i < this->data.size(); i++) {
+        new_vector[i] = pFunction(this->data[i]);
+    }
+    return new_vector;
 }
