@@ -1,5 +1,5 @@
 
-#include "vm_lab1/Lab1.cpp"
+#include "vm_lab2/Lab2.cpp"
 using namespace std;
 
 int main() {
@@ -11,11 +11,9 @@ int main() {
     cerr << "If you want to automatically generate matrix and vector, print 'generate'" << endl;
     cin >> mode;
     if (mode == "file") {
-        Lab1::runFromFile();
-    } else if (mode == "generate") {
-        Lab1::runFromKeyboardWithGeneration();
+        Lab2::runFromFile();
     } else {
-        Lab1::runFromKeyboard();
+        Lab2::runFromKeyboard();
     }
 
     return 0;
