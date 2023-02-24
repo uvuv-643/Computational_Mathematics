@@ -7,6 +7,7 @@
 
 #include "./methods/half_dividing/CHalfDividingResult.h"
 #include "./methods/secant/CSecantResult.h"
+#include "./methods/iterations//CIterationsResult.h"
 
 class Lab2 {
 public:
@@ -14,6 +15,7 @@ public:
     static void runFromKeyboard();
     static void outputResult(CHalfDividingResult& result, float f(float));
     static void outputResult(CSecantResult& result, float f(float));
+    static void outputResult(CIterationsResult& result, float f(float));
 };
 
 
