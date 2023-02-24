@@ -43,3 +43,6 @@ void CSecantResult::append(CFloat &current_x, CFloat& current_y, CFloat& current
     z.push_back(current_z);
 }
 
+void CSecantResult::setMethodResult(enum MethodResult result) {
+    this->method_result = result;
+}

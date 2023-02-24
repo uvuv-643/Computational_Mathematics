@@ -52,7 +52,3 @@ CSecantResult CSecantMethod::performMethod(float f(float), float derivative(floa
     }
     return result;
 }
-
-void CSecantResult::setMethodResult(enum MethodResult result) {
-    this->method_result = result;
-}
