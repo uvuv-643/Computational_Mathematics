@@ -8,22 +8,23 @@
 #include "./methods/half_dividing/CHalfDividingMethod.cpp"
 #include "./methods/secant/CSecantMethod.cpp"
 #include "./methods/iterations/CIterationsMethod.cpp"
-#include "./CFunctionManager.cpp"
+#include "functions/CFunctionManager.cpp"
+#include "functions/FunctionType.h"
 
 
 void Lab2::runFromKeyboard() {
 
     CFunctionManager manager = * new CFunctionManager();
-    CFunction* function1 = manager[0];
+    CFunctionSW* function1 = (CFunctionSW *) (manager[SINGLE_VARIABLE][0].release());
 
     CHalfDividingResult result = CHalfDividingMethod::performMethod(function1, -2, -1, 0.0001);
-    outputResult(result, function1->f);
+    outputResult(result, function1);
 
     CSecantResult result1 = CSecantMethod::performMethod(function1, -2, -1, 0.0001);
-    outputResult(result1, function1->f);
+    outputResult(result1, function1);
 
     CIterationsResult result2 = CIterationsMethod::performMethod(function1, -2, -1, 0.0001);
-    outputResult(result2, function1->f);
+    outputResult(result2, function1);
 
 }
 
@@ -31,7 +32,7 @@ void Lab2::runFromFile() {
 
 }
 
-void Lab2::outputResult(CHalfDividingResult &result, float f(float)) {
+void Lab2::outputResult(CHalfDividingResult &result, CFunction* function_data) {
 
     enum MethodResult method_result = result.getMethodResult();
     cout << method_result << endl;
@@ -54,16 +55,16 @@ void Lab2::outputResult(CHalfDividingResult &result, float f(float)) {
     table.insert("a", a);
     table.insert("b", b);
     table.insert("x", answer);
-    table.insert("f(a)", a.apply(f));
-    table.insert("f(b)", b.apply(f));
-    table.insert("f(x)", answer.apply(f));
+    table.insert("f(a)", a.apply(function_data->f));
+    table.insert("f(b)", b.apply(function_data->f));
+    table.insert("f(x)", answer.apply(function_data->f));
     table.insert("|a - b|", (a - b).apply(abs));
     cout << table << endl;
 
 }
 
 
-void Lab2::outputResult(CSecantResult &result, float f(float)) {
+void Lab2::outputResult(CSecantResult &result, CFunction* function_data) {
 
     enum MethodResult method_result = result.getMethodResult();
     cout << method_result << endl;
@@ -89,14 +90,14 @@ void Lab2::outputResult(CSecantResult &result, float f(float)) {
     table.insert("x_{i-1}", x);
     table.insert("x_{i}", y);
     table.insert("x_{i+1}", z);
-    table.insert("f(x_{i+1})", z.apply(f));
+    table.insert("f(x_{i+1})", z.apply(function_data->f));
     table.insert("|x_{i+1} - x_{i}|", (z - y).apply(abs));
     cout << table << endl;
 
 }
 
 
-void Lab2::outputResult(CIterationsResult &result, float f(float)) {
+void Lab2::outputResult(CIterationsResult &result, CFunction* function_data) {
 
     enum MethodResult method_result = result.getMethodResult();
     cout << method_result << endl;
@@ -123,7 +124,7 @@ void Lab2::outputResult(CIterationsResult &result, float f(float)) {
     CTable table(x.n);
     table.insert("x_{i-1}", x);
     table.insert("x_{i}", y);
-    table.insert("f(x_{i+1})", y.apply(f));
+    table.insert("f(x_{i+1})", y.apply(function_data->f));
     table.insert("|x_{i+1} - x_{i}|", (y - x).apply(abs));
     cout << table << endl;
 

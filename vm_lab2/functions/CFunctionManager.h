@@ -8,14 +8,18 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include "./CFunctionMV.h"
+#include "./CFunctionSW.h"
+#include "./FunctionType.h"
 
 using namespace std;
 
 class CFunctionManager {
-    vector<CFunction*> functions;
+    vector<CFunctionSW*> functions;
+    vector<CFunctionMV*> functions_multiple_variables;
 public:
     CFunctionManager();
-    CFunction* operator[](size_t i);
+    vector<std::unique_ptr<CFunction>> operator[] (enum FunctionType type);
 };
 
 
