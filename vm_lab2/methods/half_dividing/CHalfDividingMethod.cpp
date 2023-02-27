@@ -5,7 +5,7 @@
 #include "CHalfDividingMethod.h"
 
 
-enum MethodResult CHalfDividingMethod::validateBorder(CFunctionSW* function_data, float border_left, float border_right) {
+enum MethodResult CHalfDividingMethod::validateBorder(CFunctionSV* function_data, float border_left, float border_right) {
     if (function_data->f(border_left) * function_data->f(border_right) > 0) {
         return WRONG_NUMBER_OF_SOLUTIONS;
     }
@@ -20,7 +20,7 @@ enum MethodResult CHalfDividingMethod::validateBorder(CFunctionSW* function_data
     return METHOD_CAN_BE_APPLIED;
 }
 
-CHalfDividingResult CHalfDividingMethod::performMethod(CFunctionSW* function_data, float initial_border_left, float initial_border_right, float eps) {
+CHalfDividingResult CHalfDividingMethod::performMethod(CFunctionSV* function_data, float initial_border_left, float initial_border_right, float eps) {
     CFloat border_left = initial_border_left;
     CFloat border_right = initial_border_right;
     CHalfDividingResult result = *new CHalfDividingResult(validateBorder(function_data, border_left, border_right));

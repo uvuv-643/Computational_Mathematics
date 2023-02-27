@@ -8,14 +8,14 @@
 #include <cmath>
 #include <string>
 #include <vector>
-#include "./CFunctionMV.h"
-#include "./CFunctionSW.h"
+#include "./CFunctionMV.cpp"
+#include "./CFunctionSV.h"
 #include "./FunctionType.h"
 
 using namespace std;
 
 class CFunctionManager {
-    vector<CFunctionSW*> functions;
+    vector<CFunctionSV*> functions;
     vector<CFunctionMV*> functions_multiple_variables;
 public:
     CFunctionManager();

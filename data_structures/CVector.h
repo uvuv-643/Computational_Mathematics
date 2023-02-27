@@ -45,6 +45,9 @@ public:
     CVector<T> &operator=(const CVector<T> &other);
 
     CVector<CFloat> apply(float (*pFunction)(float));
+
+    static CVector<CFloat> apply(CVector<CFloat>* x, CVector<CFloat>* y, float (*pFunction)(float, float));
+
 };
 
 #endif //VM1_CVECTOR_H

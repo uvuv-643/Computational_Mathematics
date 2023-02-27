@@ -16,5 +16,7 @@ int main() {
         Lab2::runFromKeyboard();
     }
 
+    _getwch();
+
     return 0;
 }

@@ -9,14 +9,14 @@
 #define DELTA 50
 
 #include "./CHalfDividingResult.cpp"
-#include "../../functions/CFunctionSW.cpp"
+#include "../../../functions/CFunctionSV.cpp"
 
 using namespace std;
 
 class CHalfDividingMethod {
 public:
-    static enum MethodResult validateBorder(CFunctionSW* function_data, float border_left, float border_right);
-    static CHalfDividingResult performMethod(CFunctionSW* function_data, float initial_border_left, float initial_border_right, float eps);
+    static enum MethodResult validateBorder(CFunctionSV* function_data, float border_left, float border_right);
+    static CHalfDividingResult performMethod(CFunctionSV* function_data, float initial_border_left, float initial_border_right, float eps);
 };
 
 

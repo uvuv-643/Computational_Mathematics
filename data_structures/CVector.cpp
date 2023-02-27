@@ -96,3 +96,14 @@ CVector<CFloat> CVector<T>::apply(float (*pFunction)(float)) {
     }
     return new_vector;
 }
+
+template<typename T>
+CVector<CFloat> CVector<T>::apply(CVector<CFloat>* x, CVector<CFloat>* y, float (*pFunction)(float, float)) {
+    CVector<CFloat> new_vector = *new CVector<CFloat>(x->n);
+    if (x->n == y->n) {
+        for (size_t i = 0; i < x->data.size(); i++) {
+            new_vector[i] = pFunction(x->data[i], y->data[i]);
+        }
+    }
+    return new_vector;
+}
