@@ -8,8 +8,11 @@
 
 #define KEY_ESC 27
 
+FILE* Lab2::gnu_pipe;
 
 void Lab2::runFromKeyboard() {
+
+    Lab2::gnu_pipe = _popen("gnuplot -persist", "w");
 
     CFunctionManager manager = CFunctionManager();
 
@@ -29,17 +32,17 @@ void Lab2::runFromKeyboard() {
             cout << "Half-dividing method" << endl;
             SingleFunctionMethodData data = Lab2::inputDataSingleFunction(manager);
             CHalfDividingResult result = CHalfDividingMethod::performMethod(data.getF(), data.getA(), data.getB(), data.getEps());
-            outputResult(result, data.getF());
+            outputResult(result, data.getF(), data.getA(), data.getB());
         } else if (key == '2') {
             cout << "Secant method" << endl;
             SingleFunctionMethodData data = Lab2::inputDataSingleFunction(manager);
             CSecantResult result = CSecantMethod::performMethod(data.getF(), data.getA(), data.getB(), data.getEps());
-            outputResult(result, data.getF());
+            outputResult(result, data.getF(), data.getA(), data.getB());
         } else if (key == '3') {
             cout << "Method of simple iterations" << endl;
             SingleFunctionMethodData data = Lab2::inputDataSingleFunction(manager);
             CIterationsResult result = CIterationsMethod::performMethod(data.getF(), data.getA(), data.getB(), data.getEps());
-            outputResult(result, data.getF());
+            outputResult(result, data.getF(), data.getA(), data.getB());
         } else if (key == '4') {
             cout << "Newton method" << endl;
             MultipleFunctionMethodData data = Lab2::inputDataMultipleFunction(manager);
@@ -51,13 +54,15 @@ void Lab2::runFromKeyboard() {
 
     }
 
+    fclose(Lab2::gnu_pipe);
+
 }
 
 void Lab2::runFromFile() {
 
 }
 
-void Lab2::outputResult(CHalfDividingResult &result, CFunctionSV *function_data) {
+void Lab2::outputResult(CHalfDividingResult &result, CFunctionSV *function_data, float a, float b) {
 
     enum MethodResult method_result = result.getMethodResult();
     if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
@@ -72,23 +77,25 @@ void Lab2::outputResult(CHalfDividingResult &result, CFunctionSV *function_data)
     cout << "Number of iterations: " << result.getCountOfIterations() << endl;
 
     CVector<CFloat> answer = result.getAnswers();
-    CVector<CFloat> a = result.getA();
-    CVector<CFloat> b = result.getB();
+    CVector<CFloat> aRow = result.getA();
+    CVector<CFloat> bRow = result.getB();
 
     CTable table(answer.n);
-    table.insert("a", a);
-    table.insert("b", b);
+    table.insert("a", aRow);
+    table.insert("b", bRow);
     table.insert("x", answer);
-    table.insert("f(a)", a.apply(function_data->f));
-    table.insert("f(b)", b.apply(function_data->f));
+    table.insert("f(a)", aRow.apply(function_data->f));
+    table.insert("f(b)", bRow.apply(function_data->f));
     table.insert("f(x)", answer.apply(function_data->f));
-    table.insert("|a - b|", (a - b).apply(abs));
+    table.insert("|a - b|", (aRow - bRow).apply(abs));
     cout << table << endl;
+
+    GraphicManager::drawSingleX(gnu_pipe, function_data, a, b);
 
 }
 
 
-void Lab2::outputResult(CSecantResult &result, CFunctionSV *function_data) {
+void Lab2::outputResult(CSecantResult &result, CFunctionSV *function_data, float a, float b) {
 
     enum MethodResult method_result = result.getMethodResult();
     if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
@@ -117,10 +124,12 @@ void Lab2::outputResult(CSecantResult &result, CFunctionSV *function_data) {
     table.insert("|x_{i+1} - x_{i}|", (z - y).apply(abs));
     cout << table << endl;
 
+    GraphicManager::drawSingleX(gnu_pipe, function_data, a, b);
+
 }
 
 
-void Lab2::outputResult(CIterationsResult &result, CFunctionSV *function_data) {
+void Lab2::outputResult(CIterationsResult &result, CFunctionSV *function_data, float a, float b) {
 
     enum MethodResult method_result = result.getMethodResult();
     if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
@@ -149,6 +158,8 @@ void Lab2::outputResult(CIterationsResult &result, CFunctionSV *function_data) {
     table.insert("f(x_{i+1})", y.apply(function_data->f));
     table.insert("|x_{i+1} - x_{i}|", (y - x).apply(abs));
     cout << table << endl;
+
+    GraphicManager::drawMultipleX(gnu_pipe, function_data, a, b);
 
 }
 
@@ -194,12 +205,14 @@ SingleFunctionMethodData Lab2::inputDataSingleFunction(CFunctionManager manager)
     while (!chosen_function) {
         cout << "Choose function: " << endl;
         for (size_t function_index = 0; function_index < manager[SINGLE_VARIABLE].size(); function_index++) {
-            cout << "[" << (function_index + 1) << "] - " << * manager[SINGLE_VARIABLE][function_index].release() << endl;
+            cout << "[" << (function_index + 1) << "] - " << *manager[SINGLE_VARIABLE][function_index].release()
+                 << endl;
         }
         size_t index = getch() - '1';
         if (index >= 0 && index < 10 && index < manager[SINGLE_VARIABLE].size()) {
             current_function = (CFunctionSV *) manager[SINGLE_VARIABLE][index].release();
             chosen_function = true;
+            GraphicManager::drawSingleX(gnu_pipe, current_function, -4, 4);
         } else {
             cout << "There is no such function" << endl;
         }
@@ -225,8 +238,6 @@ SingleFunctionMethodData Lab2::inputDataSingleFunction(CFunctionManager manager)
     return { current_function, a, b, eps };
 }
 
-
-
 MultipleFunctionMethodData Lab2::inputDataMultipleFunction(CFunctionManager manager) {
     bool chosen_function = false;
     CFunctionMV *first_function = nullptr;
@@ -240,6 +251,7 @@ MultipleFunctionMethodData Lab2::inputDataMultipleFunction(CFunctionManager mana
         if (index >= 0 && index < 10 && index < manager[TWO_VARIABLES].size()) {
             first_function = (CFunctionMV *) manager[TWO_VARIABLES][index].release();
             chosen_function = true;
+            GraphicManager::drawSingleXY(gnu_pipe, first_function);
         } else {
             cout << "There is no such function" << endl;
         }
@@ -258,20 +270,17 @@ MultipleFunctionMethodData Lab2::inputDataMultipleFunction(CFunctionManager mana
                 cout << "You already choose this function" << endl;
             } else {
                 chosen_function = true;
+                GraphicManager::drawMultipleXY(gnu_pipe, first_function, second_function);
             }
         } else {
             cout << "There is no such function" << endl;
         }
     }
-
     CFloat a = 0, b = 0, eps = -1;
-
     cout << "Input initial x:" << endl;
     cin >> a;
-
     cout << "Input y: " << endl;
     cin >> b;
-
     do {
         cout << "Input epsilon: " << endl;
         cin >> eps;
