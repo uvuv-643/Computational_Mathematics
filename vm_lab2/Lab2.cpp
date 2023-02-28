@@ -4,6 +4,7 @@
 
 #include "cmath"
 #include <conio.h>
+#include <fstream>
 #include "Lab2.h"
 
 #define KEY_ESC 27
@@ -12,46 +13,84 @@ FILE* Lab2::gnu_pipe;
 
 void Lab2::runFromKeyboard() {
 
+    ofstream fs;
     Lab2::gnu_pipe = _popen("gnuplot -persist", "w");
 
     CFunctionManager manager = CFunctionManager();
 
-    cout << "Welcome to keyboard mode. Choose action: ";
+    cout << "Welcome to keyboard mode. Default output - stdout. Choose action: ";
+    ostream* os = &cout;
+
     while (true) {
         system("cls");
         cout << "[1] - Perform half-dividing method" << endl;
         cout << "[2] - Perform secant method" << endl;
         cout << "[3] - Perform method of simple iterations" << endl;
         cout << "[4] - Newton method" << endl;
+        cout << "[9] - Change output" << endl;
         cout << "[ESC] - Exit" << endl;
         int32_t key = getch();
         system("cls");
-        if (key == KEY_ESC) break;
-
+        if (key == KEY_ESC) {
+            cout << "Good bye." << endl;
+            break;
+        }
         else if (key == '1') {
             cout << "Half-dividing method" << endl;
             SingleFunctionMethodData data = Lab2::inputDataSingleFunction(manager);
             CHalfDividingResult result = CHalfDividingMethod::performMethod(data.getF(), data.getA(), data.getB(), data.getEps());
-            outputResult(result, data.getF(), data.getA(), data.getB());
+            outputResult(*os, result, data.getF(), data.getA(), data.getB());
+            cout << "Completed. Press any key to continue...";
         } else if (key == '2') {
             cout << "Secant method" << endl;
             SingleFunctionMethodData data = Lab2::inputDataSingleFunction(manager);
             CSecantResult result = CSecantMethod::performMethod(data.getF(), data.getA(), data.getB(), data.getEps());
-            outputResult(result, data.getF(), data.getA(), data.getB());
+            outputResult(*os, result, data.getF(), data.getA(), data.getB());
+            cout << "Completed. Press any key to continue...";
         } else if (key == '3') {
             cout << "Method of simple iterations" << endl;
             SingleFunctionMethodData data = Lab2::inputDataSingleFunction(manager);
             CIterationsResult result = CIterationsMethod::performMethod(data.getF(), data.getA(), data.getB(), data.getEps());
-            outputResult(result, data.getF(), data.getA(), data.getB());
+            outputResult(*os, result, data.getF(), data.getA(), data.getB());
+            cout << "Completed. Press any key to continue...";
         } else if (key == '4') {
             cout << "Newton method" << endl;
             MultipleFunctionMethodData data = Lab2::inputDataMultipleFunction(manager);
-            CNewtonResult result = CNewtonMethod::performMethod(data.getF(), data.getG(), data.getA(), data.getB(), data.getEps());
-            outputResult(result, data.getF(), data.getG());
+            CNewtonResult result = CNewtonMethod::performMethod(data.getF(), data.getG(), data.getA(), data.getB(),data.getEps());
+            outputResult(*os, result, data.getF(), data.getG());
+            cout << "Completed. Press any key to continue...";
+        } else if (key == '9') {
+            system("cls");
+            cout << "[1] - stdout" << endl;
+            cout << "[2] - stderr" << endl;
+            cout << "[3] - file from SOURCE_PATH env variable" << endl;
+            int32_t key1 = getch();
+            if (key1 == '1') {
+                os = &cout;
+                cout << "Successfully changed" << endl;
+            } else if (key1 == '2') {
+                os = &cerr;
+                cout << "Successfully changed" << endl;
+            } else if (key1 == '3') {
+                string file_path = std::getenv(ENV_PATH);
+                if (file_path.empty()) {
+                    cerr << "Not found env. variable '" << ENV_PATH << "'" << endl;
+                    return;
+                }
+                fs.open(std::getenv(ENV_PATH));
+                if (fs.fail()) {
+                    cerr << "File not found. Make sure that it exists" << endl;
+                    return;
+                }
+                os = &fs;
+                cout << "Successfully changed" << endl;
+            } else {
+                cout << "There is no such key. Press any key to continue...";
+            }
+        } else {
+            cout << "Wrong key. Press any key to continue...";
         }
-
         getch();
-
     }
 
     fclose(Lab2::gnu_pipe);
@@ -62,19 +101,19 @@ void Lab2::runFromFile() {
 
 }
 
-void Lab2::outputResult(CHalfDividingResult &result, CFunctionSV *function_data, float a, float b) {
+void Lab2::outputResult(ostream& os, CHalfDividingResult &result, CFunctionSV *function_data, float a, float b) {
 
     enum MethodResult method_result = result.getMethodResult();
     if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
-        cout << "Method was successfully found solution for equation" << endl;
+        os << "Method was successfully found solution for equation" << endl;
     } else if (method_result == WRONG_NUMBER_OF_SOLUTIONS) {
-        cout << "There are either no solutions or more than one" << endl;
+        os << "There are either no solutions or more than one" << endl;
         return;
     } else if (method_result == DERIVATIVE_MUST_BE_SAME_SIGN) {
-        cout << "The derivative must be the same sign on given interval" << endl;
+        os << "The derivative must be the same sign on given interval" << endl;
         return;
     }
-    cout << "Number of iterations: " << result.getCountOfIterations() << endl;
+    os << "Number of iterations: " << result.getCountOfIterations() << endl;
 
     CVector<CFloat> answer = result.getAnswers();
     CVector<CFloat> aRow = result.getA();
@@ -88,29 +127,31 @@ void Lab2::outputResult(CHalfDividingResult &result, CFunctionSV *function_data,
     table.insert("f(b)", bRow.apply(function_data->f));
     table.insert("f(x)", answer.apply(function_data->f));
     table.insert("|a - b|", (aRow - bRow).apply(abs));
-    cout << table << endl;
+    os << table << endl;
 
-    GraphicManager::drawSingleX(gnu_pipe, function_data, a, b);
+    if (&os == &cout) {
+        GraphicManager::drawSingleX(gnu_pipe, function_data, a, b);
+    }
 
 }
 
 
-void Lab2::outputResult(CSecantResult &result, CFunctionSV *function_data, float a, float b) {
+void Lab2::outputResult(ostream& os, CSecantResult &result, CFunctionSV *function_data, float a, float b) {
 
     enum MethodResult method_result = result.getMethodResult();
     if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
-        cout << "Method was successfully found solution for equation" << endl;
+        os << "Method was successfully found solution for equation" << endl;
     } else if (method_result == WRONG_NUMBER_OF_SOLUTIONS) {
-        cout << "There are either no solutions or more than one" << endl;
+        os << "There are either no solutions or more than one" << endl;
         return;
     } else if (method_result == DERIVATIVE_MUST_BE_SAME_SIGN) {
-        cout << "The derivative must be the same sign on given interval" << endl;
+        os << "The derivative must be the same sign on given interval" << endl;
         return;
     } else if (method_result == SECOND_DERIVATIVE_MUST_BE_SAME_SIGN) {
-        cout << "The second derivative must be the same sign on given interval" << endl;
+        os << "The second derivative must be the same sign on given interval" << endl;
         return;
     }
-    cout << "Number of iterations: " << result.getCountOfIterations() << endl;
+    os << "Number of iterations: " << result.getCountOfIterations() << endl;
 
     CVector<CFloat> x = result.getX();
     CVector<CFloat> y = result.getY();
@@ -122,32 +163,34 @@ void Lab2::outputResult(CSecantResult &result, CFunctionSV *function_data, float
     table.insert("x_{i+1}", z);
     table.insert("f(x_{i+1})", z.apply(function_data->f));
     table.insert("|x_{i+1} - x_{i}|", (z - y).apply(abs));
-    cout << table << endl;
+    os << table << endl;
 
-    GraphicManager::drawSingleX(gnu_pipe, function_data, a, b);
+    if (&os == &cout) {
+        GraphicManager::drawSingleX(gnu_pipe, function_data, a, b);
+    }
 
 }
 
 
-void Lab2::outputResult(CIterationsResult &result, CFunctionSV *function_data, float a, float b) {
+void Lab2::outputResult(ostream& os, CIterationsResult &result, CFunctionSV *function_data, float a, float b) {
 
     enum MethodResult method_result = result.getMethodResult();
     if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
-        cout << "Method was successfully found solution for equation" << endl;
+        os << "Method was successfully found solution for equation" << endl;
     } else if (method_result == WRONG_NUMBER_OF_SOLUTIONS) {
-        cout << "There are either no solutions or more than one" << endl;
+        os << "There are either no solutions or more than one" << endl;
         return;
     } else if (method_result == DERIVATIVE_MUST_BE_SAME_SIGN) {
-        cout << "The derivative must be the same sign on given interval" << endl;
+        os << "The derivative must be the same sign on given interval" << endl;
         return;
     } else if (method_result == SECOND_DERIVATIVE_MUST_BE_SAME_SIGN) {
-        cout << "The second derivative must be the same sign on given interval" << endl;
+        os << "The second derivative must be the same sign on given interval" << endl;
         return;
     } else if (method_result == LIPSCHITZ_CONSTANT_GREATER_THAN_ONE) {
-        cout << "The derivative of phi must be less then one on interval" << endl;
+        os << "The derivative of phi must be less then one on interval" << endl;
         return;
     }
-    cout << "Number of iterations: " << result.getCountOfIterations() << endl;
+    os << "Number of iterations: " << result.getCountOfIterations() << endl;
 
     CVector<CFloat> x = result.getX();
     CVector<CFloat> y = result.getY();
@@ -157,31 +200,33 @@ void Lab2::outputResult(CIterationsResult &result, CFunctionSV *function_data, f
     table.insert("x_{i}", y);
     table.insert("f(x_{i+1})", y.apply(function_data->f));
     table.insert("|x_{i+1} - x_{i}|", (y - x).apply(abs));
-    cout << table << endl;
+    os << table << endl;
 
-    GraphicManager::drawMultipleX(gnu_pipe, function_data, a, b);
+    if (&os == &cout) {
+        GraphicManager::drawMultipleX(gnu_pipe, function_data, a, b);
+    }
 
 }
 
-void Lab2::outputResult(CNewtonResult &result, CFunctionMV *f, CFunctionMV *g) {
+void Lab2::outputResult(ostream& os, CNewtonResult &result, CFunctionMV *f, CFunctionMV *g) {
 
     enum MethodResult method_result = result.getMethodResult();
     if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
-        cout << "Method was successfully found solution for equation" << endl;
+        os << "Method was successfully found solution for equation" << endl;
     } else if (method_result == WRONG_NUMBER_OF_SOLUTIONS) {
-        cout << "There are either no solutions or more than one" << endl;
+        os << "There are either no solutions or more than one" << endl;
         return;
     } else if (method_result == DERIVATIVE_MUST_BE_SAME_SIGN) {
-        cout << "The derivative must be the same sign on given interval" << endl;
+        os << "The derivative must be the same sign on given interval" << endl;
         return;
     } else if (method_result == SECOND_DERIVATIVE_MUST_BE_SAME_SIGN) {
-        cout << "The second derivative must be the same sign on given interval" << endl;
+        os << "The second derivative must be the same sign on given interval" << endl;
         return;
     } else if (method_result == LIPSCHITZ_CONSTANT_GREATER_THAN_ONE) {
-        cout << "The derivative of phi must be less then one on interval" << endl;
+        os << "The derivative of phi must be less then one on interval" << endl;
         return;
     }
-    cout << "Number of iterations: " << result.getCountOfIterations() << endl;
+    os << "Number of iterations: " << result.getCountOfIterations() << endl;
 
     CVector<CFloat> x = result.getX();
     CVector<CFloat> y = result.getY();
@@ -195,7 +240,7 @@ void Lab2::outputResult(CNewtonResult &result, CFunctionMV *f, CFunctionMV *g) {
     table.insert("dy_{i}", dy);
     table.insert("f(x_{i}, y_{i})", CVector<CFloat>::apply(&x, &y, f->f));
     table.insert("g(x_{i}, y_{i})", CVector<CFloat>::apply(&x, &y, g->f));
-    cout << table << endl;
+    os << table << endl;
 
 }
 

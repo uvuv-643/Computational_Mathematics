@@ -22,7 +22,7 @@ ostream &operator<<(ostream &os, CTable &table) {
             os << "|";
         }
     }
-    cout << endl;
+    os << endl;
 
     for (size_t row = 0; row < table_rows; row++) {
         for (size_t col = 0; col < table_cols; col++) {

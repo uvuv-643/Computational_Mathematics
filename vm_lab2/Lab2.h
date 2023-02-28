@@ -5,6 +5,8 @@
 #ifndef VM1_LAB2_H
 #define VM1_LAB2_H
 
+#define ENV_PATH "SOURCE_PATH"
+
 #include <algorithm>
 #include "./methods/half_dividing/CHalfDividingResult.h"
 #include "./methods/secant/CSecantResult.h"
@@ -27,10 +29,10 @@ class Lab2 {
 public:
     static void runFromFile();
     static void runFromKeyboard();
-    static void outputResult(CHalfDividingResult& result, CFunctionSV* function_data, float a, float b);
-    static void outputResult(CSecantResult& result, CFunctionSV* function_data, float a, float b);
-    static void outputResult(CIterationsResult& result, CFunctionSV* function_data, float a, float b);
-    static void outputResult(CNewtonResult &result, CFunctionMV* f, CFunctionMV* g);
+    static void outputResult(ostream& os, CHalfDividingResult& result, CFunctionSV* function_data, float a, float b);
+    static void outputResult(ostream& os, CSecantResult& result, CFunctionSV* function_data, float a, float b);
+    static void outputResult(ostream& os, CIterationsResult& result, CFunctionSV* function_data, float a, float b);
+    static void outputResult(ostream& os, CNewtonResult &result, CFunctionMV* f, CFunctionMV* g);
     static SingleFunctionMethodData inputDataSingleFunction(CFunctionManager manager);
     static MultipleFunctionMethodData inputDataMultipleFunction(CFunctionManager manager);
 };

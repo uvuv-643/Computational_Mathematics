@@ -12,7 +12,7 @@ void GraphicManager::drawSingleX(FILE* gnu_pipe, CFunctionSV *function, float a,
     while ((pos = function_definition.find('^')) != std::string::npos) {
         function_definition.replace(pos, 1, "**");
     }
-    string plot_text = "plot [" + to_string(ceil(a - 1)) + ":" + to_string(floor(b + 1)) + "] " + function_definition + ", x \n";
+    string plot_text = "plot [" + to_string(ceil(a - 1)) + ":" + to_string(floor(b + 1)) + "] " + function_definition + " \n";
     fprintf(gnu_pipe, plot_text.c_str());
     fflush(gnu_pipe);
 }
