@@ -11,6 +11,7 @@
 #include "../../../io/CSize.cpp"
 #include "../../../data_structures/CVector.cpp"
 #include "../MethodResult.h"
+#include "../../methods_data/SingleFunctionMethodData.h"
 
 class CHalfDividingResult {
     CSize count_of_iterations;
@@ -18,11 +19,12 @@ class CHalfDividingResult {
     CVector<CFloat> answers;
     CVector<CFloat> a;
     CVector<CFloat> b;
+    SingleFunctionMethodData initial_data;
 public:
 
-    explicit CHalfDividingResult();
+    CHalfDividingResult(SingleFunctionMethodData initial_data);
 
-    explicit CHalfDividingResult(enum MethodResult method_result);
+    CHalfDividingResult(enum MethodResult method_result, SingleFunctionMethodData initial_data);
 
     CSize getCountOfIterations();
 
@@ -37,6 +39,11 @@ public:
     void append(CFloat &iteration_answer, CFloat& current_a, CFloat& current_b);
 
     void setMethodResult(MethodResult result);
+
+    SingleFunctionMethodData getInitialData();
+
+    friend ostream& operator <<(ostream& os, CHalfDividingResult& result);
+
 };
 
 

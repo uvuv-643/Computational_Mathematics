@@ -13,6 +13,7 @@ class SingleFunctionMethodData {
     float b;
     float eps;
 public:
+    SingleFunctionMethodData();
     SingleFunctionMethodData(CFunctionSV* f, float a, float b, float eps);
     CFunctionSV* getF();
     float getA();

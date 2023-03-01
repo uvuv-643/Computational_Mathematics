@@ -23,7 +23,9 @@ enum MethodResult CHalfDividingMethod::validateBorder(CFunctionSV* function_data
 CHalfDividingResult CHalfDividingMethod::performMethod(CFunctionSV* function_data, float initial_border_left, float initial_border_right, float eps) {
     CFloat border_left = initial_border_left;
     CFloat border_right = initial_border_right;
-    CHalfDividingResult result = *new CHalfDividingResult(validateBorder(function_data, border_left, border_right));
+    SingleFunctionMethodData initial_data(function_data, border_left, border_right, eps);
+    MethodResult validation_result = validateBorder(function_data, border_left, border_right);
+    CHalfDividingResult result = *new CHalfDividingResult(validation_result, initial_data);
     if (result.getMethodResult() == METHOD_CAN_BE_APPLIED) {
         do {
             CFloat new_border = (border_right + border_left) / 2;
@@ -35,7 +37,7 @@ CHalfDividingResult CHalfDividingMethod::performMethod(CFunctionSV* function_dat
             } else if (function_data->f(new_border) == 0) {
                 return result;
             } else {
-                return *new CHalfDividingResult(WRONG_NUMBER_OF_SOLUTIONS);
+                return *new CHalfDividingResult(WRONG_NUMBER_OF_SOLUTIONS, initial_data);
             }
         } while (result.getCountOfIterations() < LIMIT_OF_ITERATIONS && 2 * (border_right - border_left) > eps);
         result.setMethodResult(METHOD_WAS_SUCCESSFULLY_FINISHED);

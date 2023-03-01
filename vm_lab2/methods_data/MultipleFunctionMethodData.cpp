@@ -29,3 +29,7 @@ MultipleFunctionMethodData::MultipleFunctionMethodData(CFunctionMV *f, CFunction
     this->b = b;
     this->eps = eps;
 }
+
+MultipleFunctionMethodData::MultipleFunctionMethodData() {
+
+}

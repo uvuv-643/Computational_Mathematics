@@ -11,6 +11,7 @@
 #include "../../../io/CSize.cpp"
 #include "../../../data_structures/CVector.cpp"
 #include "../MethodResult.h"
+#include "../../methods_data/SingleFunctionMethodData.h"
 
 class CSecantResult {
     CSize count_of_iterations;
@@ -18,11 +19,12 @@ class CSecantResult {
     CVector<CFloat> x;
     CVector<CFloat> y;
     CVector<CFloat> z;
+    SingleFunctionMethodData initial_data;
 public:
 
-    explicit CSecantResult();
+    CSecantResult(SingleFunctionMethodData initial_data);
 
-    explicit CSecantResult(enum MethodResult method_result);
+    CSecantResult(enum MethodResult method_result, SingleFunctionMethodData initial_data);
 
     CSize getCountOfIterations();
 
@@ -37,6 +39,11 @@ public:
     CVector<CFloat> getZ();
 
     void append(CFloat &x, CFloat& y, CFloat& z);
+
+    SingleFunctionMethodData getInitialData();
+
+    friend ostream& operator <<(ostream& os, CSecantResult& result);
+
 };
 
 

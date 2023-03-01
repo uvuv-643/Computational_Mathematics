@@ -93,6 +93,13 @@ float g2(float x, float y) {
     return y - 3 * x * x;
 }
 
+float g3(float x, float y) {
+    return x * x - y * y - 1;
+}
+float g4(float x, float y) {
+    return x * x * x - y + 1.5;
+}
+
 float g1_derivative_x(float x, float y) {
     return 2 * x;
 };
@@ -109,6 +116,24 @@ float g2_derivative_y(float x, float y) {
     return 1;
 };
 
+float g3_derivative_x(float x, float y) {
+    return 2 * x;
+};
+
+float g3_derivative_y(float x, float y) {
+    return -2 * y;
+};
+
+float g4_derivative_x(float x, float y) {
+    return 3 * x * x - 1;
+};
+
+float g4_derivative_y(float x, float y) {
+    return -1;
+};
+
+
+
 
 CFunctionManager::CFunctionManager() {
     this->functions.push_back(new CFunctionSV("x^3 - x + 4", "12.0 / 11.0 * x - 1.0 / 11.0 * x**3 - 4.0 / 11.0", f1, f1_der, f1_sec_der, f1_phi, f1_phi_der));
@@ -117,6 +142,8 @@ CFunctionManager::CFunctionManager() {
     this->functions.push_back(new CFunctionSV("x^3 + 2.28 * x^2 - 1.934 * x - 3.907", "x - 0.1 * (x^3 + 2.28 * x^2 - 1.934 * x - 3.907)", f4, f4_der, f4_sec_der, f4_phi, f4_phi_der));
     this->functions_multiple_variables.push_back(new CFunctionMV("x^2 + y^2 - 4", g1, g1_derivative_x, g1_derivative_y));
     this->functions_multiple_variables.push_back(new CFunctionMV("y - 3 * x^2", g2, g2_derivative_x, g2_derivative_y));
+    this->functions_multiple_variables.push_back(new CFunctionMV("x^2 - y^2 - 1", g3, g3_derivative_x, g3_derivative_y));
+    this->functions_multiple_variables.push_back(new CFunctionMV("x^3 - y + 1.5", g4, g4_derivative_x, g4_derivative_y));
 }
 
 vector<std::unique_ptr<CFunction>> CFunctionManager::operator[](enum FunctionType type) {

@@ -11,17 +11,20 @@
 #include "../../../io/CSize.cpp"
 #include "../../../data_structures/CVector.cpp"
 #include "../MethodResult.h"
+#include "../../methods_data/SingleFunctionMethodData.h"
+
 
 class CIterationsResult {
     CSize count_of_iterations;
     enum MethodResult method_result;
     CVector<CFloat> x;
     CVector<CFloat> y;
+    SingleFunctionMethodData initial_data;
 public:
 
-    explicit CIterationsResult();
+    CIterationsResult(SingleFunctionMethodData initial_data);
 
-    explicit CIterationsResult(enum MethodResult method_result);
+    CIterationsResult(enum MethodResult method_result, SingleFunctionMethodData initial_data);
 
     CSize getCountOfIterations();
 
@@ -34,6 +37,10 @@ public:
     CVector<CFloat> getY();
 
     void append(CFloat &x, CFloat &y);
+
+    SingleFunctionMethodData getInitialData();
+
+    friend ostream& operator <<(ostream& os, CIterationsResult& result);
 
 };
 

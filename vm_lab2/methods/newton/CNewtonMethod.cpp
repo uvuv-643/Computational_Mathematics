@@ -7,7 +7,8 @@
 CNewtonResult CNewtonMethod::performMethod(CFunctionMV* f, CFunctionMV* g, float initial_x, float initial_y, float eps) {
     CFloat x = initial_x;
     CFloat y = initial_y;
-    CNewtonResult result = *new CNewtonResult(METHOD_CAN_BE_APPLIED);
+    MultipleFunctionMethodData initial_data(f, g, x, y, eps);
+    CNewtonResult result = *new CNewtonResult(METHOD_CAN_BE_APPLIED, initial_data);
     for (size_t current_iteration = 0; current_iteration < LIMIT_OF_ITERATIONS; current_iteration++) {
         float a = f->f_derivative_x(x, y);
         float b = f->f_derivative_y(x, y);
@@ -23,7 +24,7 @@ CNewtonResult CNewtonMethod::performMethod(CFunctionMV* f, CFunctionMV* g, float
         x += dx;
         y += dy;
         result.append(x, y, dx, dy);
-        if (f->f(x, y) <= eps && g->f(x, y) <= eps) break;
+        if (abs(f->f(x, y)) <= eps && abs(g->f(x, y)) <= eps) break;
     }
     result.setMethodResult(METHOD_WAS_SUCCESSFULLY_FINISHED);
     return result;

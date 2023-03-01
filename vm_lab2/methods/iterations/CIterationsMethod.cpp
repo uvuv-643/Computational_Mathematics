@@ -20,7 +20,9 @@ enum MethodResult CIterationsMethod::validateBorder(CFunctionSV* function_data, 
 CIterationsResult CIterationsMethod::performMethod(CFunctionSV* function_data, float initial_border_left, float initial_border_right, float eps) {
     CFloat border_left = initial_border_left;
     CFloat border_right = initial_border_right;
-    CIterationsResult result = *new CIterationsResult(validateBorder(function_data, border_left, border_right));
+    SingleFunctionMethodData initial_data(function_data, border_left, border_right, eps);
+    MethodResult validation_result = validateBorder(function_data, border_left, border_right);
+    CIterationsResult result = *new CIterationsResult(validation_result, initial_data);
     if (result.getMethodResult() == METHOD_CAN_BE_APPLIED) {
         vector<CFloat> xs;
         xs.push_back(border_left);

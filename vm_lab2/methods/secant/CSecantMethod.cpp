@@ -27,7 +27,9 @@ enum MethodResult CSecantMethod::validateBorder(CFunctionSV* function_data, floa
 CSecantResult CSecantMethod::performMethod(CFunctionSV* function_data, float initial_border_left, float initial_border_right, float eps) {
     CFloat border_left = initial_border_left;
     CFloat border_right = initial_border_right;
-    CSecantResult result = *new CSecantResult(validateBorder(function_data, border_left, border_right));
+    SingleFunctionMethodData initial_data(function_data, border_left, border_right, eps);
+    MethodResult validation_result = validateBorder(function_data, border_left, border_right);
+    CSecantResult result = *new CSecantResult(validation_result, initial_data);
     if (result.getMethodResult() == METHOD_CAN_BE_APPLIED) {
         vector<CFloat> xs;
         CFloat epsilon = (border_right - border_left) / DELTA;

@@ -14,6 +14,7 @@ class MultipleFunctionMethodData {
     float b;
     float eps;
 public:
+    MultipleFunctionMethodData();
     MultipleFunctionMethodData(CFunctionMV* f, CFunctionMV* g, float a, float b, float eps);
     CFunctionMV* getF();
     CFunctionMV* getG();

@@ -24,3 +24,7 @@ SingleFunctionMethodData::SingleFunctionMethodData(CFunctionSV *f, float a, floa
     this->b = b;
     this->eps = eps;
 }
+
+SingleFunctionMethodData::SingleFunctionMethodData() {
+
+}

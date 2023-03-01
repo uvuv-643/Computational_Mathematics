@@ -11,6 +11,7 @@
 #include "../../../io/CSize.cpp"
 #include "../../../data_structures/CVector.cpp"
 #include "../MethodResult.h"
+#include "../../methods_data/MultipleFunctionMethodData.h"
 
 class CNewtonResult {
     CSize count_of_iterations;
@@ -19,11 +20,12 @@ class CNewtonResult {
     CVector<CFloat> y;
     CVector<CFloat> dx;
     CVector<CFloat> dy;
+    MultipleFunctionMethodData initial_data;
 public:
 
-    explicit CNewtonResult();
+    CNewtonResult(MultipleFunctionMethodData initial_data);
 
-    explicit CNewtonResult(enum MethodResult method_result);
+    CNewtonResult(enum MethodResult method_result, MultipleFunctionMethodData initial_data);
 
     CSize getCountOfIterations();
 
@@ -40,6 +42,11 @@ public:
     CVector<CFloat> getDY();
 
     void append(CFloat &x, CFloat& y, CFloat& dx, CFloat& dy);
+
+    MultipleFunctionMethodData getInitialData();
+
+    friend ostream& operator <<(ostream& os, CNewtonResult& result);
+
 };
 
 

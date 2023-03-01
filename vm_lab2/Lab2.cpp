@@ -9,7 +9,7 @@
 
 #define KEY_ESC 27
 
-FILE* Lab2::gnu_pipe;
+FILE *Lab2::gnu_pipe;
 
 void Lab2::runFromKeyboard() {
 
@@ -19,7 +19,7 @@ void Lab2::runFromKeyboard() {
     CFunctionManager manager = CFunctionManager();
 
     cout << "Welcome to keyboard mode. Default output - stdout. Choose action: ";
-    ostream* os = &cout;
+    ostream *os = &cout;
 
     while (true) {
         system("cls");
@@ -34,30 +34,40 @@ void Lab2::runFromKeyboard() {
         if (key == KEY_ESC) {
             cout << "Good bye." << endl;
             break;
-        }
-        else if (key == '1') {
+        } else if (key == '1') {
             cout << "Half-dividing method" << endl;
             SingleFunctionMethodData data = Lab2::inputDataSingleFunction(manager);
-            CHalfDividingResult result = CHalfDividingMethod::performMethod(data.getF(), data.getA(), data.getB(), data.getEps());
-            outputResult(*os, result, data.getF(), data.getA(), data.getB());
+            CHalfDividingResult result = CHalfDividingMethod::performMethod(data.getF(), data.getA(), data.getB(),data.getEps());
+            (*os) << result;
+            if (os == &cout) {
+                GraphicManager::drawSingleX(gnu_pipe, data.getF(), data.getA(), data.getB());
+            }
             cout << "Completed. Press any key to continue...";
         } else if (key == '2') {
             cout << "Secant method" << endl;
             SingleFunctionMethodData data = Lab2::inputDataSingleFunction(manager);
             CSecantResult result = CSecantMethod::performMethod(data.getF(), data.getA(), data.getB(), data.getEps());
-            outputResult(*os, result, data.getF(), data.getA(), data.getB());
+            (*os) << result;
+            if (os == &cout) {
+                GraphicManager::drawSingleX(gnu_pipe, data.getF(), data.getA(), data.getB());
+            }
             cout << "Completed. Press any key to continue...";
         } else if (key == '3') {
             cout << "Method of simple iterations" << endl;
             SingleFunctionMethodData data = Lab2::inputDataSingleFunction(manager);
-            CIterationsResult result = CIterationsMethod::performMethod(data.getF(), data.getA(), data.getB(), data.getEps());
-            outputResult(*os, result, data.getF(), data.getA(), data.getB());
+            CIterationsResult result = CIterationsMethod::performMethod(data.getF(), data.getA(), data.getB(),
+                                                                        data.getEps());
+            (*os) << result;
+            if (os == &cout) {
+                GraphicManager::drawMultipleX(gnu_pipe, data.getF(), data.getA(), data.getB());
+            }
             cout << "Completed. Press any key to continue...";
         } else if (key == '4') {
             cout << "Newton method" << endl;
             MultipleFunctionMethodData data = Lab2::inputDataMultipleFunction(manager);
-            CNewtonResult result = CNewtonMethod::performMethod(data.getF(), data.getG(), data.getA(), data.getB(),data.getEps());
-            outputResult(*os, result, data.getF(), data.getG());
+            CNewtonResult result = CNewtonMethod::performMethod(data.getF(), data.getG(), data.getA(), data.getB(),
+                                                                data.getEps());
+            (*os) << result;
             cout << "Completed. Press any key to continue...";
         } else if (key == '9') {
             system("cls");
@@ -98,149 +108,96 @@ void Lab2::runFromKeyboard() {
 }
 
 void Lab2::runFromFile() {
-
-}
-
-void Lab2::outputResult(ostream& os, CHalfDividingResult &result, CFunctionSV *function_data, float a, float b) {
-
-    enum MethodResult method_result = result.getMethodResult();
-    if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
-        os << "Method was successfully found solution for equation" << endl;
-    } else if (method_result == WRONG_NUMBER_OF_SOLUTIONS) {
-        os << "There are either no solutions or more than one" << endl;
-        return;
-    } else if (method_result == DERIVATIVE_MUST_BE_SAME_SIGN) {
-        os << "The derivative must be the same sign on given interval" << endl;
+    CFunctionManager manager = CFunctionManager();
+    string file_path = std::getenv(ENV_PATH);
+    if (file_path.empty()) {
+        cerr << "Not found env. variable '" << ENV_PATH << "'" << endl;
         return;
     }
-    os << "Number of iterations: " << result.getCountOfIterations() << endl;
-
-    CVector<CFloat> answer = result.getAnswers();
-    CVector<CFloat> aRow = result.getA();
-    CVector<CFloat> bRow = result.getB();
-
-    CTable table(answer.n);
-    table.insert("a", aRow);
-    table.insert("b", bRow);
-    table.insert("x", answer);
-    table.insert("f(a)", aRow.apply(function_data->f));
-    table.insert("f(b)", bRow.apply(function_data->f));
-    table.insert("f(x)", answer.apply(function_data->f));
-    table.insert("|a - b|", (aRow - bRow).apply(abs));
-    os << table << endl;
-
-    if (&os == &cout) {
-        GraphicManager::drawSingleX(gnu_pipe, function_data, a, b);
-    }
-
-}
-
-
-void Lab2::outputResult(ostream& os, CSecantResult &result, CFunctionSV *function_data, float a, float b) {
-
-    enum MethodResult method_result = result.getMethodResult();
-    if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
-        os << "Method was successfully found solution for equation" << endl;
-    } else if (method_result == WRONG_NUMBER_OF_SOLUTIONS) {
-        os << "There are either no solutions or more than one" << endl;
-        return;
-    } else if (method_result == DERIVATIVE_MUST_BE_SAME_SIGN) {
-        os << "The derivative must be the same sign on given interval" << endl;
-        return;
-    } else if (method_result == SECOND_DERIVATIVE_MUST_BE_SAME_SIGN) {
-        os << "The second derivative must be the same sign on given interval" << endl;
+    ifstream fs;
+    fs.open(std::getenv(ENV_PATH));
+    if (fs.fail()) {
+        cerr << "File not found. Make sure that it exists" << endl;
         return;
     }
-    os << "Number of iterations: " << result.getCountOfIterations() << endl;
+    CSize type;
+    fs >> type;
+    if (type == 1) {
+        CFloat a, b, eps;
+        CSize number_of_method, number_of_function;
+        fs >> number_of_method >> number_of_function >> a >> b >> eps;
+        if (number_of_method > 0 && (int32_t) number_of_method <= 3) {
+            if (a >= b) {
+                cerr << "Incorrect #a, #b" << endl;
+                return;
+            }
+            if (eps <= 0) {
+                cerr << "Incorrect #eps" << endl;
+                return;
+            }
+            CFunctionSV *current_function = nullptr;
+            size_t index = (size_t) number_of_function - 1;
+            if (index >= 0 && index < 10 && index < manager[SINGLE_VARIABLE].size()) {
+                current_function = (CFunctionSV *) manager[SINGLE_VARIABLE][index].release();
+            } else {
+                cout << "There is no such function" << endl;
+            }
+            if (number_of_method == 1) {
+                cout << "Half-dividing method" << endl;
+                SingleFunctionMethodData data(current_function, a, b, eps);
+                CHalfDividingResult result = CHalfDividingMethod::performMethod(data.getF(), data.getA(), data.getB(),data.getEps());
+                cout << result;
+                cout << "Completed. Press any key to continue...";
+            } else if (number_of_method == 2) {
+                cout << "Secant method" << endl;
+                SingleFunctionMethodData data(current_function, a, b, eps);
+                CSecantResult result = CSecantMethod::performMethod(data.getF(), data.getA(), data.getB(), data.getEps());
+                cout << result;
+                cout << "Completed. Press any key to continue...";
+            } else if (number_of_method == 3) {
+                cout << "Method of simple iterations" << endl;
+                SingleFunctionMethodData data(current_function, a, b, eps);
+                CIterationsResult result = CIterationsMethod::performMethod(data.getF(), data.getA(), data.getB(),data.getEps());
+                cout << result;
+                cout << "Completed. Press any key to continue...";
+            }
+        } else {
+            cerr << "Incorrect #number_of_method" << endl;
+        }
+    } else if (type == 2) {
+        CFunctionMV *first_function = nullptr;
+        CFunctionMV *second_function = nullptr;
+        CFloat x, y, eps;
+        CSize f, g;
+        fs >> f >> g >> x >> y >> eps;
+            if (eps <= 0) {
+                cerr << "Incorrect #eps" << endl;
+                return;
+            }
+        size_t index1 = (size_t) f - 1;
+        size_t index2 = (size_t) g - 1;
+        if (index1 >= 0 && index1 < 10 && index1 < manager[TWO_VARIABLES].size() && index2 >= 0 && index2 < 10 && index1 < manager[TWO_VARIABLES].size()) {
+            first_function = (CFunctionMV *) manager[TWO_VARIABLES][index1].release();
+            second_function = (CFunctionMV *) manager[TWO_VARIABLES][index2].release();
+            if (first_function == second_function) {
+                second_function = nullptr;
+                cout << "You choose the same functions" << endl;
+            }
+        } else {
+            cout << "There is no such function" << endl;
+        }
 
-    CVector<CFloat> x = result.getX();
-    CVector<CFloat> y = result.getY();
-    CVector<CFloat> z = result.getZ();
+        cout << "Newton method" << endl;
+        MultipleFunctionMethodData data = MultipleFunctionMethodData(first_function, second_function, x, y, eps);
+        CNewtonResult result = CNewtonMethod::performMethod(data.getF(), data.getG(), data.getA(), data.getB(),data.getEps());
+        cout << result;
+        cout << "Completed. Press any key to continue...";
 
-    CTable table(x.n);
-    table.insert("x_{i-1}", x);
-    table.insert("x_{i}", y);
-    table.insert("x_{i+1}", z);
-    table.insert("f(x_{i+1})", z.apply(function_data->f));
-    table.insert("|x_{i+1} - x_{i}|", (z - y).apply(abs));
-    os << table << endl;
-
-    if (&os == &cout) {
-        GraphicManager::drawSingleX(gnu_pipe, function_data, a, b);
+    } else {
+        cerr << "Incorrect file" << endl;
     }
 
-}
-
-
-void Lab2::outputResult(ostream& os, CIterationsResult &result, CFunctionSV *function_data, float a, float b) {
-
-    enum MethodResult method_result = result.getMethodResult();
-    if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
-        os << "Method was successfully found solution for equation" << endl;
-    } else if (method_result == WRONG_NUMBER_OF_SOLUTIONS) {
-        os << "There are either no solutions or more than one" << endl;
-        return;
-    } else if (method_result == DERIVATIVE_MUST_BE_SAME_SIGN) {
-        os << "The derivative must be the same sign on given interval" << endl;
-        return;
-    } else if (method_result == SECOND_DERIVATIVE_MUST_BE_SAME_SIGN) {
-        os << "The second derivative must be the same sign on given interval" << endl;
-        return;
-    } else if (method_result == LIPSCHITZ_CONSTANT_GREATER_THAN_ONE) {
-        os << "The derivative of phi must be less then one on interval" << endl;
-        return;
-    }
-    os << "Number of iterations: " << result.getCountOfIterations() << endl;
-
-    CVector<CFloat> x = result.getX();
-    CVector<CFloat> y = result.getY();
-
-    CTable table(x.n);
-    table.insert("x_{i-1}", x);
-    table.insert("x_{i}", y);
-    table.insert("f(x_{i+1})", y.apply(function_data->f));
-    table.insert("|x_{i+1} - x_{i}|", (y - x).apply(abs));
-    os << table << endl;
-
-    if (&os == &cout) {
-        GraphicManager::drawMultipleX(gnu_pipe, function_data, a, b);
-    }
-
-}
-
-void Lab2::outputResult(ostream& os, CNewtonResult &result, CFunctionMV *f, CFunctionMV *g) {
-
-    enum MethodResult method_result = result.getMethodResult();
-    if (method_result == METHOD_WAS_SUCCESSFULLY_FINISHED) {
-        os << "Method was successfully found solution for equation" << endl;
-    } else if (method_result == WRONG_NUMBER_OF_SOLUTIONS) {
-        os << "There are either no solutions or more than one" << endl;
-        return;
-    } else if (method_result == DERIVATIVE_MUST_BE_SAME_SIGN) {
-        os << "The derivative must be the same sign on given interval" << endl;
-        return;
-    } else if (method_result == SECOND_DERIVATIVE_MUST_BE_SAME_SIGN) {
-        os << "The second derivative must be the same sign on given interval" << endl;
-        return;
-    } else if (method_result == LIPSCHITZ_CONSTANT_GREATER_THAN_ONE) {
-        os << "The derivative of phi must be less then one on interval" << endl;
-        return;
-    }
-    os << "Number of iterations: " << result.getCountOfIterations() << endl;
-
-    CVector<CFloat> x = result.getX();
-    CVector<CFloat> y = result.getY();
-    CVector<CFloat> dx = result.getDX();
-    CVector<CFloat> dy = result.getDY();
-
-    CTable table(x.n);
-    table.insert("x_{i}", x);
-    table.insert("y_{i}", y);
-    table.insert("dx_{i}", dx);
-    table.insert("dy_{i}", dy);
-    table.insert("f(x_{i}, y_{i})", CVector<CFloat>::apply(&x, &y, f->f));
-    table.insert("g(x_{i}, y_{i})", CVector<CFloat>::apply(&x, &y, g->f));
-    os << table << endl;
+    getch();
 
 }
 
@@ -280,7 +237,7 @@ SingleFunctionMethodData Lab2::inputDataSingleFunction(CFunctionManager manager)
             cout << "Error! epsilon must be greater than 0" << endl;
         }
     } while (eps <= 0);
-    return { current_function, a, b, eps };
+    return {current_function, a, b, eps};
 }
 
 MultipleFunctionMethodData Lab2::inputDataMultipleFunction(CFunctionManager manager) {
@@ -290,7 +247,7 @@ MultipleFunctionMethodData Lab2::inputDataMultipleFunction(CFunctionManager mana
     while (!chosen_function) {
         cout << "Choose function #1: " << endl;
         for (size_t function_index = 0; function_index < manager[TWO_VARIABLES].size(); function_index++) {
-            cout << "[" << (function_index + 1) << "] " << * manager[TWO_VARIABLES][function_index].release() << endl;
+            cout << "[" << (function_index + 1) << "] " << *manager[TWO_VARIABLES][function_index].release() << endl;
         }
         size_t index = getch() - '1';
         if (index >= 0 && index < 10 && index < manager[TWO_VARIABLES].size()) {
@@ -334,5 +291,5 @@ MultipleFunctionMethodData Lab2::inputDataMultipleFunction(CFunctionManager mana
         }
     } while (eps <= 0);
 
-    return { first_function, second_function, a, b, eps };
+    return {first_function, second_function, a, b, eps};
 }
