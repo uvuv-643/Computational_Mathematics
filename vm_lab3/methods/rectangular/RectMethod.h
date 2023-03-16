@@ -7,11 +7,13 @@
 
 #define LIMIT_OF_ITERATIONS 10
 
-#include "RectMethodResult.h"
+#include "RectMethodResult.cpp"
 #include "./RectMethodType.h"
-#include <stdint.h>
+#include "../../methods_data/SingleFunctionMethodData.cpp"
+#include <cstdint>
 
 class RectMethod {
+public:
     static RectMethodResult performIteration(CFunctionSV* f, enum RectMethodType type, float a, float b, size_t current_n);
     static RectMethodResult perform(CFunctionSV* f, enum RectMethodType type, float a, float b, float eps, size_t initial_n);
 };

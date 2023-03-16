@@ -12,16 +12,19 @@
 #include "../../../data_structures/CTable.cpp"
 #include "../../../data_structures/CVector.cpp"
 #include "../../methods_data/SingleFunctionMethodData.h"
+#include "./RectMethodStatus.h"
 
 class RectMethodResult {
+    enum RectMethodSuccess status;
     float square;
-    size_t number_of_intervals;
+    CVector<CSize> intervals;
+    CVector<CFloat> squares;
     SingleFunctionMethodData method_data;
 
 public:
     RectMethodResult();
     RectMethodResult(float square);
-    RectMethodResult(float square, size_t number_of_intervals, SingleFunctionMethodData method_data);
+    RectMethodResult(CVector<CFloat> square, CVector<CSize> number_of_intervals, SingleFunctionMethodData method_data);
     float getSquare();
     CTable getResultData();
 };

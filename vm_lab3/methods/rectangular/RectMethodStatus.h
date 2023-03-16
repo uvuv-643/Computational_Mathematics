@@ -1,0 +1,14 @@
+//
+// Created by R1300-W-8-Stud on 16.03.2023.
+//
+
+#ifndef VM1_RECTMETHODSUCCESS_H
+#define VM1_RECTMETHODSUCCESS_H
+
+enum RectMethodSuccess {
+    METHOD_WAS_APPLIED = 0,
+    ITERATION_WAS_APPLIED = 1,
+    METHOD_CANNOT_BE_APPLIED = 2,
+};
+
+#endif //VM1_RECTMETHODSUCCESS_H

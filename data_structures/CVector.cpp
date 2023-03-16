@@ -5,6 +5,7 @@
 
 #include <random>
 #include <functional>
+#include <algorithm>
 #include "CVector.h"
 
 template<typename T>
@@ -58,6 +59,13 @@ void CVector<T>::push_back(T element) {
 }
 
 template<typename T>
+void CVector<T>::push_front(T element) {
+    this->data.push_back(element);
+    std::rotate(this->data.rbegin(), this->data.rbegin() + 1, this->data.rend());
+    this->n++;
+}
+
+template<typename T>
 CVector<T> &CVector<T>::operator=(const CVector<T> &other) {
     if (this == &other) {
         return *this;
@@ -79,11 +87,9 @@ void CVector<T>::setRandom() {
 
 template<typename U>
 CVector<U> &operator-(CVector<U> &l, CVector<U> &r) {
-    if (l.n == r.n) {
-        size_t vector_size = l.n;
-        for (size_t i = 0; i < vector_size; i++) {
-            l[i] = r[i] - l[i];
-        }
+    size_t vector_size = min(l.n, r.n);
+    for (size_t i = 0; i < vector_size; i++) {
+        l[i] = r[i] - l[i];
     }
     return l;
 }
@@ -106,4 +112,10 @@ CVector<CFloat> CVector<T>::apply(CVector<CFloat>* x, CVector<CFloat>* y, float 
         }
     }
     return new_vector;
+}
+
+template<typename T>
+CVector<T>::CVector(const CVector<T> &vector) {
+    this->data = vector.data;
+    this->n = vector.n;
 }

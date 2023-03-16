@@ -8,15 +8,20 @@
 #include "../../functions/CFunctionSV.h"
 
 class SingleFunctionMethodData {
-    CFunctionSV* f;
+    CFunctionSV *f;
     float a;
     float b;
 public:
     SingleFunctionMethodData();
-    SingleFunctionMethodData(CFunctionSV* f, float a, float b);
-    CFunctionSV* getF();
+
+    SingleFunctionMethodData(CFunctionSV *f, float a, float b);
+
+    CFunctionSV *getF();
+
     float getA();
+
     float getB();
+
 };
 
 

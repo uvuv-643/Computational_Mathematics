@@ -6,43 +6,49 @@
 
 RectMethodResult RectMethod::performIteration(CFunctionSV* f, enum RectMethodType type, float a, float b, size_t number_of_intervals) {
     float square = 0;
-    float dx = (b - a) / number_of_intervals;
+    float dx = (b - a) / (float) number_of_intervals;
     for (size_t i = 0; i < number_of_intervals; i++) {
         float target_x;
         switch (type) {
-            LEFT_RECTANGULAR: {
-                target_x = a + i * dx;
+            case LEFT_RECTANGULAR: {
+                target_x = a + dx * i;
                 break;
             }
-            RIGHT_RECTANGULAR: {
-                target_x = a + (i + 1) * dx;
+            case MIDDLE_RECTANGULAR: {
+                target_x = a + dx * (i + 0.5);
                 break;
             }
-            MIDDLE_RECTANGULAR: {
-                target_x = a + (i + 0.5) * dx;
+            case RIGHT_RECTANGULAR: {
+                target_x = a + dx * (i + 1);
                 break;
             }
             default: {
-                return RectMethodResult();
+                return {};
             }
         }
         square += dx * f->f(target_x);
     }
-    return RectMethodResult(square);
+    return {square};
 }
 
 RectMethodResult RectMethod::perform(CFunctionSV* f, enum RectMethodType type, float a, float b, float eps, size_t number_of_intervals) {
+    SingleFunctionMethodData method_data(f, a, b);
     RectMethodResult prev_iteration_result = performIteration(f, type, a, b, number_of_intervals);
     RectMethodResult curr_iteration_result;
+    CVector<CFloat> squares;
+    CVector<CSize> intervals;
+    squares.push_back(prev_iteration_result.getSquare());
+    intervals.push_back(number_of_intervals);
     for (size_t i = 0; i < LIMIT_OF_ITERATIONS; i++) {
         prev_iteration_result = curr_iteration_result;
-        curr_iteration_result = performIteration(f, type, a, a, 2 * number_of_intervals);
+        curr_iteration_result = performIteration(f, type, a, b, 2 * number_of_intervals);
+        squares.push_back(curr_iteration_result.getSquare());
+        intervals.push_back(number_of_intervals * 2);
         number_of_intervals *= 2;
         if (curr_iteration_result.getSquare() - prev_iteration_result.getSquare() <= eps) {
-            SingleFunctionMethodData method_data(f, a, b);
-            return RectMethodResult(curr_iteration_result.getSquare(), number_of_intervals, method_data);
+            return RectMethodResult(squares, intervals, method_data);
         }
     }
-    return RectMethodResult();
+    return RectMethodResult(squares, intervals, method_data);
 }
 

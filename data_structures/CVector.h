@@ -27,6 +27,8 @@ public:
 
     CVector(size_t n);
 
+    CVector(const CVector<T> & vector);
+
     void setRandom();
 
     template<typename U>
@@ -41,6 +43,7 @@ public:
     T &operator[](size_t i);
 
     void push_back(T element);
+    void push_front(T element);
 
     CVector<T> &operator=(const CVector<T> &other);
 

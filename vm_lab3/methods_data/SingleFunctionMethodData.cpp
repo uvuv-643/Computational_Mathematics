@@ -15,11 +15,10 @@ CFunctionSV* SingleFunctionMethodData::getF() {
     return this->f;
 };
 
-SingleFunctionMethodData::SingleFunctionMethodData(CFunctionSV *f, float a, float b, float eps) {
+SingleFunctionMethodData::SingleFunctionMethodData(CFunctionSV *f, float a, float b) {
     this->f = f;
     this->a = a;
     this->b = b;
-    this->eps = eps;
 }
 
 SingleFunctionMethodData::SingleFunctionMethodData() {

@@ -9,7 +9,7 @@
 #include <string>
 #include <vector>
 #include "./CFunctionMV.cpp"
-#include "./CFunctionSV.h"
+#include "./CFunctionSV.cpp"
 #include "./FunctionType.h"
 
 using namespace std;

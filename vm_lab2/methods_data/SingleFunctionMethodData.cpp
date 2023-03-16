@@ -28,3 +28,4 @@ SingleFunctionMethodData::SingleFunctionMethodData(CFunctionSV *f, float a, floa
 SingleFunctionMethodData::SingleFunctionMethodData() {
 
 }
+
