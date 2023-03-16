@@ -5,7 +5,7 @@
 #ifndef VM1_RECTMETHODSUCCESS_H
 #define VM1_RECTMETHODSUCCESS_H
 
-enum RectMethodSuccess {
+enum MethodStatus {
     METHOD_WAS_APPLIED = 0,
     ITERATION_WAS_APPLIED = 1,
     METHOD_CANNOT_BE_APPLIED = 2,

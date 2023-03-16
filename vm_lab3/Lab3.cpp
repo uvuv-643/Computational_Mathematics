@@ -14,6 +14,6 @@ void Lab3::runFromKeyboard() {
     CFunctionManager manager;
     CFunctionSV *current_function = nullptr;
     current_function = (CFunctionSV *) manager[SINGLE_VARIABLE][1].release();
-    CTable result = RectMethod::perform(current_function, MIDDLE_RECTANGULAR, 0, 1, 0.001, 4).getResultData();
+    CTable result = RectMethod::perform(current_function, RIGHT_RECTANGULAR, 0, 8, 0.001, 4).getResultData();
     cout << result;
 }

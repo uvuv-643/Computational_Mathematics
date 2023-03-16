@@ -26,9 +26,9 @@ RectMethodResult RectMethod::performIteration(CFunctionSV* f, enum RectMethodTyp
                 return {};
             }
         }
-        square += dx * f->f(target_x);
+        square += f->f(target_x);
     }
-    return {square};
+    return {square * dx};
 }
 
 RectMethodResult RectMethod::perform(CFunctionSV* f, enum RectMethodType type, float a, float b, float eps, size_t number_of_intervals) {
@@ -45,7 +45,7 @@ RectMethodResult RectMethod::perform(CFunctionSV* f, enum RectMethodType type, f
         squares.push_back(curr_iteration_result.getSquare());
         intervals.push_back(number_of_intervals * 2);
         number_of_intervals *= 2;
-        if (curr_iteration_result.getSquare() - prev_iteration_result.getSquare() <= eps) {
+        if (abs(curr_iteration_result.getSquare() - prev_iteration_result.getSquare()) <= eps) {
             return RectMethodResult(squares, intervals, method_data);
         }
     }

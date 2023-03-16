@@ -2,10 +2,10 @@
 // Created by R1300-W-8-Stud on 16.03.2023.
 //
 
-#ifndef VM1_RectMETHODRESULT_H
-#define VM1_RectMETHODRESULT_H
+#ifndef VM1_RECTMETHODRESULT_H
+#define VM1_RECTMETHODRESULT_H
 
-#include <cstdint>
+#include <stdint.h>
 #include "../../../io/CInt.cpp"
 #include "../../../io/CFloat.cpp"
 #include "../../../io/CSize.cpp"
@@ -14,7 +14,7 @@
 #include "../../methods_data/SingleFunctionMethodData.h"
 #include "../MethodStatus.h"
 
-class RectMethodResult {
+class TrapezeMethodResult {
     enum MethodStatus status;
     float square;
     CVector<CSize> intervals;
@@ -22,12 +22,12 @@ class RectMethodResult {
     SingleFunctionMethodData method_data;
 
 public:
-    RectMethodResult();
-    RectMethodResult(float square);
-    RectMethodResult(CVector<CFloat> square, CVector<CSize> number_of_intervals, SingleFunctionMethodData method_data);
+    TrapezeMethodResult();
+    TrapezeMethodResult(float square);
+    TrapezeMethodResult(CVector<CFloat> square, CVector<CSize> number_of_intervals, SingleFunctionMethodData method_data);
     float getSquare();
     CTable getResultData();
 };
 
 
-#endif //VM1_RectMETHODRESULT_H
+#endif //VM1_RECTMETHODRESULT_H
