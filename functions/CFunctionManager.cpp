@@ -4,6 +4,10 @@
 
 #include "CFunctionManager.h"
 
+#include <iostream>
+
+using namespace std;
+
 float f1(float x) {
     return pow(x, 3) - x + 4;
 }
@@ -65,24 +69,25 @@ float f3_phi_der(float x) {
 }
 
 float f4(float x) {
-    return pow(x, 3) + 2.28 * pow(x, 2) - 1.934 * x - 3.907;
+    return pow(x, 3) - 6 * x + 4;
 }
 
 float f4_der(float x) {
-    return 3 * pow(x, 2) + 2 * 2.28 * pow(x, 1) - 1.934;
+    return 3 * pow(x, 2) - 6;
 }
 
 float f4_sec_der(float x) {
-    return 6 * pow(x, 1) + 2 * 2.28;
+    return 6 * x;
 }
 
 float f4_phi(float x) {
-    return x - 0.1 * (f4(x));
+    return x + 0.5 * (f4(x));
 }
 
 float f4_phi_der(float x) {
-    return 1 - 0.1 * (f4_der(x));
+    return 1 + 0.5 * (f4_der(x));
 }
+
 
 
 float g1(float x, float y) {
@@ -146,21 +151,10 @@ CFunctionManager::CFunctionManager() {
     this->functions_multiple_variables.push_back(new CFunctionMV("x^3 - y + 1.5", g4, g4_derivative_x, g4_derivative_y));
 }
 
-vector<std::unique_ptr<CFunction>> CFunctionManager::operator[](enum FunctionType type) {
-    std::vector<std::unique_ptr<CFunction>> units;
-    switch (type) {
-        case SINGLE_VARIABLE: {
-            for (auto &function: this->functions) {
-                units.emplace_back(std::unique_ptr<CFunction>(function));
-            }
-            break;
-        }
-        case TWO_VARIABLES: {
-            for (auto &function: this->functions_multiple_variables) {
-                units.emplace_back(std::unique_ptr<CFunction>(function));
-            }
-            break;
-        }
-    }
-    return units;
+vector<CFunctionSV*> CFunctionManager::getSingleFunctions() {
+    return this->functions;
 }
+vector<CFunctionMV*> CFunctionManager::getMultipleFunctions() {
+    return this->functions_multiple_variables;
+}
+

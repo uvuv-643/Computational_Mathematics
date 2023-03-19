@@ -2,9 +2,6 @@
 // Created by artem on 23.02.2023.
 //
 
-#include "cmath"
-#include <conio.h>
-#include <fstream>
 #include "Lab2.h"
 
 #define KEY_ESC 27
@@ -137,8 +134,8 @@ void Lab2::runFromFile() {
             }
             CFunctionSV *current_function = nullptr;
             size_t index = (size_t) number_of_function - 1;
-            if (index >= 0 && index < 10 && index < manager[SINGLE_VARIABLE].size()) {
-                current_function = (CFunctionSV *) manager[SINGLE_VARIABLE][index].release();
+            if (index >= 0 && index < 10 && index < manager.getSingleFunctions().size()) {
+                current_function = (CFunctionSV *) manager.getSingleFunctions()[index];
             } else {
                 cout << "There is no such function" << endl;
             }
@@ -176,9 +173,9 @@ void Lab2::runFromFile() {
             }
         size_t index1 = (size_t) f - 1;
         size_t index2 = (size_t) g - 1;
-        if (index1 >= 0 && index1 < 10 && index1 < manager[TWO_VARIABLES].size() && index2 >= 0 && index2 < 10 && index1 < manager[TWO_VARIABLES].size()) {
-            first_function = (CFunctionMV *) manager[TWO_VARIABLES][index1].release();
-            second_function = (CFunctionMV *) manager[TWO_VARIABLES][index2].release();
+        if (index1 >= 0 && index1 < 10 && index1 < manager.getMultipleFunctions().size() && index2 >= 0 && index2 < 10 && index1 < manager.getMultipleFunctions().size()) {
+            first_function = (CFunctionMV *) manager.getMultipleFunctions()[index1];
+            second_function = (CFunctionMV *) manager.getMultipleFunctions()[index2];
             if (first_function == second_function) {
                 second_function = nullptr;
                 cout << "You choose the same functions" << endl;
@@ -206,13 +203,14 @@ SingleFunctionMethodData Lab2::inputDataSingleFunction(CFunctionManager manager)
     CFunctionSV *current_function = nullptr;
     while (!chosen_function) {
         cout << "Choose function: " << endl;
-        for (size_t function_index = 0; function_index < manager[SINGLE_VARIABLE].size(); function_index++) {
-            cout << "[" << (function_index + 1) << "] - " << *manager[SINGLE_VARIABLE][function_index].release()
+        getch();
+        for (size_t function_index = 0; function_index < manager.getSingleFunctions().size(); function_index++) {
+            cout << "[" << (function_index + 1) << "] - " << *manager.getSingleFunctions()[function_index]
                  << endl;
         }
         size_t index = getch() - '1';
-        if (index >= 0 && index < 10 && index < manager[SINGLE_VARIABLE].size()) {
-            current_function = (CFunctionSV *) manager[SINGLE_VARIABLE][index].release();
+        if (index >= 0 && index < 10 && index < manager.getSingleFunctions().size()) {
+            current_function = (CFunctionSV *) manager.getSingleFunctions()[index];
             chosen_function = true;
             GraphicManager::drawSingleX(gnu_pipe, current_function, -4, 4);
         } else {
@@ -246,12 +244,12 @@ MultipleFunctionMethodData Lab2::inputDataMultipleFunction(CFunctionManager mana
     CFunctionMV *second_function = nullptr;
     while (!chosen_function) {
         cout << "Choose function #1: " << endl;
-        for (size_t function_index = 0; function_index < manager[TWO_VARIABLES].size(); function_index++) {
-            cout << "[" << (function_index + 1) << "] " << *manager[TWO_VARIABLES][function_index].release() << endl;
+        for (size_t function_index = 0; function_index < manager.getMultipleFunctions().size(); function_index++) {
+            cout << "[" << (function_index + 1) << "] " << *manager.getMultipleFunctions()[function_index] << endl;
         }
         size_t index = getch() - '1';
-        if (index >= 0 && index < 10 && index < manager[TWO_VARIABLES].size()) {
-            first_function = (CFunctionMV *) manager[TWO_VARIABLES][index].release();
+        if (index >= 0 && index < 10 && index < manager.getMultipleFunctions().size()) {
+            first_function = (CFunctionMV *) manager.getMultipleFunctions()[index];
             chosen_function = true;
             GraphicManager::drawSingleXY(gnu_pipe, first_function);
         } else {
@@ -261,12 +259,12 @@ MultipleFunctionMethodData Lab2::inputDataMultipleFunction(CFunctionManager mana
     chosen_function = false;
     while (!chosen_function) {
         cout << "Choose function #2: " << endl;
-        for (size_t function_index = 0; function_index < manager[TWO_VARIABLES].size(); function_index++) {
-            cout << "[" << (function_index + 1) << "] " << *manager[TWO_VARIABLES][function_index].release() << endl;
+        for (size_t function_index = 0; function_index < manager.getMultipleFunctions().size(); function_index++) {
+            cout << "[" << (function_index + 1) << "] " << *manager.getMultipleFunctions()[function_index] << endl;
         }
         size_t index = getch() - '1';
-        if (index >= 0 && index < 10 && index < manager[TWO_VARIABLES].size()) {
-            second_function = (CFunctionMV *) manager[TWO_VARIABLES][index].release();
+        if (index >= 0 && index < 10 && index < manager.getMultipleFunctions().size()) {
+            second_function = (CFunctionMV *) manager.getMultipleFunctions()[index];
             if (first_function == second_function) {
                 second_function = nullptr;
                 cout << "You already choose this function" << endl;
