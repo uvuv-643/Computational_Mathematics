@@ -6,10 +6,11 @@
 #define VM1_CNEWTONRESULT_H
 
 #include <cstdint>
-#include "../../../io/CInt.cpp"
-#include "../../../io/CFloat.cpp"
-#include "../../../io/CSize.cpp"
-#include "../../../data_structures/CVector.cpp"
+#include "../../../io/CInt.h"
+#include "../../../io/CFloat.h"
+#include "../../../io/CSize.h"
+#include "../../../data_structures/CVector.h"
+#include "../../../data_structures/CTable.h"
 #include "../MethodResult.h"
 #include "../../methods_data/MultipleFunctionMethodData.h"
 

@@ -13,7 +13,7 @@ RectMethodResult::RectMethodResult(float square) {
     this->square = square;
 }
 
-RectMethodResult::RectMethodResult(CVector<CFloat> squares, CVector<CSize> number_of_intervals, SingleFunctionMethodData method_data) {
+RectMethodResult::RectMethodResult(CVector<CFloat> squares, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data) {
     this->status = METHOD_WAS_APPLIED;
     this->squares = squares;
     this->intervals = number_of_intervals;

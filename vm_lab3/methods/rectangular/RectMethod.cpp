@@ -32,7 +32,7 @@ RectMethodResult RectMethod::performIteration(CFunctionSV* f, enum RectMethodTyp
 }
 
 RectMethodResult RectMethod::perform(CFunctionSV* f, enum RectMethodType type, float a, float b, float eps, size_t number_of_intervals) {
-    SingleFunctionMethodData method_data(f, a, b);
+    SingleFunctionIntegralMethodData method_data(f, a, b);
     RectMethodResult prev_iteration_result = performIteration(f, type, a, b, number_of_intervals);
     RectMethodResult curr_iteration_result;
     CVector<CFloat> squares;

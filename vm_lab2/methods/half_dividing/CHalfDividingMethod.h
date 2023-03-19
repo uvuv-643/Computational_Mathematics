@@ -8,8 +8,8 @@
 #define LIMIT_OF_ITERATIONS 50
 #define DELTA 50
 
-#include "./CHalfDividingResult.cpp"
-#include "../../../functions/CFunctionSV.cpp"
+#include "./CHalfDividingResult.h"
+#include "../../../functions/CFunctionSV.h"
 
 using namespace std;
 

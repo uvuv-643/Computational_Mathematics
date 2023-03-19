@@ -3,7 +3,7 @@
 //
 
 #include "CFunctionSV.h"
-#include <utility>
+
 
 CFunctionSV::CFunctionSV(string name, string phi_name, float f(float), float f_derivative(float), float f_second_derivative(float), float phi(float), float phi_derivative(float)) {
     this->f = f;

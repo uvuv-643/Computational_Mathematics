@@ -11,6 +11,8 @@
 #include <conio.h>
 #include <fstream>
 #include <iostream>
+#include "./methods/rectangular/RectMethod.h"
+#include "../functions/CFunctionManager.h"
 
 using namespace std;
 

@@ -7,9 +7,9 @@
 
 #define LIMIT_OF_ITERATIONS 10
 
-#include "SimpsonMethodResult.cpp"
-#include "../../methods_data/SingleFunctionMethodData.cpp"
 #include <cstdint>
+#include "SimpsonMethodResult.h"
+#include "../../methods_data/SingleFunctionIntegralMethodData.h"
 
 class SimpsonMethod {
 public:

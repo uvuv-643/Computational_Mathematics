@@ -7,7 +7,6 @@
 
 #include "./CFunction.h"
 
-
 class CFunctionSV : public CFunction {
 public:
 

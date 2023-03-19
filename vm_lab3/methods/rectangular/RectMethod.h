@@ -5,12 +5,15 @@
 #ifndef VM1_RECTMETHOD_H
 #define VM1_RECTMETHOD_H
 
+#ifndef LIMIT_OF_ITERATIONS
 #define LIMIT_OF_ITERATIONS 10
+#endif
 
-#include "RectMethodResult.cpp"
-#include "./RectMethodType.h"
-#include "../../methods_data/SingleFunctionMethodData.cpp"
 #include <cstdint>
+
+#include "RectMethodResult.h"
+#include "./RectMethodType.h"
+#include "../../methods_data/SingleFunctionIntegralMethodData.h"
 
 class RectMethod {
 public:

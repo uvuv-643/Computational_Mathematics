@@ -4,7 +4,6 @@
 
 #include "CHalfDividingMethod.h"
 
-
 enum MethodResult CHalfDividingMethod::validateBorder(CFunctionSV* function_data, float border_left, float border_right) {
     if (function_data->f(border_left) * function_data->f(border_right) > 0) {
         return WRONG_NUMBER_OF_SOLUTIONS;

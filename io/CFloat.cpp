@@ -4,7 +4,6 @@
 
 #pragma once
 #include "CFloat.h"
-#include <iomanip>
 
 ostream &operator<<(ostream &os, const CFloat &validated) {
     os << setprecision(8);
@@ -13,15 +12,21 @@ ostream &operator<<(ostream &os, const CFloat &validated) {
 }
 
 istream &operator>>(istream &is, CFloat &data) {
-    float inputted;
+    float inputted; string val;
     if (&is == &cin) {
         cerr << "Input float:" << endl;
     }
-    while (!(is >> inputted) && !is.eof()) {
-        is.clear();
-        is.ignore(1000, '\n');
+    while (true) {
+        is >> val;
+        try {
+            std::replace( val.begin(), val.end(), ',', '.');
+            inputted = stof(val);
+            break;
+        } catch (const std::invalid_argument& ignored) { }
         if (&is == &cin) {
             cerr << "Wrong input" << endl;
+            is.clear();
+            is.ignore(1000, '\n');
         }
     }
     data.value = inputted;

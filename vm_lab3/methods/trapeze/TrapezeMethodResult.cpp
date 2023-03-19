@@ -13,7 +13,7 @@ TrapezeMethodResult::TrapezeMethodResult(float square) {
     this->square = square;
 }
 
-TrapezeMethodResult::TrapezeMethodResult(CVector<CFloat> squares, CVector<CSize> number_of_intervals, SingleFunctionMethodData method_data) {
+TrapezeMethodResult::TrapezeMethodResult(CVector<CFloat> squares, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data) {
     this->status = METHOD_WAS_APPLIED;
     this->squares = squares;
     this->intervals = number_of_intervals;

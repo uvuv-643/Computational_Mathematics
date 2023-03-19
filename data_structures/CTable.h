@@ -5,12 +5,13 @@
 #ifndef VM1_CTABLE_H
 #define VM1_CTABLE_H
 
-#include <stdint.h>
-#include "./CVector.cpp"
-#include "../io/CFloat.cpp"
-#include "../io/CSize.cpp"
-#include "../io/CInt.cpp"
+#include <cstdint>
 #include <string>
+#include <utility>
+#include "./CVector.h"
+#include "../io/CFloat.h"
+#include "../io/CSize.h"
+#include "../io/CInt.h"
 
 using namespace std;
 

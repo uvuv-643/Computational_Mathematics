@@ -2,7 +2,6 @@
 // Created by artem on 26.02.2023.
 //
 
-#include <utility>
 #include "CFunctionMV.h"
 
 CFunctionMV::CFunctionMV(string name, float f(float, float), float f_derivative_x(float, float), float f_derivative_y(float, float)) {

@@ -14,7 +14,7 @@ SimpsonMethodResult SimpsonMethod::performIteration(CFunctionSV* f, float a, flo
 }
 
 SimpsonMethodResult SimpsonMethod::perform(CFunctionSV* f, float a, float b, float eps, size_t number_of_intervals) {
-    SingleFunctionMethodData method_data(f, a, b);
+    SingleFunctionIntegralMethodData method_data(f, a, b);
     SimpsonMethodResult prev_iteration_result = performIteration(f, a, b, number_of_intervals);
     SimpsonMethodResult curr_iteration_result;
     CVector<CFloat> squares;

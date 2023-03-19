@@ -3,7 +3,6 @@
 //
 
 #include "CTable.h"
-#include <utility>
 
 ostream &operator<<(ostream &os, CTable &table) {
     size_t table_rows = table.table_data.n;

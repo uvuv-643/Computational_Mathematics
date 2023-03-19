@@ -6,12 +6,12 @@
 #define VM1_SIMPSONMETHODRESULT_H
 
 #include <stdint.h>
-#include "../../../io/CInt.cpp"
-#include "../../../io/CFloat.cpp"
-#include "../../../io/CSize.cpp"
-#include "../../../data_structures/CTable.cpp"
-#include "../../../data_structures/CVector.cpp"
-#include "../../methods_data/SingleFunctionMethodData.h"
+#include "../../../io/CInt.h"
+#include "../../../io/CFloat.h"
+#include "../../../io/CSize.h"
+#include "../../../data_structures/CTable.h"
+#include "../../../data_structures/CVector.h"
+#include "../../methods_data/SingleFunctionIntegralMethodData.h"
 #include "../MethodStatus.h"
 
 class SimpsonMethodResult {
@@ -19,12 +19,12 @@ class SimpsonMethodResult {
     float square;
     CVector<CSize> intervals;
     CVector<CFloat> squares;
-    SingleFunctionMethodData method_data;
+    SingleFunctionIntegralMethodData method_data;
 
 public:
     SimpsonMethodResult();
     SimpsonMethodResult(float square);
-    SimpsonMethodResult(CVector<CFloat> square, CVector<CSize> number_of_intervals, SingleFunctionMethodData method_data);
+    SimpsonMethodResult(CVector<CFloat> square, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data);
     float getSquare();
     CTable getResultData();
 };

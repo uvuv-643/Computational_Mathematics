@@ -5,7 +5,8 @@
 #ifndef VM1_GRAPHICMANAGER_H
 #define VM1_GRAPHICMANAGER_H
 
-#include "stdio.h"
+#include <cstdio>
+#include <cmath>
 #include "../functions/CFunctionSV.h"
 #include "../functions/CFunctionMV.h"
 

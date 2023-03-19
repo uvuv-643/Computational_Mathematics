@@ -8,7 +8,7 @@
 #define LIMIT_OF_ITERATIONS 50
 #define DELTA 50
 
-#include "./CSecantResult.cpp"
+#include "./CSecantResult.h"
 
 class CSecantMethod {
 public:

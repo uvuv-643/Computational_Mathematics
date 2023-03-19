@@ -7,9 +7,9 @@
 
 #define LIMIT_OF_ITERATIONS 10
 
-#include "TrapezeMethodResult.cpp"
-#include "../../methods_data/SingleFunctionMethodData.cpp"
 #include <cstdint>
+#include "TrapezeMethodResult.h"
+#include "../../methods_data/SingleFunctionIntegralMethodData.h"
 
 class TrapezeMethod {
 public:

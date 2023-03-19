@@ -12,13 +12,10 @@
 #include <set>
 #include <map>
 #include <string>
-#include "../io/CInt.cpp"
-#include "../io/CFloat.cpp"
-#include "../io/CSize.cpp"
-#include "../data_structures/Matrix.cpp"
-#include "../data_structures/CVector.cpp"
+#include "../data_structures/Matrix.h"
+#include "../data_structures/CVector.h"
 #include "DiagonalDominanceStatus.h"
-#include "IterMethodInformation.cpp"
+#include "IterMethodInformation.h"
 
 #include <fstream>
 

@@ -3,8 +3,7 @@
 //
 
 #include "Lab3.h"
-#include "./methods/rectangular/RectMethod.cpp"
-#include "../functions/CFunctionManager.cpp"
+
 
 #define KEY_ESC 27
 
@@ -13,7 +12,7 @@ FILE *Lab3::gnu_pipe;
 void Lab3::runFromKeyboard() {
     CFunctionManager manager;
     CFunctionSV *current_function = nullptr;
-    current_function = (CFunctionSV *) manager[SINGLE_VARIABLE][1].release();
+    current_function = (CFunctionSV *) manager.getSingleFunctions()[1];
     CTable result = RectMethod::perform(current_function, RIGHT_RECTANGULAR, 0, 8, 0.001, 4).getResultData();
     cout << result;
 }

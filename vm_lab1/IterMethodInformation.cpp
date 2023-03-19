@@ -1,7 +1,6 @@
 //
 // Created by artem on 16.02.2023.
 //
-#pragma once
 #include "IterMethodInformation.h"
 
 IterMethodInformation::IterMethodInformation(Matrix<CFloat>& initial_matrix) {

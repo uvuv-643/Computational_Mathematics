@@ -5,11 +5,13 @@
 #ifndef VM1_CNEWTONMETHOD_H
 #define VM1_CNEWTONMETHOD_H
 
+#ifndef LIMIT_OF_ITERATIONS
 #define LIMIT_OF_ITERATIONS 50
+#endif
 #define DELTA 50
 
 #include "../../../functions/CFunctionMV.h"
-#include "./CNewtonResult.cpp"
+#include "./CNewtonResult.h"
 
 class CNewtonMethod {
 public:

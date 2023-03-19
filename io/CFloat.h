@@ -5,6 +5,8 @@
 #ifndef VM1_CFLOAT_H
 #define VM1_CFLOAT_H
 
+#include <iomanip>
+#include <algorithm>
 #include <iostream>
 
 using namespace std;
