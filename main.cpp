@@ -5,6 +5,6 @@
 using namespace std;
 
 int main() {
-    Lab2::runFromKeyboard();
+    Lab3::runFromKeyboard();
     return 0;
 }

@@ -13,13 +13,17 @@
 #include <iostream>
 #include "./methods/rectangular/RectMethod.h"
 #include "../functions/CFunctionManager.h"
+#include "./methods_data/SingleFunctionIntegralMethodData.h"
 
 using namespace std;
 
 class Lab3 {
     static FILE* gnu_pipe;
 public:
+    static void runFromFile();
     static void runFromKeyboard();
+    static SingleFunctionIntegralMethodData inputDataSingleFunction(CFunctionManager manager);
+    static SingleFunctionIntegralMethodData inputDataMultipleFunction(CFunctionManager manager);
 };
 
 
