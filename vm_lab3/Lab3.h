@@ -5,12 +5,16 @@
 #ifndef VM1_LAB3_H
 #define VM1_LAB3_H
 
+#define ENV_PATH "SOURCE_PATH"
 
 #include <cstdio>
 #include "cmath"
 #include <conio.h>
 #include <fstream>
 #include <iostream>
+#include "../graphic/GraphicManager.h"
+#include "./methods/simpson/SimpsonMethod.h"
+#include "./methods/trapeze/TrapezeMethod.h"
 #include "./methods/rectangular/RectMethod.h"
 #include "../functions/CFunctionManager.h"
 #include "./methods_data/SingleFunctionIntegralMethodData.h"
@@ -23,7 +27,6 @@ public:
     static void runFromFile();
     static void runFromKeyboard();
     static SingleFunctionIntegralMethodData inputDataSingleFunction(CFunctionManager manager);
-    static SingleFunctionIntegralMethodData inputDataMultipleFunction(CFunctionManager manager);
 };
 
 

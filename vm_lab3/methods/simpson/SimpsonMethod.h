@@ -5,11 +5,12 @@
 #ifndef VM1_SIMPSONMETHOD_H
 #define VM1_SIMPSONMETHOD_H
 
+#ifndef LIMIT_OF_ITERATIONS
 #define LIMIT_OF_ITERATIONS 10
+#endif
 
 #include <cstdint>
 #include "SimpsonMethodResult.h"
-#include "../../methods_data/SingleFunctionIntegralMethodData.h"
 
 class SimpsonMethod {
 public:

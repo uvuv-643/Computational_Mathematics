@@ -6,13 +6,17 @@
 #define VM1_SINGLEFUNCTIONINTEGRALMETHODDATA_H
 
 #include "../../functions/CFunctionSV.h"
+#include "../methods/rectangular/RectMethodType.h"
 
 class SingleFunctionIntegralMethodData {
     CFunctionSV *f;
     float a;
     float b;
+    float eps;
 public:
     SingleFunctionIntegralMethodData();
+
+    SingleFunctionIntegralMethodData(CFunctionSV *f, float a, float b, float eps);
 
     SingleFunctionIntegralMethodData(CFunctionSV *f, float a, float b);
 
@@ -21,6 +25,8 @@ public:
     float getA() const;
 
     float getB() const;
+
+    float getEps() const;
 
 };
 

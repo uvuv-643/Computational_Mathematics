@@ -2,14 +2,15 @@
 // Created by R1300-W-8-Stud on 16.03.2023.
 //
 
-#ifndef VM1_RECTMETHOD_H
-#define VM1_RECTMETHOD_H
+#ifndef VM1_TRAPEZEMETHOD_H
+#define VM1_TRAPEZEMETHOD_H
 
+#ifndef LIMIT_OF_ITERATIONS
 #define LIMIT_OF_ITERATIONS 10
+#endif
 
 #include <cstdint>
 #include "TrapezeMethodResult.h"
-#include "../../methods_data/SingleFunctionIntegralMethodData.h"
 
 class TrapezeMethod {
 public:
@@ -18,4 +19,4 @@ public:
 };
 
 
-#endif //VM1_RECTMETHOD_H
+#endif //VM1_TRAPEZEMETHOD_H

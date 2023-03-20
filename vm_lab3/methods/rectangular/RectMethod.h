@@ -13,7 +13,6 @@
 
 #include "RectMethodResult.h"
 #include "./RectMethodType.h"
-#include "../../methods_data/SingleFunctionIntegralMethodData.h"
 
 class RectMethod {
 public:

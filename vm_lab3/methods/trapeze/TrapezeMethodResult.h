@@ -5,7 +5,7 @@
 #ifndef VM1_RECTMETHODRESULT_H
 #define VM1_RECTMETHODRESULT_H
 
-#include <stdint.h>
+#include <cstdint>
 #include "../../../io/CInt.h"
 #include "../../../io/CFloat.h"
 #include "../../../io/CSize.h"
