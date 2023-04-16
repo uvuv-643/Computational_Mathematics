@@ -13,6 +13,7 @@
 #include <fstream>
 #include <iostream>
 #include "../discrete_functions/DiscreteFunction.h"
+#include "PolynomialRegression.h"
 
 class Lab4 {
     static FILE* gnu_pipe;
