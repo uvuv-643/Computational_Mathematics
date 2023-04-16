@@ -7,7 +7,7 @@
 
 #include <cstdint>
 #include "../../../io/CInt.h"
-#include "../../../io/CFloat.h"
+#include "../../../io/CDouble.h"
 #include "../../../io/CSize.h"
 #include "../../../data_structures/CVector.h"
 #include "../../../data_structures/CTable.h"
@@ -17,9 +17,9 @@
 class CHalfDividingResult {
     CSize count_of_iterations;
     enum MethodResult method_result;
-    CVector<CFloat> answers;
-    CVector<CFloat> a;
-    CVector<CFloat> b;
+    CVector<CDouble> answers;
+    CVector<CDouble> a;
+    CVector<CDouble> b;
     SingleFunctionMethodData initial_data;
 public:
 
@@ -31,13 +31,13 @@ public:
 
     enum MethodResult getMethodResult();
 
-    CVector<CFloat> getAnswers();
+    CVector<CDouble> getAnswers();
 
-    CVector<CFloat> getA();
+    CVector<CDouble> getA();
 
-    CVector<CFloat> getB();
+    CVector<CDouble> getB();
 
-    void append(CFloat &iteration_answer, CFloat& current_a, CFloat& current_b);
+    void append(CDouble &iteration_answer, CDouble& current_a, CDouble& current_b);
 
     void setMethodResult(MethodResult result);
 

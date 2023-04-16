@@ -7,7 +7,7 @@
 
 #include <cstdint>
 #include "../../../io/CInt.h"
-#include "../../../io/CFloat.h"
+#include "../../../io/CDouble.h"
 #include "../../../io/CSize.h"
 #include "../../../data_structures/CVector.h"
 #include "../../../data_structures/CTable.h"
@@ -17,9 +17,9 @@
 class CSecantResult {
     CSize count_of_iterations;
     enum MethodResult method_result;
-    CVector<CFloat> x;
-    CVector<CFloat> y;
-    CVector<CFloat> z;
+    CVector<CDouble> x;
+    CVector<CDouble> y;
+    CVector<CDouble> z;
     SingleFunctionMethodData initial_data;
 public:
 
@@ -33,13 +33,13 @@ public:
 
     void setMethodResult(enum MethodResult method_result);
 
-    CVector<CFloat> getX();
+    CVector<CDouble> getX();
 
-    CVector<CFloat> getY();
+    CVector<CDouble> getY();
 
-    CVector<CFloat> getZ();
+    CVector<CDouble> getZ();
 
-    void append(CFloat &x, CFloat& y, CFloat& z);
+    void append(CDouble &x, CDouble& y, CDouble& z);
 
     SingleFunctionMethodData getInitialData();
 

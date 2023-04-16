@@ -10,11 +10,11 @@
 class CFunctionMV : public CFunction {
 public:
 
-    float (*f)(float, float);
-    float (*f_derivative_x)(float, float);
-    float (*f_derivative_y)(float, float);
+    double (*f)(double, double);
+    double (*f_derivative_x)(double, double);
+    double (*f_derivative_y)(double, double);
 
-    CFunctionMV(string name, float f(float, float), float f_derivative_x(float, float), float f_derivative_y(float, float));
+    CFunctionMV(string name, double f(double, double), double f_derivative_x(double, double), double f_derivative_y(double, double));
 
 };
 

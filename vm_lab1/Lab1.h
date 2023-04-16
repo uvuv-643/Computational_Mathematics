@@ -23,8 +23,8 @@ using namespace std;
 
 class Lab1 {
 public:
-    static enum DiagonalDominanceStatus checkOrApplyDiagonalDominance(Matrix<CFloat>& a, CVector<CFloat>& b);
-    static IterMethodInformation& applyIterMethod(Matrix<CFloat>& a, CVector<CFloat>& b, CFloat eps);
+    static enum DiagonalDominanceStatus checkOrApplyDiagonalDominance(Matrix<CDouble>& a, CVector<CDouble>& b);
+    static IterMethodInformation& applyIterMethod(Matrix<CDouble>& a, CVector<CDouble>& b, CDouble eps);
     static void runFromFile();
     static void runFromKeyboard();
     static void runFromKeyboardWithGeneration();

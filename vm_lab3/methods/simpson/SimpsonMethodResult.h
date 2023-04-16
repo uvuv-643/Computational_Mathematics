@@ -7,7 +7,7 @@
 
 #include <stdint.h>
 #include "../../../io/CInt.h"
-#include "../../../io/CFloat.h"
+#include "../../../io/CDouble.h"
 #include "../../../io/CSize.h"
 #include "../../../data_structures/CTable.h"
 #include "../../../data_structures/CVector.h"
@@ -16,16 +16,16 @@
 
 class SimpsonMethodResult {
     enum MethodStatus status;
-    float square;
+    double square;
     CVector<CSize> intervals;
-    CVector<CFloat> squares;
+    CVector<CDouble> squares;
     SingleFunctionIntegralMethodData method_data;
 
 public:
     SimpsonMethodResult();
-    SimpsonMethodResult(float square);
-    SimpsonMethodResult(CVector<CFloat> square, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data);
-    float getSquare();
+    SimpsonMethodResult(double square);
+    SimpsonMethodResult(CVector<CDouble> square, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data);
+    double getSquare();
     CTable getResultData();
 };
 

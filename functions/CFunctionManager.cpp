@@ -8,132 +8,132 @@
 
 using namespace std;
 
-float f1(float x) {
+double f1(double x) {
     return pow(x, 3) - x + 4;
 }
 
-float f1_der(float x) {
+double f1_der(double x) {
     return 3.0 * pow(x, 2) - 1;
 }
 
-float f1_sec_der(float x) {
+double f1_sec_der(double x) {
     return 6 * x;
 }
 
-float f1_phi(float x) {
+double f1_phi(double x) {
     return 12.0 / 11.0 * x - 1.0 / 11.0 * pow(x, 3) - 4.0 / 11.0;
 }
 
-float f1_phi_der(float x) {
+double f1_phi_der(double x) {
     return 12.0 / 11.0 - 3.0 * 1.0 / 11.0 * pow(x, 2);
 }
 
-float f2(float x) {
+double f2(double x) {
     return pow(x, 2) * exp(- pow(x, 2)) - 0.2;
 }
 
-float f2_der(float x) {
+double f2_der(double x) {
     return -2 * pow(x, 3) * exp(- pow(x, 2)) + 2 * x * exp(- pow(x, 2));
 }
 
-float f2_sec_der(float x) {
+double f2_sec_der(double x) {
     return 2 * (1 - 5 * pow(x, 2) + 2 * pow(x, 4)) * exp(-pow(x, 2));
 }
 
-float f2_phi(float x) {
+double f2_phi(double x) {
     return x - (f2(x));
 }
 
-float f2_phi_der(float x) {
+double f2_phi_der(double x) {
     return 1 - (f2_der(x));
 }
 
-float f3(float x) {
+double f3(double x) {
     return sin(x) / M_PI;
 }
 
-float f3_der(float x) {
+double f3_der(double x) {
     return cos(x) / M_PI;
 }
 
-float f3_sec_der(float x) {
+double f3_sec_der(double x) {
     return -sin(x) / M_PI;
 }
 
-float f3_phi(float x) {
+double f3_phi(double x) {
     return x - sin(x) / M_PI;
 }
 
-float f3_phi_der(float x) {
+double f3_phi_der(double x) {
     return 1 - cos(x) / M_PI;
 }
 
-float f4(float x) {
+double f4(double x) {
     return pow(x, 3) + 2.28 * pow(x, 2) - 1.934 * x - 3.907;
 }
 
-float f4_der(float x) {
+double f4_der(double x) {
     return 3 * pow(x, 2) - 6;
 }
 
-float f4_sec_der(float x) {
+double f4_sec_der(double x) {
     return 6 * x;
 }
 
-float f4_phi(float x) {
+double f4_phi(double x) {
     return x + 0.5 * (f4(x));
 }
 
-float f4_phi_der(float x) {
+double f4_phi_der(double x) {
     return 1 + 0.5 * (f4_der(x));
 }
 
 
 
-float g1(float x, float y) {
+double g1(double x, double y) {
     return x * x + y * y - 4;
 }
 
-float g2(float x, float y) {
+double g2(double x, double y) {
     return y - 3 * x * x;
 }
 
-float g3(float x, float y) {
+double g3(double x, double y) {
     return x * x - y * y - 1;
 }
-float g4(float x, float y) {
+double g4(double x, double y) {
     return x * x * x - y + 1.5;
 }
 
-float g1_derivative_x(float x, float y) {
+double g1_derivative_x(double x, double y) {
     return 2 * x;
 };
 
-float g1_derivative_y(float x, float y) {
+double g1_derivative_y(double x, double y) {
     return 2 * y;
 };
 
-float g2_derivative_x(float x, float y) {
+double g2_derivative_x(double x, double y) {
     return -6 * x;
 };
 
-float g2_derivative_y(float x, float y) {
+double g2_derivative_y(double x, double y) {
     return 1;
 };
 
-float g3_derivative_x(float x, float y) {
+double g3_derivative_x(double x, double y) {
     return 2 * x;
 };
 
-float g3_derivative_y(float x, float y) {
+double g3_derivative_y(double x, double y) {
     return -2 * y;
 };
 
-float g4_derivative_x(float x, float y) {
+double g4_derivative_x(double x, double y) {
     return 3 * x * x - 1;
 };
 
-float g4_derivative_y(float x, float y) {
+double g4_derivative_y(double x, double y) {
     return -1;
 };
 

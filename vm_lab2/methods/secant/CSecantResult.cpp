@@ -6,9 +6,9 @@
 
 CSecantResult::CSecantResult(SingleFunctionMethodData initial_data) {
     this->count_of_iterations = 0;
-    this->x = *(new CVector<CFloat>(0));
-    this->y = *(new CVector<CFloat>(0));
-    this->z = *(new CVector<CFloat>(0));
+    this->x = *(new CVector<CDouble>(0));
+    this->y = *(new CVector<CDouble>(0));
+    this->z = *(new CVector<CDouble>(0));
     this->method_result = METHOD_WAS_SUCCESSFULLY_FINISHED;
     this->initial_data = initial_data;
 }
@@ -26,19 +26,19 @@ enum MethodResult CSecantResult::getMethodResult() {
     return this->method_result;
 }
 
-CVector<CFloat> CSecantResult::getX() {
+CVector<CDouble> CSecantResult::getX() {
     return this->x;
 }
 
-CVector<CFloat> CSecantResult::getY() {
+CVector<CDouble> CSecantResult::getY() {
     return this->y;
 }
 
-CVector<CFloat> CSecantResult::getZ() {
+CVector<CDouble> CSecantResult::getZ() {
     return this->z;
 }
 
-void CSecantResult::append(CFloat &current_x, CFloat& current_y, CFloat& current_z) {
+void CSecantResult::append(CDouble &current_x, CDouble& current_y, CDouble& current_z) {
     count_of_iterations++;
     x.push_back(current_x);
     y.push_back(current_y);
@@ -67,9 +67,9 @@ ostream &operator<<(ostream &os, CSecantResult &result) {
     }
     os << "Number of iterations: " << result.getCountOfIterations() << endl;
 
-    CVector<CFloat> x = result.getX();
-    CVector<CFloat> y = result.getY();
-    CVector<CFloat> z = result.getZ();
+    CVector<CDouble> x = result.getX();
+    CVector<CDouble> y = result.getY();
+    CVector<CDouble> z = result.getZ();
 
     CTable table(x.n);
     table.insert("x_{i-1}", x);

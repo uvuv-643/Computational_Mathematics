@@ -6,10 +6,10 @@
 
 CNewtonResult::CNewtonResult(MultipleFunctionMethodData initial_data) {
     this->count_of_iterations = 0;
-    this->x = *(new CVector<CFloat>(0));
-    this->y = *(new CVector<CFloat>(0));
-    this->dx = *(new CVector<CFloat>(0));
-    this->dy= *(new CVector<CFloat>(0));
+    this->x = *(new CVector<CDouble>(0));
+    this->y = *(new CVector<CDouble>(0));
+    this->dx = *(new CVector<CDouble>(0));
+    this->dy= *(new CVector<CDouble>(0));
     this->method_result = METHOD_WAS_SUCCESSFULLY_FINISHED;
     this->initial_data = initial_data;
 }
@@ -27,23 +27,23 @@ enum MethodResult CNewtonResult::getMethodResult() {
     return this->method_result;
 }
 
-CVector<CFloat> CNewtonResult::getX() {
+CVector<CDouble> CNewtonResult::getX() {
     return this->x;
 }
 
-CVector<CFloat> CNewtonResult::getY() {
+CVector<CDouble> CNewtonResult::getY() {
     return this->y;
 }
 
-CVector<CFloat> CNewtonResult::getDX() {
+CVector<CDouble> CNewtonResult::getDX() {
     return this->dx;
 }
 
-CVector<CFloat> CNewtonResult::getDY() {
+CVector<CDouble> CNewtonResult::getDY() {
     return this->dx;
 }
 
-void CNewtonResult::append(CFloat &current_x, CFloat& current_y, CFloat& current_dx, CFloat& current_dy) {
+void CNewtonResult::append(CDouble &current_x, CDouble& current_y, CDouble& current_dx, CDouble& current_dy) {
     count_of_iterations++;
     x.push_back(current_x);
     y.push_back(current_y);
@@ -79,18 +79,18 @@ ostream &operator<<(ostream &os, CNewtonResult &result) {
     }
     os << "Number of iterations: " << result.getCountOfIterations() << endl;
 
-    CVector<CFloat> x = result.getX();
-    CVector<CFloat> y = result.getY();
-    CVector<CFloat> dx = result.getDX();
-    CVector<CFloat> dy = result.getDY();
+    CVector<CDouble> x = result.getX();
+    CVector<CDouble> y = result.getY();
+    CVector<CDouble> dx = result.getDX();
+    CVector<CDouble> dy = result.getDY();
 
     CTable table(x.n);
     table.insert("x_{i}", x);
     table.insert("y_{i}", y);
     table.insert("dx_{i}", dx);
     table.insert("dy_{i}", dy);
-    table.insert("f(x_{i}, y_{i})", CVector<CFloat>::apply(&x, &y, f->f));
-    table.insert("g(x_{i}, y_{i})", CVector<CFloat>::apply(&x, &y, g->f));
+    table.insert("f(x_{i}, y_{i})", CVector<CDouble>::apply(&x, &y, f->f));
+    table.insert("g(x_{i}, y_{i})", CVector<CDouble>::apply(&x, &y, g->f));
     os << table << endl;
 
     return os;

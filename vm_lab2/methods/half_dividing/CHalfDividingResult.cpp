@@ -6,9 +6,9 @@
 
 CHalfDividingResult::CHalfDividingResult(SingleFunctionMethodData initial_data) {
     this->count_of_iterations = 0;
-    this->answers = *(new CVector<CFloat>(0));
-    this->a = *(new CVector<CFloat>(0));
-    this->b = *(new CVector<CFloat>(0));
+    this->answers = *(new CVector<CDouble>(0));
+    this->a = *(new CVector<CDouble>(0));
+    this->b = *(new CVector<CDouble>(0));
     this->method_result = METHOD_CAN_BE_APPLIED;
     this->initial_data = initial_data;
 }
@@ -26,19 +26,19 @@ enum MethodResult CHalfDividingResult::getMethodResult() {
     return this->method_result;
 }
 
-CVector<CFloat> CHalfDividingResult::getA() {
+CVector<CDouble> CHalfDividingResult::getA() {
     return this->a;
 }
 
-CVector<CFloat> CHalfDividingResult::getB() {
+CVector<CDouble> CHalfDividingResult::getB() {
     return this->b;
 }
 
-CVector<CFloat> CHalfDividingResult::getAnswers() {
+CVector<CDouble> CHalfDividingResult::getAnswers() {
     return this->answers;
 }
 
-void CHalfDividingResult::append(CFloat &iteration_answer, CFloat& current_a, CFloat& current_b) {
+void CHalfDividingResult::append(CDouble &iteration_answer, CDouble& current_a, CDouble& current_b) {
     count_of_iterations++;
     answers.push_back(iteration_answer);
     a.push_back(current_a);
@@ -64,9 +64,9 @@ ostream &operator<<(ostream &os, CHalfDividingResult &result) {
     }
     os << "Number of iterations: " << result.getCountOfIterations() << endl;
 
-    CVector<CFloat> answer = result.getAnswers();
-    CVector<CFloat> aRow = result.getA();
-    CVector<CFloat> bRow = result.getB();
+    CVector<CDouble> answer = result.getAnswers();
+    CVector<CDouble> aRow = result.getA();
+    CVector<CDouble> bRow = result.getB();
 
     CTable table(answer.n);
     table.insert("a", aRow);

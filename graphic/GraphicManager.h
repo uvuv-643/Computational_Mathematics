@@ -12,8 +12,8 @@
 
 class GraphicManager {
 public:
-    static void drawSingleX(FILE* gnu_pipe, CFunctionSV *function, float a, float b);
-    static void drawMultipleX(FILE* gnu_pipe, CFunctionSV* f, float a, float b);
+    static void drawSingleX(FILE* gnu_pipe, CFunctionSV *function, double a, double b);
+    static void drawMultipleX(FILE* gnu_pipe, CFunctionSV* f, double a, double b);
     static void drawMultipleXY(FILE* gnu_pipe, CFunctionMV* f, CFunctionMV* g);
     static void drawSingleXY(FILE* gnu_pipe, CFunctionMV* f);
 };

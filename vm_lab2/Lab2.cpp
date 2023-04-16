@@ -120,7 +120,7 @@ void Lab2::runFromFile() {
     CSize type;
     fs >> type;
     if (type == 1) {
-        CFloat a, b, eps;
+        CDouble a, b, eps;
         CSize number_of_method, number_of_function;
         fs >> number_of_method >> number_of_function >> a >> b >> eps;
         if (number_of_method > 0 && (int32_t) number_of_method <= 3) {
@@ -164,7 +164,7 @@ void Lab2::runFromFile() {
     } else if (type == 2) {
         CFunctionMV *first_function = nullptr;
         CFunctionMV *second_function = nullptr;
-        CFloat x, y, eps;
+        CDouble x, y, eps;
         CSize f, g;
         fs >> f >> g >> x >> y >> eps;
             if (eps <= 0) {
@@ -218,7 +218,7 @@ SingleFunctionMethodData Lab2::inputDataSingleFunction(CFunctionManager manager)
         }
     }
 
-    CFloat a = 0, b = 0, eps = -1;
+    CDouble a = 0, b = 0, eps = -1;
     cout << "Input a (left border):" << endl;
     cin >> a;
     do {
@@ -276,7 +276,7 @@ MultipleFunctionMethodData Lab2::inputDataMultipleFunction(CFunctionManager mana
             cout << "There is no such function" << endl;
         }
     }
-    CFloat a = 0, b = 0, eps = -1;
+    CDouble a = 0, b = 0, eps = -1;
     cout << "Input initial x:" << endl;
     cin >> a;
     cout << "Input y: " << endl;

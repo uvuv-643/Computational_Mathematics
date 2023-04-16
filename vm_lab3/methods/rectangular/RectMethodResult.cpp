@@ -8,25 +8,25 @@ RectMethodResult::RectMethodResult() {
     this->status = METHOD_CANNOT_BE_APPLIED;
 }
 
-RectMethodResult::RectMethodResult(float square) {
+RectMethodResult::RectMethodResult(double square) {
     this->status = ITERATION_WAS_APPLIED;
     this->square = square;
 }
 
-RectMethodResult::RectMethodResult(CVector<CFloat> squares, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data) {
+RectMethodResult::RectMethodResult(CVector<CDouble> squares, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data) {
     this->status = METHOD_WAS_APPLIED;
     this->squares = squares;
     this->intervals = number_of_intervals;
     this->method_data = method_data;
 }
 
-float RectMethodResult::getSquare() {
+double RectMethodResult::getSquare() {
     return this->square;
 }
 
 CTable RectMethodResult::getResultData() {
     CTable table(intervals.n);
-    CVector<CFloat> squares_shifted = (squares);
+    CVector<CDouble> squares_shifted = (squares);
     squares_shifted.push_front(squares[0]);
     table.insert("n_{i}", intervals);
     table.insert("s_{i}", squares);

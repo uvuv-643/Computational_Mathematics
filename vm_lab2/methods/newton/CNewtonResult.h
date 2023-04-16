@@ -7,7 +7,7 @@
 
 #include <cstdint>
 #include "../../../io/CInt.h"
-#include "../../../io/CFloat.h"
+#include "../../../io/CDouble.h"
 #include "../../../io/CSize.h"
 #include "../../../data_structures/CVector.h"
 #include "../../../data_structures/CTable.h"
@@ -17,10 +17,10 @@
 class CNewtonResult {
     CSize count_of_iterations;
     enum MethodResult method_result;
-    CVector<CFloat> x;
-    CVector<CFloat> y;
-    CVector<CFloat> dx;
-    CVector<CFloat> dy;
+    CVector<CDouble> x;
+    CVector<CDouble> y;
+    CVector<CDouble> dx;
+    CVector<CDouble> dy;
     MultipleFunctionMethodData initial_data;
 public:
 
@@ -34,15 +34,15 @@ public:
 
     void setMethodResult(enum MethodResult method_result);
 
-    CVector<CFloat> getX();
+    CVector<CDouble> getX();
 
-    CVector<CFloat> getY();
+    CVector<CDouble> getY();
 
-    CVector<CFloat> getDX();
+    CVector<CDouble> getDX();
 
-    CVector<CFloat> getDY();
+    CVector<CDouble> getDY();
 
-    void append(CFloat &x, CFloat& y, CFloat& dx, CFloat& dy);
+    void append(CDouble &x, CDouble& y, CDouble& dx, CDouble& dy);
 
     MultipleFunctionMethodData getInitialData();
 

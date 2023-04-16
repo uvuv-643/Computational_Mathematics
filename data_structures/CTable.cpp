@@ -35,7 +35,7 @@ ostream &operator<<(ostream &os, CTable &table) {
     return os;
 }
 
-bool CTable::insert(string column_title, CVector<CFloat> row) {
+bool CTable::insert(string column_title, CVector<CDouble> row) {
     if ((size_t) row.n == (size_t) this->table_data.n) {
         this->column_names.push_back(std::move(column_title));
         for (size_t col = 0; col < (size_t) this->table_data.n; col++) {

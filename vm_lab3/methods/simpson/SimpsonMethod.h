@@ -14,8 +14,8 @@
 
 class SimpsonMethod {
 public:
-    static SimpsonMethodResult performIteration(CFunctionSV* f, float a, float b, size_t current_n);
-    static SimpsonMethodResult perform(CFunctionSV* f,float a, float b, float eps, size_t initial_n);
+    static SimpsonMethodResult performIteration(CFunctionSV* f, double a, double b, size_t current_n);
+    static SimpsonMethodResult perform(CFunctionSV* f,double a, double b, double eps, size_t initial_n);
 };
 
 

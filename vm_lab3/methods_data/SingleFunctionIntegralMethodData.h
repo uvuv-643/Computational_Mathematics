@@ -10,23 +10,23 @@
 
 class SingleFunctionIntegralMethodData {
     CFunctionSV *f;
-    float a;
-    float b;
-    float eps;
+    double a;
+    double b;
+    double eps;
 public:
     SingleFunctionIntegralMethodData();
 
-    SingleFunctionIntegralMethodData(CFunctionSV *f, float a, float b, float eps);
+    SingleFunctionIntegralMethodData(CFunctionSV *f, double a, double b, double eps);
 
-    SingleFunctionIntegralMethodData(CFunctionSV *f, float a, float b);
+    SingleFunctionIntegralMethodData(CFunctionSV *f, double a, double b);
 
     CFunctionSV *getF();
 
-    float getA() const;
+    double getA() const;
 
-    float getB() const;
+    double getB() const;
 
-    float getEps() const;
+    double getEps() const;
 
 };
 

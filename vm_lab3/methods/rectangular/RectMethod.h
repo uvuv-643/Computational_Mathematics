@@ -16,8 +16,8 @@
 
 class RectMethod {
 public:
-    static RectMethodResult performIteration(CFunctionSV* f, enum RectMethodType type, float a, float b, size_t current_n);
-    static RectMethodResult perform(CFunctionSV* f, enum RectMethodType type, float a, float b, float eps, size_t initial_n);
+    static RectMethodResult performIteration(CFunctionSV* f, enum RectMethodType type, double a, double b, size_t current_n);
+    static RectMethodResult perform(CFunctionSV* f, enum RectMethodType type, double a, double b, double eps, size_t initial_n);
 };
 
 

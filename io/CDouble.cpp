@@ -3,18 +3,18 @@
 //
 
 #pragma once
-#include "CFloat.h"
+#include "CDouble.h"
 
-ostream &operator<<(ostream &os, const CFloat &validated) {
+ostream &operator<<(ostream &os, const CDouble &validated) {
     os << setprecision(8);
     os << validated.value;
     return os;
 }
 
-istream &operator>>(istream &is, CFloat &data) {
-    float inputted; string val;
+istream &operator>>(istream &is, CDouble &data) {
+    double inputted; string val;
     if (&is == &cin) {
-        cerr << "Input float:" << endl;
+        cerr << "Input double:" << endl;
     }
     while (true) {
         is >> val;
@@ -33,20 +33,20 @@ istream &operator>>(istream &is, CFloat &data) {
     return is;
 }
 
-CFloat::CFloat() {
+CDouble::CDouble() {
     this->value = 0;
 }
 
-CFloat::CFloat(float _value) {
+CDouble::CDouble(double _value) {
     this->value = _value;
 }
 
-CFloat operator+(CFloat lhs, const CFloat &rhs) {
+CDouble operator+(CDouble lhs, const CDouble &rhs) {
     lhs += rhs;
     return lhs;
 }
 
-CFloat &CFloat::operator+=(const CFloat &rhs) {
+CDouble &CDouble::operator+=(const CDouble &rhs) {
     this->value += rhs.value;
     return *this;
 }

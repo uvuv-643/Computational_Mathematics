@@ -6,8 +6,8 @@
 
 CIterationsResult::CIterationsResult(SingleFunctionMethodData initial_data) {
     this->count_of_iterations = 0;
-    this->x = *(new CVector<CFloat>(0));
-    this->y = *(new CVector<CFloat>(0));
+    this->x = *(new CVector<CDouble>(0));
+    this->y = *(new CVector<CDouble>(0));
     this->method_result = METHOD_WAS_SUCCESSFULLY_FINISHED;
     this->initial_data = initial_data;
 }
@@ -25,15 +25,15 @@ enum MethodResult CIterationsResult::getMethodResult() {
     return this->method_result;
 }
 
-CVector<CFloat> CIterationsResult::getX() {
+CVector<CDouble> CIterationsResult::getX() {
     return this->x;
 }
 
-CVector<CFloat> CIterationsResult::getY() {
+CVector<CDouble> CIterationsResult::getY() {
     return this->y;
 }
 
-void CIterationsResult::append(CFloat &current_x, CFloat& current_y) {
+void CIterationsResult::append(CDouble &current_x, CDouble& current_y) {
     count_of_iterations++;
     x.push_back(current_x);
     y.push_back(current_y);
@@ -69,8 +69,8 @@ ostream &operator<<(ostream &os, CIterationsResult &result) {
     }
     os << "Number of iterations: " << result.getCountOfIterations() << endl;
 
-    CVector<CFloat> x = result.getX();
-    CVector<CFloat> y = result.getY();
+    CVector<CDouble> x = result.getX();
+    CVector<CDouble> y = result.getY();
 
     CTable table(x.n);
     table.insert("x_{i-1}", x);

@@ -12,7 +12,7 @@
 #include <random>
 #include <functional>
 #include <algorithm>
-#include "../io/CFloat.h"
+#include "../io/CDouble.h"
 #include "../io/CSize.h"
 
 #define MAXIMUM_DISPLAYED_SYMBOLS_IN_VECTOR 15
@@ -53,9 +53,9 @@ public:
 
     CVector<T> &operator=(const CVector<T> &other);
 
-    CVector<CFloat> apply(float (*pFunction)(float));
+    CVector<CDouble> apply(double (*pFunction)(double));
 
-    static CVector<CFloat> apply(CVector<CFloat>* x, CVector<CFloat>* y, float (*pFunction)(float, float));
+    static CVector<CDouble> apply(CVector<CDouble>* x, CVector<CDouble>* y, double (*pFunction)(double, double));
 
 };
 
@@ -146,8 +146,8 @@ CVector<U> &operator-(CVector<U> &l, CVector<U> &r) {
 }
 
 template<typename T>
-CVector<CFloat> CVector<T>::apply(float (*pFunction)(float)) {
-    CVector<CFloat> new_vector = *new CVector<CFloat>(this->n);
+CVector<CDouble> CVector<T>::apply(double (*pFunction)(double)) {
+    CVector<CDouble> new_vector = *new CVector<CDouble>(this->n);
     for (size_t i = 0; i < this->data.size(); i++) {
         new_vector[i] = pFunction(this->data[i]);
     }
@@ -155,8 +155,8 @@ CVector<CFloat> CVector<T>::apply(float (*pFunction)(float)) {
 }
 
 template<typename T>
-CVector<CFloat> CVector<T>::apply(CVector<CFloat>* x, CVector<CFloat>* y, float (*pFunction)(float, float)) {
-    CVector<CFloat> new_vector = *new CVector<CFloat>(x->n);
+CVector<CDouble> CVector<T>::apply(CVector<CDouble>* x, CVector<CDouble>* y, double (*pFunction)(double, double)) {
+    CVector<CDouble> new_vector = *new CVector<CDouble>(x->n);
     if (x->n == y->n) {
         for (size_t i = 0; i < x->data.size(); i++) {
             new_vector[i] = pFunction(x->data[i], y->data[i]);

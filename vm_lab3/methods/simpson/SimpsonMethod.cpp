@@ -4,20 +4,20 @@
 
 #include "SimpsonMethod.h"
 
-SimpsonMethodResult SimpsonMethod::performIteration(CFunctionSV* f, float a, float b, size_t number_of_intervals) {
-    float square = (f->f(a) + f->f(b));
-    float dx = (b - a) / (float) number_of_intervals;
+SimpsonMethodResult SimpsonMethod::performIteration(CFunctionSV* f, double a, double b, size_t number_of_intervals) {
+    double square = (f->f(a) + f->f(b));
+    double dx = (b - a) / (double) number_of_intervals;
     for (size_t i = 1; i < number_of_intervals; i++) {
         square += f->f(a + dx * i) * ((i % 2 == 0) ? 2.0 : 4.0);
     }
     return { dx * square / 3 };
 }
 
-SimpsonMethodResult SimpsonMethod::perform(CFunctionSV* f, float a, float b, float eps, size_t number_of_intervals) {
+SimpsonMethodResult SimpsonMethod::perform(CFunctionSV* f, double a, double b, double eps, size_t number_of_intervals) {
     SingleFunctionIntegralMethodData method_data(f, a, b);
     SimpsonMethodResult prev_iteration_result = performIteration(f, a, b, number_of_intervals);
     SimpsonMethodResult curr_iteration_result;
-    CVector<CFloat> squares;
+    CVector<CDouble> squares;
     CVector<CSize> intervals;
     squares.push_back(prev_iteration_result.getSquare());
     intervals.push_back(number_of_intervals);

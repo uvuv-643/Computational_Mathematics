@@ -15,7 +15,7 @@
 
 class CNewtonMethod {
 public:
-    static CNewtonResult performMethod(CFunctionMV* first_function, CFunctionMV* second_function, float initial_x, float initial_y, float eps);
+    static CNewtonResult performMethod(CFunctionMV* first_function, CFunctionMV* second_function, double initial_x, double initial_y, double eps);
 };
 
 

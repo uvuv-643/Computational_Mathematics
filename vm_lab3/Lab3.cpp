@@ -118,7 +118,7 @@ void Lab3::runFromFile() {
         cerr << "File not found. Make sure that it exists" << endl;
         return;
     }
-    CFloat a, b, eps;
+    CDouble a, b, eps;
     CSize number_of_method, number_of_function;
     fs >> number_of_method >> number_of_function >> a >> b >> eps;
     if (number_of_method > 0 && (int32_t) number_of_method <= 5) {
@@ -198,7 +198,7 @@ SingleFunctionIntegralMethodData Lab3::inputDataSingleFunction(CFunctionManager 
         }
     }
 
-    CFloat a = 0, b = 0, eps = -1;
+    CDouble a = 0, b = 0, eps = -1;
     cout << "Input a (left border):" << endl;
     cin >> a;
     do {

@@ -9,16 +9,16 @@
 
 class SingleFunctionMethodData {
     CFunctionSV* f;
-    float a;
-    float b;
-    float eps;
+    double a;
+    double b;
+    double eps;
 public:
     SingleFunctionMethodData();
-    SingleFunctionMethodData(CFunctionSV* f, float a, float b, float eps);
+    SingleFunctionMethodData(CFunctionSV* f, double a, double b, double eps);
     CFunctionSV* getF();
-    float getA();
-    float getB();
-    float getEps();
+    double getA();
+    double getB();
+    double getEps();
 };
 
 

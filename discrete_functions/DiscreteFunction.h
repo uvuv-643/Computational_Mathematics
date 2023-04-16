@@ -14,8 +14,8 @@ using namespace std;
 class DiscreteFunction {
 
     size_t number_of_points;
-    CVector<CFloat> x;
-    CVector<CFloat> y;
+    CVector<CDouble> x;
+    CVector<CDouble> y;
 
 public:
 
@@ -25,15 +25,15 @@ public:
 
     size_t getNumberOfPoints() const;
 
-    CVector<CFloat> getX() const;
+    CVector<CDouble> getX() const;
 
-    CVector<CFloat> getY() const;
+    CVector<CDouble> getY() const;
 
     void setNumberOfPoints(size_t number_of_points);
 
-    void setX(CVector<CFloat> x);
+    void setX(CVector<CDouble> x);
 
-    void setY(CVector<CFloat> y);
+    void setY(CVector<CDouble> y);
 
 };
 

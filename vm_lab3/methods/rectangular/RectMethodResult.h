@@ -7,7 +7,7 @@
 
 #include <cstdint>
 #include "../../../io/CInt.h"
-#include "../../../io/CFloat.h"
+#include "../../../io/CDouble.h"
 #include "../../../io/CSize.h"
 #include "../../../data_structures/CTable.h"
 #include "../../../data_structures/CVector.h"
@@ -16,16 +16,16 @@
 
 class RectMethodResult {
     enum MethodStatus status;
-    float square;
+    double square;
     CVector<CSize> intervals;
-    CVector<CFloat> squares;
+    CVector<CDouble> squares;
     SingleFunctionIntegralMethodData method_data;
 
 public:
     RectMethodResult();
-    RectMethodResult(float square);
-    RectMethodResult(CVector<CFloat> square, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data);
-    float getSquare();
+    RectMethodResult(double square);
+    RectMethodResult(CVector<CDouble> square, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data);
+    double getSquare();
     CTable getResultData();
 };
 

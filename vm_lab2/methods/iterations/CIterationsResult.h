@@ -7,7 +7,7 @@
 
 #include <cstdint>
 #include "../../../io/CInt.h"
-#include "../../../io/CFloat.h"
+#include "../../../io/CDouble.h"
 #include "../../../io/CSize.h"
 #include "../../../data_structures/CVector.h"
 #include "../../../data_structures/CTable.h"
@@ -18,8 +18,8 @@
 class CIterationsResult {
     CSize count_of_iterations;
     enum MethodResult method_result;
-    CVector<CFloat> x;
-    CVector<CFloat> y;
+    CVector<CDouble> x;
+    CVector<CDouble> y;
     SingleFunctionMethodData initial_data;
 public:
 
@@ -33,11 +33,11 @@ public:
 
     void setMethodResult(enum MethodResult method_result);
 
-    CVector<CFloat> getX();
+    CVector<CDouble> getX();
 
-    CVector<CFloat> getY();
+    CVector<CDouble> getY();
 
-    void append(CFloat &x, CFloat &y);
+    void append(CDouble &x, CDouble &y);
 
     SingleFunctionMethodData getInitialData();
 

@@ -4,13 +4,13 @@
 
 #include "MultipleFunctionMethodData.h"
 
-float MultipleFunctionMethodData::getA() {
+double MultipleFunctionMethodData::getA() {
     return this->a;
 };
-float MultipleFunctionMethodData::getB() {
+double MultipleFunctionMethodData::getB() {
     return this->b;
 };
-float MultipleFunctionMethodData::getEps() {
+double MultipleFunctionMethodData::getEps() {
     return this->eps;
 };
 
@@ -22,7 +22,7 @@ CFunctionMV* MultipleFunctionMethodData::getG() {
     return this->g;
 };
 
-MultipleFunctionMethodData::MultipleFunctionMethodData(CFunctionMV *f, CFunctionMV *g, float a, float b, float eps) {
+MultipleFunctionMethodData::MultipleFunctionMethodData(CFunctionMV *f, CFunctionMV *g, double a, double b, double eps) {
     this->f = f;
     this->g = g;
     this->a = a;

@@ -15,15 +15,15 @@ using namespace std;
 
 class GaussianSolver {
 private:
-    Matrix<CFloat> A;
-    CVector<CFloat> b;
+    Matrix<CDouble> A;
+    CVector<CDouble> b;
     int n;
 
 public:
 
-    GaussianSolver(const Matrix<CFloat> &_a, const CVector<CFloat> &_b);
+    GaussianSolver(const Matrix<CDouble> &_a, const CVector<CDouble> &_b);
 
-    CVector<CFloat> solve();
+    CVector<CDouble> solve();
 
 };
 

@@ -4,13 +4,13 @@
 
 #include "SingleFunctionMethodData.h"
 
-float SingleFunctionMethodData::getA() {
+double SingleFunctionMethodData::getA() {
     return this->a;
 };
-float SingleFunctionMethodData::getB() {
+double SingleFunctionMethodData::getB() {
     return this->b;
 };
-float SingleFunctionMethodData::getEps() {
+double SingleFunctionMethodData::getEps() {
     return this->eps;
 };
 
@@ -18,7 +18,7 @@ CFunctionSV* SingleFunctionMethodData::getF() {
     return this->f;
 };
 
-SingleFunctionMethodData::SingleFunctionMethodData(CFunctionSV *f, float a, float b, float eps) {
+SingleFunctionMethodData::SingleFunctionMethodData(CFunctionSV *f, double a, double b, double eps) {
     this->f = f;
     this->a = a;
     this->b = b;

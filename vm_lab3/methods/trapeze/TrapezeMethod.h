@@ -14,8 +14,8 @@
 
 class TrapezeMethod {
 public:
-    static TrapezeMethodResult performIteration(CFunctionSV* f, float a, float b, size_t current_n);
-    static TrapezeMethodResult perform(CFunctionSV* f,float a, float b, float eps, size_t initial_n);
+    static TrapezeMethodResult performIteration(CFunctionSV* f, double a, double b, size_t current_n);
+    static TrapezeMethodResult perform(CFunctionSV* f,double a, double b, double eps, size_t initial_n);
 };
 
 

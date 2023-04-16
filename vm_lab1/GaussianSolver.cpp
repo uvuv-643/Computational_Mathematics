@@ -4,13 +4,13 @@
 
 #include "GaussianSolver.h"
 
-GaussianSolver::GaussianSolver(const Matrix<CFloat> &_a, const CVector<CFloat> &_b)  {
+GaussianSolver::GaussianSolver(const Matrix<CDouble> &_a, const CVector<CDouble> &_b)  {
     A = _a;
     b = _b;
     n = b.n;
 }
 
-CVector<CFloat> GaussianSolver::solve() {
+CVector<CDouble> GaussianSolver::solve() {
     for (int i = 0; i < n; i++) {
         int max_index = i;
         for (int j = i + 1; j < n; j++) {
@@ -20,7 +20,7 @@ CVector<CFloat> GaussianSolver::solve() {
         swap(A[i], A[max_index]);
         swap(b[i], b[max_index]);
         for (int j = i + 1; j < n; j++) {
-            float factor = A[j][i] / A[i][i];
+            double factor = A[j][i] / A[i][i];
             for (int k = i; k < n; k++) {
                 A[j][k] = A[j][k] - factor * A[i][k];
             }
@@ -28,9 +28,9 @@ CVector<CFloat> GaussianSolver::solve() {
         }
     }
 
-    CVector<CFloat> x(n);
+    CVector<CDouble> x(n);
     for (int i = n - 1; i >= 0; i--) {
-        float sum = 0;
+        double sum = 0;
         for (int j = i + 1; j < n; j++) {
             sum += A[i][j] * x[j];
         }

@@ -6,14 +6,14 @@
 
 void Lab1::runFromKeyboard() {
 
-    Matrix<CFloat> a;
-    CFloat eps;
+    Matrix<CDouble> a;
+    CDouble eps;
 
     cerr << "> Enter matrix A below following instruction" << endl;
     cin >> a;
     size_t n = a.n;
 
-    CVector<CFloat> b(n);
+    CVector<CDouble> b(n);
     cerr << "> Enter vector B below following instruction" << endl;
     cin >> b;
 
@@ -31,10 +31,10 @@ void Lab1::runFromKeyboardWithGeneration() {
     cerr << "> Enter number of equations" << endl;
     cin >> n;
 
-    Matrix<CFloat> a(n);
+    Matrix<CDouble> a(n);
     a.setRandom();
-    CFloat eps;
-    CVector<CFloat> b(n);
+    CDouble eps;
+    CVector<CDouble> b(n);
     b.setRandom();
 
     cerr << "> Enter eps below" << endl;
@@ -64,11 +64,11 @@ void Lab1::runFromFile() {
         return;
     }
 
-    Matrix<CFloat> a;
-    CFloat eps;
+    Matrix<CDouble> a;
+    CDouble eps;
     fs >> a;
     size_t n = a.n;
-    CVector<CFloat> b(n);
+    CVector<CDouble> b(n);
     fs >> b;
 
     if (!fs.eof()) {
@@ -83,10 +83,10 @@ void Lab1::runFromFile() {
 }
 
 void Lab1::outputResult(IterMethodInformation information) {
-    Matrix<CFloat> initial_matrix = information.getInitialMatrix();
+    Matrix<CDouble> initial_matrix = information.getInitialMatrix();
     if (information.getCountOfIterations() > 0) {
-        CVector<CVector<CFloat>> iterations = information.getAnswers();
-        CVector<CFloat> errors = information.getEps();
+        CVector<CVector<CDouble>> iterations = information.getAnswers();
+        CVector<CDouble> errors = information.getEps();
         cout << "Diagonal domination was reached" << endl;
         cout << "Updated matrix A: " << endl;
         cout << initial_matrix << endl;
@@ -103,7 +103,7 @@ void Lab1::outputResult(IterMethodInformation information) {
     }
 }
 
-enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> &a, CVector<CFloat> &b) {
+enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CDouble> &a, CVector<CDouble> &b) {
     size_t n = a.n;
     set<size_t> good_indexes;
     map<size_t, size_t> maximums_by_indexes;
@@ -111,8 +111,8 @@ enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> 
         maximums_by_indexes[row] = -1;
     }
     for (size_t row = 0; row < n; row++) {
-        CFloat sum_in_row = 0;
-        CFloat maximum_element_in_row = abs(a[row][0]);
+        CDouble sum_in_row = 0;
+        CDouble maximum_element_in_row = abs(a[row][0]);
         size_t maximum_element_in_row_index = 0;
         for (size_t col = 0; col < n; col++) {
             sum_in_row += abs(a[row][col]);
@@ -160,19 +160,19 @@ enum DiagonalDominanceStatus Lab1::checkOrApplyDiagonalDominance(Matrix<CFloat> 
     }
 }
 
-IterMethodInformation &Lab1::applyIterMethod(Matrix<CFloat> &a, CVector<CFloat> &b, CFloat eps) {
+IterMethodInformation &Lab1::applyIterMethod(Matrix<CDouble> &a, CVector<CDouble> &b, CDouble eps) {
     enum DiagonalDominanceStatus dominance_status = checkOrApplyDiagonalDominance(a, b);
     auto *answer = new IterMethodInformation(a);
     if (dominance_status >= 0) {
         size_t k = 1;
         size_t n = a.n;
-        vector<vector<float>> dp(1, vector<float>(n));
-        float current_eps = INITIAL_EPS;
+        vector<vector<double>> dp(1, vector<double>(n));
+        double current_eps = INITIAL_EPS;
         for (size_t i = 0; i < n; i++) {
             dp[0][i] = b[i] / a[i][i];
         }
         while (k < MAX_NUMBER_OF_ITERATIONS && current_eps >= eps) {
-            vector<float> new_solution(n);
+            vector<double> new_solution(n);
             dp.emplace_back(new_solution);
             for (size_t i = 0; i < n; i++) {
                 dp[k][i] += b[i] / a[i][i];
@@ -182,7 +182,7 @@ IterMethodInformation &Lab1::applyIterMethod(Matrix<CFloat> &a, CVector<CFloat> 
                     }
                 }
             }
-            float maximum_difference = 0;
+            double maximum_difference = 0;
             for (size_t i = 0; i < n; i++) {
                 maximum_difference = max(maximum_difference, abs(dp[k][i] - dp[k - 1][i]));
             }
@@ -190,8 +190,8 @@ IterMethodInformation &Lab1::applyIterMethod(Matrix<CFloat> &a, CVector<CFloat> 
             k++;
         }
         for (size_t s = 0; s < dp.size(); s++) {
-            float maximum_difference = 0;
-            CVector<CFloat> current(n);
+            double maximum_difference = 0;
+            CVector<CDouble> current(n);
             for (size_t i = 0; i < n; i++) {
                 current[i] = dp[s][i];
             }

@@ -9,7 +9,7 @@
 #include <string>
 #include <utility>
 #include "./CVector.h"
-#include "../io/CFloat.h"
+#include "../io/CDouble.h"
 #include "../io/CSize.h"
 #include "../io/CInt.h"
 
@@ -25,7 +25,7 @@ public:
 
     CTable(size_t n, bool with_index);
 
-    bool insert(string column_title, CVector<CFloat> row);
+    bool insert(string column_title, CVector<CDouble> row);
 
     bool insert(string column_title, CVector<string> row);
 

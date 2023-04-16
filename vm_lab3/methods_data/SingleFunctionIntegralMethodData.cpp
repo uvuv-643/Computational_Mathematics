@@ -4,10 +4,10 @@
 
 #include "SingleFunctionIntegralMethodData.h"
 
-float SingleFunctionIntegralMethodData::getA() const {
+double SingleFunctionIntegralMethodData::getA() const {
     return this->a;
 };
-float SingleFunctionIntegralMethodData::getB() const {
+double SingleFunctionIntegralMethodData::getB() const {
     return this->b;
 };
 
@@ -15,14 +15,14 @@ CFunctionSV* SingleFunctionIntegralMethodData::getF() {
     return this->f;
 };
 
-SingleFunctionIntegralMethodData::SingleFunctionIntegralMethodData(CFunctionSV *f, float a, float b) {
+SingleFunctionIntegralMethodData::SingleFunctionIntegralMethodData(CFunctionSV *f, double a, double b) {
     this->f = f;
     this->a = a;
     this->b = b;
     this->eps = 1;
 }
 
-SingleFunctionIntegralMethodData::SingleFunctionIntegralMethodData(CFunctionSV *f, float a, float b, float eps) {
+SingleFunctionIntegralMethodData::SingleFunctionIntegralMethodData(CFunctionSV *f, double a, double b, double eps) {
     this->f = f;
     this->a = a;
     this->b = b;
@@ -33,6 +33,6 @@ SingleFunctionIntegralMethodData::SingleFunctionIntegralMethodData() {
 
 }
 
-float SingleFunctionIntegralMethodData::getEps() const {
+double SingleFunctionIntegralMethodData::getEps() const {
     return eps;
 }

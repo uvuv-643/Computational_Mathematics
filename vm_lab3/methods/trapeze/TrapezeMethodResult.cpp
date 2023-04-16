@@ -8,25 +8,25 @@ TrapezeMethodResult::TrapezeMethodResult() {
     this->status = METHOD_CANNOT_BE_APPLIED;
 }
 
-TrapezeMethodResult::TrapezeMethodResult(float square) {
+TrapezeMethodResult::TrapezeMethodResult(double square) {
     this->status = ITERATION_WAS_APPLIED;
     this->square = square;
 }
 
-TrapezeMethodResult::TrapezeMethodResult(CVector<CFloat> squares, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data) {
+TrapezeMethodResult::TrapezeMethodResult(CVector<CDouble> squares, CVector<CSize> number_of_intervals, SingleFunctionIntegralMethodData method_data) {
     this->status = METHOD_WAS_APPLIED;
     this->squares = squares;
     this->intervals = number_of_intervals;
     this->method_data = method_data;
 }
 
-float TrapezeMethodResult::getSquare() {
+double TrapezeMethodResult::getSquare() {
     return this->square;
 }
 
 CTable TrapezeMethodResult::getResultData() {
     CTable table(intervals.n);
-    CVector<CFloat> squares_shifted = (squares);
+    CVector<CDouble> squares_shifted = (squares);
     squares_shifted.push_front(squares[0]);
     table.insert("n_{i}", intervals);
     table.insert("s_{i}", squares);

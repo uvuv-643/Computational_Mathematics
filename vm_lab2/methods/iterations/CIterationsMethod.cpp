@@ -4,12 +4,12 @@
 
 #include "CIterationsMethod.h"
 
-enum MethodResult CIterationsMethod::validateBorder(CFunctionSV* function_data, float border_left, float border_right) {
+enum MethodResult CIterationsMethod::validateBorder(CFunctionSV* function_data, double border_left, double border_right) {
     if (function_data->f(border_left) * function_data->f(border_right) > 0) {
         return WRONG_NUMBER_OF_SOLUTIONS;
     }
-    float dx = (border_right - border_left) / DELTA;
-    for (float current_point = border_left; current_point <= border_right; current_point += dx) {
+    double dx = (border_right - border_left) / DELTA;
+    for (double current_point = border_left; current_point <= border_right; current_point += dx) {
         if (abs(function_data->phi_derivative(current_point)) >= 1) {
             return LIPSCHITZ_CONSTANT_GREATER_THAN_ONE;
         }
@@ -17,18 +17,18 @@ enum MethodResult CIterationsMethod::validateBorder(CFunctionSV* function_data, 
     return METHOD_CAN_BE_APPLIED;
 }
 
-CIterationsResult CIterationsMethod::performMethod(CFunctionSV* function_data, float initial_border_left, float initial_border_right, float eps) {
-    CFloat border_left = initial_border_left;
-    CFloat border_right = initial_border_right;
+CIterationsResult CIterationsMethod::performMethod(CFunctionSV* function_data, double initial_border_left, double initial_border_right, double eps) {
+    CDouble border_left = initial_border_left;
+    CDouble border_right = initial_border_right;
     SingleFunctionMethodData initial_data(function_data, border_left, border_right, eps);
     MethodResult validation_result = validateBorder(function_data, border_left, border_right);
     CIterationsResult result = *new CIterationsResult(validation_result, initial_data);
     if (result.getMethodResult() == METHOD_CAN_BE_APPLIED) {
-        vector<CFloat> xs;
+        vector<CDouble> xs;
         xs.push_back(border_left);
         for (size_t current_iteration = 0; current_iteration < LIMIT_OF_ITERATIONS; current_iteration++) {
-            CFloat x_prev = xs[current_iteration];
-            CFloat x_current = function_data->phi(x_prev);
+            CDouble x_prev = xs[current_iteration];
+            CDouble x_current = function_data->phi(x_prev);
             xs.push_back(x_current);
             if (abs(function_data->f(x_current)) < eps) break;
         }

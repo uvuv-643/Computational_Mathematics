@@ -17,7 +17,7 @@ public:
 
     PolynomialRegression(size_t p);
 
-    CVector<CFloat> performMethod(size_t number_of_points, CVector<CFloat> x, CVector<CFloat> y) const;
+    CVector<CDouble> performMethod(size_t number_of_points, CVector<CDouble> x, CVector<CDouble> y) const;
 
 };
 

@@ -4,7 +4,7 @@
 
 #include "GraphicManager.h"
 
-void GraphicManager::drawSingleX(FILE* gnu_pipe, CFunctionSV *function, float a, float b) {
+void GraphicManager::drawSingleX(FILE* gnu_pipe, CFunctionSV *function, double a, double b) {
     fprintf(gnu_pipe, "set key left box \n");
     fprintf(gnu_pipe, "set samples 200 \n");
     string function_definition = (function->function_definition);
@@ -17,7 +17,7 @@ void GraphicManager::drawSingleX(FILE* gnu_pipe, CFunctionSV *function, float a,
     fflush(gnu_pipe);
 }
 
-void GraphicManager::drawMultipleX(FILE *gnu_pipe, CFunctionSV *function, float a, float b) {
+void GraphicManager::drawMultipleX(FILE *gnu_pipe, CFunctionSV *function, double a, double b) {
     fprintf(gnu_pipe, "set key left box \n");
     fprintf(gnu_pipe, "set samples 200 \n");
     string function_definition = (function->function_definition_phi);

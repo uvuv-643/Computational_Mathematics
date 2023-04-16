@@ -15,8 +15,8 @@ using namespace std;
 
 class CHalfDividingMethod {
 public:
-    static enum MethodResult validateBorder(CFunctionSV* function_data, float border_left, float border_right);
-    static CHalfDividingResult performMethod(CFunctionSV* function_data, float initial_border_left, float initial_border_right, float eps);
+    static enum MethodResult validateBorder(CFunctionSV* function_data, double border_left, double border_right);
+    static CHalfDividingResult performMethod(CFunctionSV* function_data, double initial_border_left, double initial_border_right, double eps);
 };
 
 

@@ -21,8 +21,8 @@ istream &operator>>(istream &is, DiscreteFunction &df) {
     }
     is >> number_of_points;
 
-    CVector<CFloat> x(number_of_points);
-    CVector<CFloat> y(number_of_points);
+    CVector<CDouble> x(number_of_points);
+    CVector<CDouble> y(number_of_points);
     if (&is == &cin) {
         cerr << "Enter x_1, x_2, ..., x_n" << endl;
     }
@@ -41,11 +41,11 @@ size_t DiscreteFunction::getNumberOfPoints() const {
     return this->number_of_points;
 }
 
-CVector<CFloat> DiscreteFunction::getX() const {
+CVector<CDouble> DiscreteFunction::getX() const {
     return this->x;
 }
 
-CVector<CFloat> DiscreteFunction::getY() const {
+CVector<CDouble> DiscreteFunction::getY() const {
     return this->y;
 }
 
@@ -53,10 +53,10 @@ void DiscreteFunction::setNumberOfPoints(size_t number_of_points) {
     this->number_of_points = number_of_points;
 }
 
-void DiscreteFunction::setX(CVector<CFloat> x) {
+void DiscreteFunction::setX(CVector<CDouble> x) {
     this->x = x;
 }
 
-void DiscreteFunction::setY(CVector<CFloat> y) {
+void DiscreteFunction::setY(CVector<CDouble> y) {
     this->y = y;
 }

@@ -11,14 +11,14 @@ class CFunctionSV : public CFunction {
 public:
 
     string function_definition_phi;
-    float (*f)(float);
-    float (*f_derivative)(float);
-    float (*f_second_derivative)(float);
-    float (*phi)(float);
-    float (*phi_derivative)(float);
+    double (*f)(double);
+    double (*f_derivative)(double);
+    double (*f_second_derivative)(double);
+    double (*phi)(double);
+    double (*phi_derivative)(double);
 
-    CFunctionSV(string name, string phi_name, float f(float), float f_derivative(float), float f_second_derivative(float), float phi(float),
-                float phi_derivative(float));
+    CFunctionSV(string name, string phi_name, double f(double), double f_derivative(double), double f_second_derivative(double), double phi(double),
+                double phi_derivative(double));
 
 };
 
