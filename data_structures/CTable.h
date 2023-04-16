@@ -20,7 +20,10 @@ class CTable {
     CVector<string> column_names;
     size_t number_of_cols;
 public:
+
     explicit CTable(size_t n);
+
+    CTable(size_t n, bool with_index);
 
     bool insert(string column_title, CVector<CFloat> row);
 

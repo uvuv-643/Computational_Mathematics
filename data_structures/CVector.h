@@ -31,6 +31,8 @@ public:
 
     CVector(size_t n);
 
+    CVector(vector<T> n);
+
     CVector(const CVector<T> & vector);
 
     void setRandom();
@@ -167,6 +169,12 @@ template<typename T>
 CVector<T>::CVector(const CVector<T> &vector) {
     this->data = vector.data;
     this->n = vector.n;
+}
+
+template<typename T>
+CVector<T>::CVector(const vector<T> vector) {
+    this->data = vector;
+    this->n = vector.size();
 }
 
 #endif //VM1_CVECTOR_H

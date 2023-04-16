@@ -69,7 +69,7 @@ float f3_phi_der(float x) {
 }
 
 float f4(float x) {
-    return pow(x, 3) - 6 * x + 4;
+    return pow(x, 3) + 2.28 * pow(x, 2) - 1.934 * x - 3.907;
 }
 
 float f4_der(float x) {

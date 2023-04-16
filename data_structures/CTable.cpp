@@ -79,4 +79,20 @@ CTable::CTable(size_t n) {
     CVector<CVector<string>> table(n);
     this->table_data = table;
     this->number_of_cols = 0;
+    vector<CSize> index_vector = vector<CSize>(n);
+    size_t i = 1;
+    generate(begin(index_vector), end(index_vector), [&] { return i++; });
+    this->insert("#", CVector<CSize>(index_vector));
+}
+
+CTable::CTable(size_t n, bool with_index) {
+    CVector<CVector<string>> table(n);
+    this->table_data = table;
+    this->number_of_cols = 0;
+    if (with_index) {
+        size_t i = 1;
+        vector<CSize> index_vector = vector<CSize>(n);
+        generate(begin(index_vector), end(index_vector), [&] { return i++; });
+        this->insert("#", CVector<CSize>(index_vector));
+    }
 }
