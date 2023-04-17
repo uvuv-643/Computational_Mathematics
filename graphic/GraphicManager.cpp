@@ -17,6 +17,26 @@ void GraphicManager::drawSingleX(FILE* gnu_pipe, CFunctionSV *function, double a
     fflush(gnu_pipe);
 }
 
+void GraphicManager::drawSingleX(FILE *gnu_pipe, string function_definition, double a, double b) {
+    fprintf(gnu_pipe, "set key left box \n");
+    fprintf(gnu_pipe, "set samples 200 \n");
+    fprintf(gnu_pipe, "set size ratio 1 \n");
+    fprintf(gnu_pipe, "set xzeroaxis lt -1 lw 1 \n");
+    fprintf(gnu_pipe, "set yzeroaxis lt -1 lw 1 \n");
+    string range_x_definition = "set xrange [" + to_string(ceil(a - 1)) + ":" + to_string(floor(b + 1)) + "] \n";
+    string range_y_definition = "set yrange [" + to_string(- (b - a + 2) / 2) + ":" + to_string((b - a + 2) / 2) + "] \n";
+    fprintf(gnu_pipe, range_x_definition.c_str());
+    fprintf(gnu_pipe, range_y_definition.c_str());
+    fprintf(gnu_pipe, "set samples 200 \n");
+    size_t pos;
+    while ((pos = function_definition.find('^')) != std::string::npos) {
+        function_definition.replace(pos, 1, "**");
+    }
+    string plot_text = "plot  " + function_definition + "\n";
+    fprintf(gnu_pipe, plot_text.c_str());
+    fflush(gnu_pipe);
+}
+
 void GraphicManager::drawMultipleX(FILE *gnu_pipe, CFunctionSV *function, double a, double b) {
     fprintf(gnu_pipe, "set key left box \n");
     fprintf(gnu_pipe, "set samples 200 \n");
@@ -68,4 +88,5 @@ void GraphicManager::drawMultipleXY(FILE* gnu_pipe, CFunctionMV *f, CFunctionMV 
     fprintf(gnu_pipe, plot_text.c_str());
     fflush(gnu_pipe);
 }
+
 
