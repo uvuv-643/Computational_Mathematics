@@ -140,7 +140,7 @@ void Lab4::runFromKeyboard() {
     CVector<CDouble> ty = df.getY();
 
     (*os) << "Corr coefficient" << endl;
-    (*os) << Metrics::corr(tx, ty);
+    (*os) << Metrics::corr(tx, ty) << endl << endl;
 
     CTable answers = Lab4::performRegression(df);
 
