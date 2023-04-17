@@ -14,12 +14,27 @@ ostream &operator<<(ostream &os, const DiscreteFunction &df) {
 }
 
 istream &operator>>(istream &is, DiscreteFunction &df) {
-    CSize number_of_points;
+    CSize number_of_points = 0;
 
     if (&is == &cin) {
         cerr << "Enter number of points" << endl;
     }
-    is >> number_of_points;
+
+    if (&is == &cin) {
+        while (number_of_points < 8 || number_of_points > 12) {
+            is >> number_of_points;
+            if (number_of_points < 8 || number_of_points > 12) {
+                cerr << "Number of points must be in range [8, 12]. Try one more time" << endl;
+            }
+        }
+    } else {
+        is >> number_of_points;
+        if (number_of_points < 8 || number_of_points > 12) {
+            cerr << "Number of points must be in range [8, 12]." << endl;
+            getch();
+            exit(-1);
+        }
+    }
 
     CVector<CDouble> x(number_of_points);
     CVector<CDouble> y(number_of_points);

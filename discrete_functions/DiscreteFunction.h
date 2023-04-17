@@ -6,6 +6,7 @@
 #define VM1_DISCRETEFUNCTION_H
 
 #include <vector>
+#include <conio.h>
 #include <iostream>
 #include "../data_structures/CTable.h"
 
