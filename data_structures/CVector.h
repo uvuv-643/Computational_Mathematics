@@ -44,7 +44,10 @@ public:
     friend istream &operator>>(istream &os, CVector<U> &vector);
 
     template<typename U>
-    friend CVector<U> &operator -(CVector<U> &l, CVector<U> &r);
+    CVector<U> operator-(CVector<U>& other);
+
+    template<typename U>
+    CVector<U> operator-(U& other);
 
     T &operator[](size_t i);
 
@@ -54,6 +57,16 @@ public:
     CVector<T> &operator=(const CVector<T> &other);
 
     CVector<CDouble> apply(double (*pFunction)(double));
+
+    double mean();
+
+    double sum();
+
+    double min();
+
+    double max();
+
+    bool empty();
 
     static CVector<CDouble> apply(CVector<CDouble>* x, CVector<CDouble>* y, double (*pFunction)(double, double));
 
@@ -90,9 +103,9 @@ istream& operator>>(istream& is, CVector<T>& vector) {
     size_t n = vector.n;
     vector.data.resize(n);
     for (size_t row = 0; row < n; row++) {
-        if (&is == &cin) {
-            cerr << "Input a[" << row << "]" << endl;
-        }
+//        if (&is == &cin) {
+//            cerr << "Input a[" << row << "]" << endl;
+//        }
         is >> vector[row];
     }
     return is;
@@ -136,15 +149,6 @@ void CVector<T>::setRandom() {
     }
 }
 
-template<typename U>
-CVector<U> &operator-(CVector<U> &l, CVector<U> &r) {
-    size_t vector_size = min(l.n, r.n);
-    for (size_t i = 0; i < vector_size; i++) {
-        l[i] = r[i] - l[i];
-    }
-    return l;
-}
-
 template<typename T>
 CVector<CDouble> CVector<T>::apply(double (*pFunction)(double)) {
     CVector<CDouble> new_vector = *new CVector<CDouble>(this->n);
@@ -176,5 +180,73 @@ CVector<T>::CVector(const vector<T> vector) {
     this->data = vector;
     this->n = vector.size();
 }
+
+template<typename T>
+double CVector<T>::mean() {
+    double answer = 0;
+    for (CDouble x : this->data) {
+        answer += x;
+    }
+    return answer / (size_t) this->n;
+}
+
+template<typename T>
+double CVector<T>::min() {
+    double answer = this->data[0];
+    for (CDouble x : this->data) {
+        if (x < answer) {
+            answer = x;
+        }
+    }
+    return answer;
+}
+
+template<typename T>
+double CVector<T>::max() {
+    double answer = this->data[0];
+    for (CDouble x : this->data) {
+        if (x > answer) {
+            answer = x;
+        }
+    }
+    return answer;
+}
+
+template<typename T>
+double CVector<T>::sum() {
+    double answer = 0;
+    for (CDouble x : this->data) {
+        answer += x;
+    }
+    return answer;
+}
+
+template<typename T>
+template<typename U>
+CVector<U> CVector<T>::operator-(CVector<U> &other) {
+    size_t vector_size = other.n;
+    CVector<U> new_vector(vector_size);
+    for (size_t i = 0; i < vector_size; i++) {
+        new_vector[i] = other[i] - this->data[i];
+    }
+    return new_vector;
+}
+
+template<typename T>
+template<typename U>
+CVector<U> CVector<T>::operator-(U &other) {
+    size_t vector_size = this->n;
+    CVector<U> new_vector(vector_size);
+    for (size_t i = 0; i < vector_size; i++) {
+        new_vector[i] = other - this->data[i];
+    }
+    return new_vector;
+}
+
+template<typename T>
+bool CVector<T>::empty() {
+    return this->data.empty();
+}
+
 
 #endif //VM1_CVECTOR_H

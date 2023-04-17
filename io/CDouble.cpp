@@ -2,7 +2,6 @@
 // Created by artem on 10.02.2023.
 //
 
-#pragma once
 #include "CDouble.h"
 
 ostream &operator<<(ostream &os, const CDouble &validated) {
@@ -13,9 +12,9 @@ ostream &operator<<(ostream &os, const CDouble &validated) {
 
 istream &operator>>(istream &is, CDouble &data) {
     double inputted; string val;
-    if (&is == &cin) {
-        cerr << "Input double:" << endl;
-    }
+//    if (&is == &cin) {
+//        cerr << "Input double:" << endl;
+//    }
     while (true) {
         is >> val;
         try {

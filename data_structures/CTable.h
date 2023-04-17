@@ -19,7 +19,10 @@ class CTable {
     CVector<CVector<string>> table_data;
     CVector<string> column_names;
     size_t number_of_cols;
+    size_t number_of_rows;
 public:
+
+    explicit CTable();
 
     explicit CTable(size_t n);
 
@@ -32,6 +35,10 @@ public:
     bool insert(string column_title, CVector<CSize> row);
 
     friend ostream &operator<<(ostream &os, CTable &table);
+
+    bool isEmpty() const;
+
+    bool isFilled() const;
 
 };
 

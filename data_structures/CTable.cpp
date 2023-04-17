@@ -76,6 +76,7 @@ bool CTable::insert(string column_title, CVector<CSize> row) {
 }
 
 CTable::CTable(size_t n) {
+    number_of_rows = n;
     CVector<CVector<string>> table(n);
     this->table_data = table;
     this->number_of_cols = 0;
@@ -86,6 +87,7 @@ CTable::CTable(size_t n) {
 }
 
 CTable::CTable(size_t n, bool with_index) {
+    number_of_rows = n;
     CVector<CVector<string>> table(n);
     this->table_data = table;
     this->number_of_cols = 0;
@@ -95,4 +97,16 @@ CTable::CTable(size_t n, bool with_index) {
         generate(begin(index_vector), end(index_vector), [&] { return i++; });
         this->insert("#", CVector<CSize>(index_vector));
     }
+}
+
+CTable::CTable() {
+    number_of_rows = 0;
+}
+
+bool CTable::isEmpty() const {
+    return this->number_of_rows == 0;
+}
+
+bool CTable::isFilled() const {
+    return this->number_of_rows > 0;
 }
