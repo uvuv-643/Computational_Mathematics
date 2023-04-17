@@ -4,7 +4,7 @@
 
 #include "PolynomialRegression.h"
 
-CVector<CDouble> PolynomialRegression::performMethod(size_t number_of_points, CVector<CDouble> x, CVector<CDouble> y) const {
+CVector<CDouble> PolynomialRegression::performMethod(size_t number_of_points, CVector<CDouble> x, CVector<CDouble> y) {
 
     size_t n = this->p + 1;
     Matrix<CDouble> a(n);
@@ -33,4 +33,27 @@ CVector<CDouble> PolynomialRegression::performMethod(size_t number_of_points, CV
 
 PolynomialRegression::PolynomialRegression(size_t p) {
     this->p = p;
+}
+
+string PolynomialRegression::createDefinition(CVector<CDouble> answer) {
+    string definition;
+    for (int i = 0; i < (size_t) answer.n; i++) {
+        switch (i) {
+            case 0: {
+                definition += to_string(answer[i]);
+                break;
+            }
+            case 1: {
+                definition += to_string(answer[i]) + " * x";
+                break;
+            }
+            default: {
+                definition += to_string(answer[i]) + " * x^" + to_string(i);
+            }
+        }
+        if (i + 1 < (size_t) answer.n) {
+            definition += " + ";
+        }
+    }
+    return definition;
 }
