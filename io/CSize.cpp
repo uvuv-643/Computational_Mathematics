@@ -7,10 +7,7 @@
 
 istream &operator>>(istream &is, CSize &data) {
     int32_t inputted;
-    if (&is == &cin) {
-        cerr << "Input size:" << endl;
-    }
-    while ((!(is >> inputted) || inputted <= 0) && !is.eof()) {
+    while ((!(is >> inputted) || inputted <= 0 || abs((int)inputted - inputted) > 0.0001) && !is.eof()) {
         is.clear();
         is.ignore(1000, '\n');
         if (&is == &cin) {

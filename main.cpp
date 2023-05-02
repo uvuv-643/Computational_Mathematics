@@ -3,6 +3,7 @@
 #include "vm_lab2/Lab2.h"
 #include "vm_lab3/Lab3.h"
 #include "vm_lab4/Lab4.h"
+#include "vm_lab5/Lab5.h"
 
 using namespace std;
 
@@ -52,8 +53,38 @@ int lab4() {
 
 }
 
+
+int lab5() {
+
+    string mode;
+    cerr << "Do you want to read data from file or from keyboard?" << endl;
+    cerr << "Data will be read from file with filepath from env. variable 'SOURCE_PATH_INPUT'" << endl;
+    cerr << "If you want to read data from file print 'file'" << endl;
+    cerr << "If you want to read data from given function print 'function'" << endl;
+    cerr << "File must be in following format depends on number of variables: " << endl;
+    cerr << "#n" << endl;
+    cerr << "#x_0, #x_1, ..., #x_n" << endl;
+    cerr << "#y_0, #y_1, ..., #y_n" << endl;
+    cerr << "#target_x" << endl;
+
+    cin >> mode;
+    if (mode == "file") {
+        Lab5::runFromFile();
+    } else if (mode == "function") {
+        Lab5::runFromFunctions();
+    } else {
+        Lab5::runFromKeyboard();
+    }
+
+    getch();
+    fclose(Lab5::gnu_pipe);
+
+    return 0;
+
+}
+
 int main() {
 
-    return lab4();
+    return lab5();
 
 }

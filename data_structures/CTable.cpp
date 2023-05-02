@@ -7,7 +7,7 @@
 ostream &operator<<(ostream &os, CTable &table) {
     size_t table_rows = table.table_data.n;
     size_t table_cols = table.number_of_cols;
-    vector<size_t> maximum_size(table_rows);
+    vector<size_t> maximum_size(table_cols);
     for (size_t col = 0; col < table_cols; col++) {
         size_t current_size = table.column_names[col].size();
         for (size_t row = 0; row < table_rows; row++) {
@@ -109,4 +109,14 @@ bool CTable::isEmpty() const {
 
 bool CTable::isFilled() const {
     return this->number_of_rows > 0;
+}
+
+vector<vector<double>> CTable::getData() {
+    vector<vector<double>> data(number_of_rows, vector<double>(number_of_cols - 1));
+    for (int i = 0; i < number_of_rows; i++) {
+        for (int j = 1; j < number_of_cols; j++) {
+            data[i][j - 1] = stod(this->table_data[i][j]);
+        }
+    }
+    return data;
 }

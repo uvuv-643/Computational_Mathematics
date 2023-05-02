@@ -29,7 +29,7 @@ void Lab4::runFromFile() {
 
     ofstream fs1;
 
-    DiscreteFunction df;
+    DiscreteFunction df("lab4");
     fs >> df;
 
     cout << endl << "Inputted data" << endl;
@@ -101,7 +101,7 @@ void Lab4::runFromFile() {
         }
     }
 
-    GraphicManager::drawSingleX(gnu_pipe, oss.str(), df.getX().min(), df.getX().max());
+    GraphicManager::drawSingleXWithPoints(gnu_pipe, oss.str(), tx.data, ty.data, df.getX().min(), df.getX().max());
 
 }
 
@@ -109,7 +109,7 @@ void Lab4::runFromKeyboard() {
 
     ofstream fs;
 
-    DiscreteFunction df;
+    DiscreteFunction df("lab4");
     cin >> df;
 
     cout << endl << "Inputted data" << endl;
@@ -183,7 +183,7 @@ void Lab4::runFromKeyboard() {
         }
     }
 
-    GraphicManager::drawSingleX(gnu_pipe, oss.str(), df.getX().min(), df.getX().max());
+    GraphicManager::drawSingleXWithPoints(gnu_pipe, oss.str(), tx.data, ty.data, df.getX().min(), df.getX().max());
 
 }
 

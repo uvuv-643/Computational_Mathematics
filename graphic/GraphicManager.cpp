@@ -89,4 +89,37 @@ void GraphicManager::drawMultipleXY(FILE* gnu_pipe, CFunctionMV *f, CFunctionMV 
     fflush(gnu_pipe);
 }
 
+void GraphicManager::drawSingleXWithPoints(FILE *gnu_pipe, string function_definition, vector<CDouble>& x, vector<CDouble>& y, double a,
+                                           double b) {
+
+    fprintf(gnu_pipe, "set key left box \n");
+    fprintf(gnu_pipe, "set key left box \n");
+    fprintf(gnu_pipe, "set samples 200 \n");
+    fprintf(gnu_pipe, "set size ratio 1 \n");
+    fprintf(gnu_pipe, "set xzeroaxis lt -1 lw 1 \n");
+    fprintf(gnu_pipe, "set yzeroaxis lt -1 lw 1 \n");
+    string range_x_definition = "set xrange [" + to_string(ceil(a - 5)) + ":" + to_string(floor(b + 5)) + "] \n";
+    string range_y_definition = "set yrange [" + to_string(- (b - a + 2) / 2) + ":" + to_string((b - a + 2) / 2) + "] \n";
+    fprintf(gnu_pipe, range_x_definition.c_str());
+    fprintf(gnu_pipe, range_y_definition.c_str());
+    size_t pos;
+    while ((pos = function_definition.find('^')) != std::string::npos) {
+        function_definition.replace(pos, 1, "**");
+    }
+    string plot_text = "plot  " + function_definition + " with lines linecolor rgb '#8b1a0e', ";
+
+    std::ostringstream ss;
+    ss << "set style line 1 pointtype 7 pointsize 1.5 lc rgb \"#8070D8\"\n" << endl;
+    ss << plot_text;
+    ss << "'-' with points ls 1 title \"Points\"\n";
+    for (int i = 0; i < x.size(); i++) {
+        ss << x[i] << " " << y[i] << "\n";
+    }
+    ss << "e\n";
+
+    fprintf(gnu_pipe, ss.str().c_str());
+    fflush(gnu_pipe);
+
+}
+
 

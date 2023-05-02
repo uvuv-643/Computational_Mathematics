@@ -22,8 +22,6 @@ using namespace std;
 
 template<typename T>
 class CVector {
-protected:
-    vector<T> data;
 public:
     CSize n;
 
@@ -70,6 +68,7 @@ public:
 
     static CVector<CDouble> apply(CVector<CDouble>* x, CVector<CDouble>* y, double (*pFunction)(double, double));
 
+    vector<T> data;
 };
 
 template<typename T>

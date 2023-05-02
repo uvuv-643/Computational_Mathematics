@@ -40,6 +40,8 @@ public:
 
     bool isFilled() const;
 
+    vector<vector<double>> getData();
+
 };
 
 

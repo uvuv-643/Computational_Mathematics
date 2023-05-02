@@ -6,6 +6,7 @@
 #define VM1_DISCRETEFUNCTION_H
 
 #include <vector>
+#include <set>
 #include <conio.h>
 #include <iostream>
 #include "../data_structures/CTable.h"
@@ -17,8 +18,11 @@ class DiscreteFunction {
     size_t number_of_points;
     CVector<CDouble> x;
     CVector<CDouble> y;
+    string type;
 
 public:
+
+    explicit DiscreteFunction(string type);
 
     friend ostream &operator<<(ostream &os, const DiscreteFunction &df);
 
@@ -35,6 +39,8 @@ public:
     void setX(CVector<CDouble> x);
 
     void setY(CVector<CDouble> y);
+
+    string getType();
 
 };
 
