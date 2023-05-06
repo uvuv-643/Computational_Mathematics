@@ -1,0 +1,17 @@
+body {
+    font-family: "Inter", sans-serif;
+}
+main {
+    min-height: calc(100vh - 96px);
+    padding-top: 100px;
+}
+main h1 {
+    text-align: center;
+}
+.function__item {
+    font-size: 18px;
+    border: 1px solid #FFF;
+    max-width: 500px;
+    margin: 15px auto auto;
+    cursor: pointer;
+}

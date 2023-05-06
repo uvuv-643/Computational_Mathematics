@@ -1,0 +1,51 @@
+body {
+  background: linear-gradient(90deg, #56c1de 0%, #45d2bf 100%);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.header-section {
+  margin-top: 8rem;
+  margin-bottom: 6rem;
+  min-height: 700px;
+}
+
+.section-title {
+  letter-spacing: 0.1rem;
+}
+
+.main-header-text {
+  font-size: 2.9rem;
+  font-weight: bold;
+  letter-spacing: 0.15rem;
+}
+
+.section {
+  margin-bottom: 6rem;
+  min-height: 300px;
+}
+
+.header-img {
+  max-height: 200px;
+}
+
+.section-img {
+  max-height: 200px;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 0.82);
+  margin-left: 0.6rem;
+  margin-right: 0.6rem;
+}
+
+.navbar-dark:hover .navbar-nav:hover .nav-link:hover {
+  color: rgb(255, 255, 255);
+}
+
+.footer {
+  margin-bottom: 0;
+}
+
