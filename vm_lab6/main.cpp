@@ -8,11 +8,14 @@
 #include <iostream>
 #include <string>
 
+#include <nlohmann/json.hpp>
+
 using namespace std;
 
 int main(int argc, char *argv[])
 {
 
+    CDifferentialFunctionManager manager;
     nlohmann::json request(nlohmann::json::parse(std::cin));
     double x_0 = request["x_0"];
     double y_0 = request["y_0"];
