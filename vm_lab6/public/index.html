@@ -54,27 +54,32 @@
                     <h2>Your function: </h2>
                     <div class="solution-equation"></div>
                 </div>
-                <form action="#">
+                <form action="#" class="main-form">
                     <div class="function__inputs">
                         <div class="function__inputs">
                             <label for="y_0"><span>$$ y_0 = y(x_0) $$</span></label>
                             <input id="y_0" name="y_0" class="function__input" type="text" placeholder="1.56">
+                            <div class="error-msg">Wrong $ y_0 $ provided</div>
                         </div>
                         <div class="function__inputs">
                             <label for="x_0">$$ x_0 $$</label>
                             <input id="x_0" name="x_0" class="function__input" type="text" placeholder="0.1">
+                            <div class="error-msg">Wrong $ x_0 $ provided</div>
                         </div>
                         <div class="function__inputs">
                             <label for="x_n">$$ x_n $$</label>
                             <input id="x_n" name="x_n" class="function__input" type="text" placeholder="3.6">
+                            <div class="error-msg">Wrong $ x_n $ provided</div>
                         </div>
                         <div class="function__inputs">
                             <label for="h">$$ h $$</label>
                             <input id="h" name="h" class="function__input" type="text" placeholder="0.1">
+                            <div class="error-msg">Wrong $ h $ provided</div>
                         </div>
                         <div class="function__inputs">
                             <label for="eps">$$ \varepsilon $$</label>
                             <input id="eps" name="eps" class="function__input" type="text" placeholder="0.01">
+                            <div class="error-msg">Wrong $ eps $ provided</div>
                         </div>
                         <div class="function__inputs">
                             <button type="submit">Submit</button>
@@ -82,26 +87,18 @@
                     </div>
                 </form>
             </div>
-            <div class="page-answer">
+            <div class="page-answer _hidden">
                 <table>
                     <thead>
                         <tr class="table-header">
-                            <th></th>
-                            <th>Euler default</th>
-                            <th>Euler modified</th>
-                            <th>Adams</th>
+                            <th>$$ x^{(i)} $$</th>
+                            <th>$$ y^{(i)}_{Euler} $$ <span class="inline-tex">$ h_{actual} = $ <span class="actual_h1">15</span></span></th>
+                            <th>$$ y^{(i)}_{Euler Modified} $$ <span class="inline-tex">$ h_{actual} = $ <span class="actual_h2">15</span></span></th>
+                            <th>$$ y^{(i)}_{Adams} $$ <span class="inline-tex">$ h_{actual} = $ <span class="actual_h3">15</span></span></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="table-m1">
-                            <td>$$ h_{actual} $$</td>
-                        </tr>
-                        <tr class="table-m2">
-                            <td>Euler modified</td>
-                        </tr>
-                        <tr class="table-m3">
-                            <td>Adams</td>
-                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -120,7 +117,24 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
 
+    // accepts JSON: {
+    //      x_0,
+    //      y_0
+    //      x_n
+    //      h
+    //      eps
+    //      method
+    // }
+
+    // return JSON: {
+    //      h_actual: 15,
+    //      items: [1, 4, 6, 7, ..., 51]
+    // }
+
+    // number of rows: Math.floor((x_n - x_0) / h)
+
     $(document).ready(function () {
+
         MathJax = {
             tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
         };
@@ -143,6 +157,66 @@
             setTimeout(() => {
                 $('.page-content').removeClass('_hidden')
             }, 500)
+        })
+
+        $('.main-form').on('submit', function (event) {
+            event.preventDefault();
+
+            (() => {
+
+                let elements = {
+                    x_0: $('input[name="x_0"]'),
+                    y_0: $('input[name="y_0"]'),
+                    x_n: $('input[name="x_n"]'),
+                    h: $('input[name="h"]'),
+                    eps: $('input[name="eps"]'),
+                }
+
+                let canBeSubmitted = true;
+                for (const element of Object.values(elements)) {
+                    let targetValue = element.val()
+                    if (!targetValue || isNaN(parseFloat(targetValue))) {
+                        element.addClass('_error')
+                        canBeSubmitted = false
+                    }
+                }
+
+                if (canBeSubmitted) {
+                    if (parseFloat(elements.eps.val()) > 0) {
+                        let x_0 = parseFloat(elements.x_0.val())
+                        let x_n = parseFloat(elements.x_n.val())
+                        let h = parseFloat(elements.h.val())
+                        let steps = (x_n - x_0) / h
+                        if (steps > 1 && steps < 100) {
+
+                            for (let i = 0; i <= steps; i++) {
+                                $('tbody').append(' <tr class="table-m' + (i) + '">' +
+                            '                            <td>' + (x_0 + i * h).toFixed(4) + '</td>' +
+                            '                        </tr>')
+                            }
+
+                            $('.page-solution').addClass('_hidden')
+                            setTimeout(() => {
+                                $('main').addClass('_active')
+                                $('.page-answer').removeClass('_hidden')
+                            }, 500)
+
+                        } else {
+                            elements.h.addClass('_error')
+                        }
+                    } else {
+                        elements.eps.addClass('_error')
+                    }
+                }
+
+
+
+            })()
+
+        })
+
+        $('input').on('input', function () {
+            $(this).removeClass('_error')
         })
 
     })

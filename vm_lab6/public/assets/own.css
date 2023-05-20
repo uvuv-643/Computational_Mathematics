@@ -44,7 +44,7 @@ body {
 .function__item._active .function__item--bg {
     width: 100%;
 }
-.page-content, .page-solution {
+.page-content, .page-solution, .page-answer {
     transition: 0.6s;
 }
 .page-content._hidden {
@@ -55,6 +55,12 @@ body {
 }
 .page-solution._hidden {
     transform: translateX(100vw);
+}
+.page-answer {
+    margin-top: -500px;
+}
+.page-answer._hidden {
+    transform: translateX(-100vw);
 }
 .function__inputs {
     margin-top: 0;
@@ -108,4 +114,49 @@ body {
     font-weight: bold;
     margin-bottom: 15px;
     cursor: pointer;
+}
+main._active {
+    max-width: 500px;
+}
+
+th, td {
+    padding: 5px 15px;
+}
+table, th, td {
+    border: 1px solid white;
+}
+
+input._error {
+    border-color: rgba(255, 0, 0, 0.8);
+    color: rgba(255, 0, 0, 0.8);
+}
+input._error::placeholder {
+    color: rgba(255, 0, 0, 0.7);
+}
+.error-msg {
+    display: none;
+    color: red;
+    font-size: 12px;
+    margin-bottom: 15px;
+    text-align: right;
+    margin-top: -10px;
+    opacity: 0.7;
+}
+.page-answer {
+    display: flex;
+    align-content: start;
+}
+input._error ~ .error-msg {
+    display: block;
+}
+
+th {
+    white-space: nowrap;
+    font-weight: 400;
+}
+
+.inline-tex {
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 15px;
 }
