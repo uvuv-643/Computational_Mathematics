@@ -15,30 +15,96 @@
 </head>
 <body>
 
-<header>
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
-            <a class="navbar-brand" href="/">Numerical solution of ordinary differential equations</a>
-        </nav>
-    </div>
-</header>
+<!--<header>-->
+<!--    <div class="container">-->
+<!--        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">-->
+<!--            <a class="navbar-brand" href="/">Numerical solution of ordinary differential equations</a>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--</header>-->
 <main>
     <div class="container">
-        <h1>Choose function for which you want to get soolution</h1>
-        <div class="function__item">
-            $$ y'=\frac{\sqrt{y^2+1}}{xy} $$
-        </div>
-        <div class="function__item">
-            $$ y'=\frac{2-y}{ctg(x)} $$
-        </div>
-        <div class="function__item">
-            $$ y'=2\left(\frac{y+2}{x+y-1}\right)^2 $$
-        </div>
-        <div class="function__item">
-            $$ y'=\frac{y}{2yx^2lny-x} $$
-        </div>
-        <div class="function__item">
-            $$ y'=sinx $$
+        <div class="wrapper">
+            <div class="page-content">
+                <h1>Choose function</h1>
+                <div class="function__item">
+                    <div class="function__item--bg"></div>
+                    $$ y'=\frac{\sqrt{y^2+1}}{xy} $$
+                </div>
+                <div class="function__item">
+                    <div class="function__item--bg"></div>
+                    $$ y'=\frac{2-y}{ctg(x)} $$
+                </div>
+                <div class="function__item">
+                    <div class="function__item--bg"></div>
+                    $$ y'=2\left(\frac{y+2}{x+y-1}\right)^2 $$
+                </div>
+                <div class="function__item">
+                    <div class="function__item--bg"></div>
+                    $$ y'=\frac{y}{2yx^2lny-x} $$
+                </div>
+                <div class="function__item">
+                    <div class="function__item--bg"></div>
+                    $$ y'=sinx $$
+                </div>
+            </div>
+            <div class="page-solution _hidden">
+                <div class="solution__back"><- Back</div>
+                <div class="solution-wrapper">
+                    <h2>Your function: </h2>
+                    <div class="solution-equation"></div>
+                </div>
+                <form action="#">
+                    <div class="function__inputs">
+                        <div class="function__inputs">
+                            <label for="y_0"><span>$$ y_0 = y(x_0) $$</span></label>
+                            <input id="y_0" name="y_0" class="function__input" type="text" placeholder="1.56">
+                        </div>
+                        <div class="function__inputs">
+                            <label for="x_0">$$ x_0 $$</label>
+                            <input id="x_0" name="x_0" class="function__input" type="text" placeholder="0.1">
+                        </div>
+                        <div class="function__inputs">
+                            <label for="x_n">$$ x_n $$</label>
+                            <input id="x_n" name="x_n" class="function__input" type="text" placeholder="3.6">
+                        </div>
+                        <div class="function__inputs">
+                            <label for="h">$$ h $$</label>
+                            <input id="h" name="h" class="function__input" type="text" placeholder="0.1">
+                        </div>
+                        <div class="function__inputs">
+                            <label for="eps">$$ \varepsilon $$</label>
+                            <input id="eps" name="eps" class="function__input" type="text" placeholder="0.01">
+                        </div>
+                        <div class="function__inputs">
+                            <button type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="page-answer">
+                <table>
+                    <thead>
+                        <tr class="table-header">
+                            <th></th>
+                            <th>Euler default</th>
+                            <th>Euler modified</th>
+                            <th>Adams</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-m1">
+                            <td>$$ h_{actual} $$</td>
+                        </tr>
+                        <tr class="table-m2">
+                            <td>Euler modified</td>
+                        </tr>
+                        <tr class="table-m3">
+                            <td>Adams</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </main>
@@ -51,10 +117,36 @@
     </div>
 </footer>
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script>
-    MathJax = {
-        tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-    };
+
+    $(document).ready(function () {
+        MathJax = {
+            tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
+        };
+
+        $('.function__item').on('click', function (event) {
+            event.preventDefault()
+            $(this).addClass('_active')
+            setTimeout(() => {
+                $('.page-content').addClass('_hidden')
+                $('.solution-equation').html($(this).html())
+                setTimeout(() => {
+                    $('.page-solution').removeClass('_hidden')
+                }, 500)
+            }, 500)
+        })
+
+        $('.solution__back').on('click', function (event) {
+            event.preventDefault()
+            $('.page-solution').addClass('_hidden')
+            setTimeout(() => {
+                $('.page-content').removeClass('_hidden')
+            }, 500)
+        })
+
+    })
+
 </script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
