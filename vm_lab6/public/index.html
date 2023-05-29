@@ -9,8 +9,8 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/main.css">
-    <link rel="stylesheet" href="assets/own.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/own.css">
 
 </head>
 <body>
@@ -27,23 +27,19 @@
         <div class="wrapper">
             <div class="page-content">
                 <h1>Choose function</h1>
-                <div class="function__item">
+                <div class="function__item" data-function="0">
                     <div class="function__item--bg"></div>
                     $$ y'=\frac{\sqrt{y^2+1}}{xy} $$
                 </div>
-                <div class="function__item">
+                <div class="function__item" data-function="1">
                     <div class="function__item--bg"></div>
                     $$ y'=\frac{2-y}{ctg(x)} $$
                 </div>
-                <div class="function__item">
+                <div class="function__item" data-function="2">
                     <div class="function__item--bg"></div>
-                    $$ y'=2\left(\frac{y+2}{x+y-1}\right)^2 $$
+                    $$ y'=xyxyxyxyx $$
                 </div>
-                <div class="function__item">
-                    <div class="function__item--bg"></div>
-                    $$ y'=\frac{y}{2yx^2lny-x} $$
-                </div>
-                <div class="function__item">
+                <div class="function__item" data-function="3">
                     <div class="function__item--bg"></div>
                     $$ y'=sinx $$
                 </div>
@@ -59,27 +55,27 @@
                         <div class="function__inputs">
                             <label for="y_0"><span>$$ y_0 = y(x_0) $$</span></label>
                             <input id="y_0" name="y_0" class="function__input" type="text" placeholder="1.56">
-                            <div class="error-msg">Wrong $ y_0 $ provided</div>
+                            <div class="error-msg">Wrong y_0 provided</div>
                         </div>
                         <div class="function__inputs">
                             <label for="x_0">$$ x_0 $$</label>
                             <input id="x_0" name="x_0" class="function__input" type="text" placeholder="0.1">
-                            <div class="error-msg">Wrong $ x_0 $ provided</div>
+                            <div class="error-msg">Wrong x_0 provided</div>
                         </div>
                         <div class="function__inputs">
                             <label for="x_n">$$ x_n $$</label>
                             <input id="x_n" name="x_n" class="function__input" type="text" placeholder="3.6">
-                            <div class="error-msg">Wrong $ x_n $ provided</div>
+                            <div class="error-msg">Wrong x_n provided</div>
                         </div>
                         <div class="function__inputs">
                             <label for="h">$$ h $$</label>
                             <input id="h" name="h" class="function__input" type="text" placeholder="0.1">
-                            <div class="error-msg">Wrong $ h $ provided</div>
+                            <div class="error-msg">Wrong h provided</div>
                         </div>
                         <div class="function__inputs">
                             <label for="eps">$$ \varepsilon $$</label>
                             <input id="eps" name="eps" class="function__input" type="text" placeholder="0.01">
-                            <div class="error-msg">Wrong $ eps $ provided</div>
+                            <div class="error-msg">Wrong eps provided</div>
                         </div>
                         <div class="function__inputs">
                             <button type="submit">Submit</button>
@@ -88,19 +84,22 @@
                 </form>
             </div>
             <div class="page-answer _hidden">
+                <div class="answer__back"><- On home page</div>
                 <table>
                     <thead>
                         <tr class="table-header">
                             <th>$$ x^{(i)} $$</th>
-                            <th>$$ y^{(i)}_{Euler} $$ <span class="inline-tex">$ h_{actual} = $ <span class="actual_h1">15</span></span></th>
-                            <th>$$ y^{(i)}_{Euler Modified} $$ <span class="inline-tex">$ h_{actual} = $ <span class="actual_h2">15</span></span></th>
-                            <th>$$ y^{(i)}_{Adams} $$ <span class="inline-tex">$ h_{actual} = $ <span class="actual_h3">15</span></span></th>
+                            <th>$$ y^{(i)}_{Euler} $$ <span class="inline-tex">h = <span class="actual_h1">15</span></span></th>
+                            <th>$$ y^{(i)}_{Euler Modified} $$ <span class="inline-tex">h = <span class="actual_h2">15</span></span></th>
+                            <th>$$ y^{(i)}_{Adams} $$ <span class="inline-tex">h = <span class="actual_h3">15</span></span></th>
                         </tr>
                     </thead>
                     <tbody>
-
                     </tbody>
                 </table>
+
+                <div id="root"></div>
+
             </div>
         </div>
     </div>
@@ -115,113 +114,8 @@
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-<script>
-
-    // accepts JSON: {
-    //      x_0,
-    //      y_0
-    //      x_n
-    //      h
-    //      eps
-    //      method
-    // }
-
-    // return JSON: {
-    //      h_actual: 15,
-    //      items: [1, 4, 6, 7, ..., 51]
-    // }
-
-    // number of rows: Math.floor((x_n - x_0) / h)
-
-    $(document).ready(function () {
-
-        MathJax = {
-            tex: {inlineMath: [['$', '$'], ['\\(', '\\)']]}
-        };
-
-        $('.function__item').on('click', function (event) {
-            event.preventDefault()
-            $(this).addClass('_active')
-            setTimeout(() => {
-                $('.page-content').addClass('_hidden')
-                $('.solution-equation').html($(this).html())
-                setTimeout(() => {
-                    $('.page-solution').removeClass('_hidden')
-                }, 500)
-            }, 500)
-        })
-
-        $('.solution__back').on('click', function (event) {
-            event.preventDefault()
-            $('.page-solution').addClass('_hidden')
-            setTimeout(() => {
-                $('.page-content').removeClass('_hidden')
-            }, 500)
-        })
-
-        $('.main-form').on('submit', function (event) {
-            event.preventDefault();
-
-            (() => {
-
-                let elements = {
-                    x_0: $('input[name="x_0"]'),
-                    y_0: $('input[name="y_0"]'),
-                    x_n: $('input[name="x_n"]'),
-                    h: $('input[name="h"]'),
-                    eps: $('input[name="eps"]'),
-                }
-
-                let canBeSubmitted = true;
-                for (const element of Object.values(elements)) {
-                    let targetValue = element.val()
-                    if (!targetValue || isNaN(parseFloat(targetValue))) {
-                        element.addClass('_error')
-                        canBeSubmitted = false
-                    }
-                }
-
-                if (canBeSubmitted) {
-                    if (parseFloat(elements.eps.val()) > 0) {
-                        let x_0 = parseFloat(elements.x_0.val())
-                        let x_n = parseFloat(elements.x_n.val())
-                        let h = parseFloat(elements.h.val())
-                        let steps = (x_n - x_0) / h
-                        if (steps > 1 && steps < 100) {
-
-                            for (let i = 0; i <= steps; i++) {
-                                $('tbody').append(' <tr class="table-m' + (i) + '">' +
-                            '                            <td>' + (x_0 + i * h).toFixed(4) + '</td>' +
-                            '                        </tr>')
-                            }
-
-                            $('.page-solution').addClass('_hidden')
-                            setTimeout(() => {
-                                $('main').addClass('_active')
-                                $('.page-answer').removeClass('_hidden')
-                            }, 500)
-
-                        } else {
-                            elements.h.addClass('_error')
-                        }
-                    } else {
-                        elements.eps.addClass('_error')
-                    }
-                }
-
-
-
-            })()
-
-        })
-
-        $('input').on('input', function () {
-            $(this).removeClass('_error')
-        })
-
-    })
-
-</script>
+<script src="https://unpkg.com/function-plot/dist/function-plot.js"></script>
+<script src="assets/js/main.js" type="module"></script>
 <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 
 </body>
