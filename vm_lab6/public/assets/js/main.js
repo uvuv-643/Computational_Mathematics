@@ -50,6 +50,7 @@ $(document).ready(function () {
 
                 let canBeSubmitted = true;
                 for (const element of Object.values(elements)) {
+                    element.val(element.val().replace(',', '.'))
                     let targetValue = element.val()
                     if (!targetValue || isNaN(parseFloat(targetValue))) {
                         element.addClass('_error')
